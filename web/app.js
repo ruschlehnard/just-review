@@ -93,9 +93,45 @@ async function anmelden() {
   }
 }
 
+/** Fehler, die Google oder Supabase als Parameter zurückschicken, sichtbar
+ *  machen - sonst landet man wortlos wieder auf der Anmeldemaske. */
+function urlFehler() {
+  const q = new URLSearchParams(location.search);
+  const h = new URLSearchParams(location.hash.replace(/^#/, ""));
+  const lies = (k) => q.get(k) || h.get(k);
+  const code = lies("error") || lies("error_code");
+  if (!code) return null;
+  const text = (lies("error_description") || "").replace(/\+/g, " ");
+  return text ? `${code} — ${decodeURIComponent(text)}` : code;
+}
+
 async function start() {
-  const { data: { session } } = await sb.auth.getSession();
-  if (!session) return zeigeGate();
+  const fehler = urlFehler();
+  if (fehler) {
+    console.error("Anmeldung fehlgeschlagen:", fehler);
+    history.replaceState(null, "", location.pathname);
+    return zeigeGate("Anmeldung fehlgeschlagen: " + fehler);
+  }
+
+  const { data: { session }, error: sitzungsfehler } = await sb.auth.getSession();
+  if (sitzungsfehler) {
+    console.error("getSession:", sitzungsfehler);
+    return zeigeGate("Sitzung konnte nicht gelesen werden: " + sitzungsfehler.message);
+  }
+  if (!session) {
+    // Nach einer Rückleitung von Google sollte hier eine Sitzung stehen. Tut
+    // sie es nicht, ist der Code-Tausch gescheitert - das muss man sehen.
+    const kamVonGoogle = new URLSearchParams(location.search).has("code");
+    if (kamVonGoogle) {
+      history.replaceState(null, "", location.pathname);
+      return zeigeGate(
+        "Google hat zurückgeleitet, aber Supabase konnte daraus keine Sitzung " +
+        "erzeugen. Prüf den Client-Schlüssel und die Redirect-URLs. " +
+        "Details stehen in der Browser-Konsole und in den Auth Logs von Supabase."
+      );
+    }
+    return zeigeGate();
+  }
 
   const { data: profil, error } = await sb
     .from("profiles").select("*").eq("id", session.user.id).maybeSingle();
