@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>just-review · Leads</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ===================================================== Anmeldung -->
+<div class="gate" id="gate" hidden>
+  <div class="gate-card">
+    <span class="note" style="font-family:var(--ff-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)">just-review</span>
+    <h1 style="font-size:26px">Lead-Dashboard</h1>
+    <p id="gate-text">Melde dich mit dem Google-Konto an, das für dich freigeschaltet wurde.</p>
+    <button class="btn" id="login">Mit Google anmelden</button>
+    <p class="note" id="gate-note"></p>
+  </div>
+</div>
+
+<!-- ====================================================== Anwendung -->
+<div class="app" id="app" hidden>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="eyebrow">just-review</span>
+        <h1>Leads</h1>
+      </div>
+      <span class="live" id="live" data-on="false">verbinde…</span>
+      <div class="whoami">
+        <span class="avatar" id="avatar">–</span>
+        <span id="username"></span>
+      </div>
+      <button class="btn ghost small" id="logout">Abmelden</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="tiles" id="tiles"></div>
+
+    <div class="filters">
+      <input type="search" id="q" placeholder="Firma, Branche, Straße oder Ort suchen …" autocomplete="off">
+      <select id="f-ort" aria-label="Ort"><option value="">Alle Orte</option></select>
+      <select id="f-bearbeiter" aria-label="Bearbeiter"><option value="">Alle Bearbeiter</option></select>
+      <select id="f-branche" aria-label="Branche"><option value="">Alle Branchen</option></select>
+      <div class="chips" id="status-chips"></div>
+    </div>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="stripe" aria-label="Kennzeichnung"></th>
+            <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
+            <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
+            <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
+            <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
+            <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
+            <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
+            <th>Kontakt</th>
+          </tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>Kein Treffer. Filter zurücksetzen.</div>
+    </div>
+
+    <p class="note" id="count" style="margin-top:10px"></p>
+  </main>
+</div>
+
+<!-- ======================================================= Schublade -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Lead bearbeiten">
+  <div class="drawer-head">
+    <h2 id="d-title">—</h2>
+    <button class="btn ghost small" id="d-close">Schließen</button>
+  </div>
+  <div class="drawer-body">
+    <div class="quick" id="d-quick"></div>
+    <p class="saving" id="d-saving"></p>
+    <form id="d-form" autocomplete="off"></form>
+
+    <fieldset>
+      <legend>Verlauf</legend>
+      <div class="log" id="d-log"><p class="note">wird geladen …</p></div>
+    </fieldset>
+  </div>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

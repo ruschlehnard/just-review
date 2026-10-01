@@ -1,0 +1,514 @@
+Firmenname;Branche;Gruppe;E-Mail;Telefon;Website;Strasse;PLZ;Ort;Stadtbezirk;Hallschlag;Adressquelle;Hinweis;OSM;lat;lon
+Kurz Zweiräder;Fahrradhandel;Einzelhandel;kontakt@kurz-zweiraeder.de;+49 711 544603;http://www.kurz-zweiraeder.de;Aachener Straße 34;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1856225971;48.808003;9.208732
+Gebäudereinigung Mohammadi;Gebäudereinigung;Handwerk;;+49 711 50429411;https://gebaeudereinigung-mohammadi.com/;Am Römerkastell 10;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 4 m;;node/2153408073;48.81286;9.207562
+nachbar;Kneipe;Gastro;;;;Am Römerkastell 75;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 26 m;;node/5733219122;48.815128;9.210833
+El-Farra;Lebensmittel;Einzelhandel;;;;Am Römerkastell 8;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 3 m;;node/4278059800;48.812752;9.207407
+Weinstube am Stadtgraben;Restaurant;Gastro;info@weinstube-stadtgraben.de;+49 711 567006;https://www.weinstube-stadtgraben.de/;Am Stadtgraben 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/1766441946;48.804942;9.216175
+Jägerhof;Restaurant;Gastro;;+49 711 544304;https://jaegerhof-mayer.de/;Am Wolfersberg 17;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/60943944;48.819617;9.200834
+Gärtnerei Heermann;Garten- & Landschaftsbau;Handwerk;;;https://www.blumenhaus-heermann.de/;Am Wolfersberg 5/1;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11191109112;48.816938;9.195748
+möbel + raum stadtnomaden;Möbel;Einzelhandel;;;http://www.stadtnomaden.com/;Andernacher Weg 8;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/144072167;48.810347;9.211765
+Stuttgarter Parkett;Teppiche;Einzelhandel;;;;Andreästraße 2;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 14 m;;node/7093498868;48.806068;9.234267
+Melirryton Patisserie;Café;Gastro;merlington.patisserie@gmail.com;+49 711 39157254;;Antwerpener Straße 2;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/267403246;48.808273;9.243586
+Sommerrain;Restaurant;Gastro;;+49 711 9079931;https://sommerrainrestaurant.com/;Asternweg 1;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3462201081;48.815447;9.247584
+Café Pavillon;Café;Gastro;;;;Auerbachstraße 110;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/11815189909;48.815139;9.186693
+Pavillon 1;Sonderposten;Einzelhandel;;+49 711 8101 3336;;Auerbachstraße 110;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 13 m;;way/92469828;48.815109;9.186716
+Skylounge 327;Bar;Gastro;;;https://www.facebook.com/skylounge327/;Auerbachstraße 182;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/47257555;48.817625;9.192425
+Robinson Barracks Commissary;Kaufhaus;Einzelhandel;;;https://www.commissaries.com/stores/html/store.cfm?dodaac=HQCE7C;Auerbachstraße 205;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 15 m;US-Kaserne, kein freier Publikumsverkehr;node/4145195686;48.820119;9.194633
+Orchidee;Kneipe;Gastro;;;;Auf der Steig 41;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 7 m;;node/2480557724;48.814809;9.206185
+Haarstudio Jasmina;Friseur;Friseur;;+49 711 27392101;;Augsburger Straße 13;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4568800292;48.804721;9.231934
+Nadine schöne Haare;Friseur;Friseur;;;https://www.nadineschoenehaare.de/;Badergasse 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3848398836;48.803967;9.21471
+Beauty Nails My Linh;Kosmetikstudio;Kosmetik/Nagel;;;;Badstraße 11;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 17 m;;node/12802249784;48.802954;9.215271
+EuroShop;Lebensmittel;Einzelhandel;;;;Badstraße 11;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/12802234339;48.80303;9.215234
+Indian Food;Lebensmittel;Einzelhandel;;;;Badstraße 15;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4166602597;48.803248;9.214734
+Blumen Kakales;Blumen;Einzelhandel;;;;Badstraße 9;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3877884088;48.803224;9.215802
+Serhat Döner & Pizza;Imbiss;Imbiss;;;;Badstraße 9;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/210508630;48.803205;9.215746
+DER;Reisebüro;Einzelhandel;;;https://der.com/reisebuero/Stuttgart-Bahnhofstrasse-1;Bahnhofstraße 1;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3672480016;48.802887;9.217367
+Happy Baker;Bäckerei;Einzelhandel;;;;Bahnhofstraße 1;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/1521793787;48.803016;9.217345
+Bistro & Café bei Anna;Kneipe;Gastro;;;;Bahnhofstraße 10;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/2517589729;48.802804;9.217074
+Borsa Gold;Schmuck;Einzelhandel;;;;Bahnhofstraße 10;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/6424297284;48.802669;9.217118
+Verleihnix;Videospiele;Einzelhandel;;;http://verleihnix.net/;Bahnhofstraße 10;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/7154575593;48.80278;9.217103
+nic*nac;Kneipe;Gastro;;;;Bahnhofstraße 10;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3625887523;48.802739;9.217106
+Yusuf Usta;Imbiss;Imbiss;;;;Bahnhofstraße 11;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/12873796382;48.802748;9.217384
+Second Hand and more ...;Mode;Einzelhandel;;;;Bahnhofstraße 13;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/560606798;48.802619;9.217421
+Sunny High Club;Club;Gastro;;;https://sunnyhigh.de/;Bahnhofstraße 14;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4433350091;48.802541;9.217096
+Fahrrad-Servicestation Neue Arbeit;Fahrradhandel;Einzelhandel;fsc@neuearbeit.de;+49 711 50593729;https://neuearbeit.de/angebote/fahrrad-service-stationen-und-radstationen;Bahnhofstraße 14-18;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4246702459;48.802449;9.217157
+Copy & Ink Store;Copyshop;Einzelhandel;;;https://www.copyinkstore.de/;Bahnhofstraße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/6486043324;48.802422;9.217485
+Messer-Ohlig;Waffenhandel;Einzelhandel;;;;Bahnhofstraße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;way/958961067;48.802558;9.217479
+Barbier Antalya;Friseur;Friseur;;;;Bahnhofstraße 17;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5651635080;48.802164;9.217744
+Ice Ice Baby;Café;Gastro;;;;Bahnhofstraße 17;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/7093508809;48.802208;9.21759
+Jaze;Bäckerei;Einzelhandel;;+49 711 90053093;https://www.baeckerei-jaze.de/;Bahnhofstraße 17;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/6462945798;48.802246;9.217497
+Bike-kitchen Stuttgart;Fahrradhandel;Einzelhandel;kontakt@bikekitchen-stuttgart.de;;https://bikekitchen-stuttgart.de;Bahnhofstraße 18;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12714697394;48.802287;9.216759
+Esco Bar&Cafe;Café;Gastro;;;;Bahnhofstraße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3625886620;48.80218;9.217214
+Imbiss am Bahnhof;Imbiss;Imbiss;;;;Bahnhofstraße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 21 m;;way/1556642564;48.801977;9.21736
+Istanbul Kebap;Imbiss;Imbiss;;;;Bahnhofstraße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/2517585663;48.802154;9.217226
+Pfiff;Restaurant;Gastro;;;https://pfiff-restaurant.de;Bahnhofstraße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/2517589269;48.802233;9.217208
+Sai Gon Asian Street Food;Restaurant;Gastro;;;;Bahnhofstraße 20;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/10951784569;48.802099;9.217127
+N&G;Mode;Einzelhandel;;;;Bahnhofstraße 21;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/6548372749;48.802145;9.217964
+Glora Kaffeehaus;Café;Gastro;;+49 711 51882615;;Bahnhofstraße 30;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5779229800;48.801616;9.218329
+Miko Kebab;Imbiss;Imbiss;;;;Bahnhofstraße 30;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/2290405087;48.801695;9.217528
+POINT;Lebensmittel;Einzelhandel;;;;Bahnhofstraße 30;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 17 m;;node/2445438735;48.801764;9.217633
+Wichtel;Kneipe;Gastro;;+4971130556732;https://www.wichtel.de/;Bahnhofstraße 30;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3877886727;48.801761;9.217396
+Soul Food;Imbiss;Imbiss;;;;Bahnhofstraße 35;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 25 m;;node/12700158027;48.80144;9.219468
+Divan;Imbiss;Imbiss;;;;Bahnhofstraße 8;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/1404763960;48.802918;9.216983
+Sport restaurant im Neckarpark;Restaurant;Gastro;info@sportrestaurant-im-neckarpark.de;+49 711 55347404;https://www.sportrestaurant-im-neckarpark.de/;Benzstraße 151;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/5670723624;48.79466;9.232269
+Siggi's Frisurenteam;Friseur;Friseur;;;;Beskidenstraße 3;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/127756500;48.809723;9.25312
+Drucker-Tankwart;Printing supply;Einzelhandel;;;;Beuthener Straße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/6263705703;48.805971;9.233852
+Perfect Studio;Friseur;Friseur;;;;Beuthener Straße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/6943335952;48.806046;9.234162
+Tante Lissy`s;Lebensmittel;Einzelhandel;;;;Bottroper Straße 35;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/4203244548;48.819732;9.210106
+Stockholm Beauty Shop & Akademie;Kosmetikstudio;Kosmetik/Nagel;;;;Bottroper Straße 8;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/3660964797;48.81774;9.213135
+Timefree;Kosmetikstudio;Kosmetik/Nagel;;;http://timefree-haarentfernung.de;Bottroper Straße 8;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/3882750271;48.817672;9.213134
+Alhamidia Eis;Eiscafé;Gastro;;+49 157 71095518;;Brunnenstraße 11;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2079147532;48.805748;9.214185
+Diana's Schneiderparadies;Schneiderei;Handwerk;;;;Brunnenstraße 13;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/3683495731;48.805856;9.21439
+Brunnenstüble;Kneipe;Gastro;;;;Brunnenstraße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3683495730;48.805954;9.214438
+Schuhtechnik Schäfer;Schuhmacher;Handwerk;;+49 711 558625;https://schuhtechnik-schaefer.de;Brunnenstraße 18;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13507527928;48.806382;9.215339
+Elektro Russ;Elektrotechnik;Handwerk;;;https://www.elektro-russ.de/;Brunnenstraße 19;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4166558342;48.806061;9.214545
+Kaiserin;Mode;Einzelhandel;;;;Brunnenstraße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/3683361425;48.805742;9.21449
+Matrix Reloaded;Kneipe;Gastro;;;;Brunnenstraße 24;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/5613869183;48.806529;9.215687
+Ali Friseur;Friseur;Friseur;;;;Brunnenstraße 25;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3841524033;48.806253;9.214654
+Die Palette;Café;Gastro;;;;Brunnenstraße 25;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/3841524032;48.806159;9.214566
+Musikcafe Magnet;Kneipe;Gastro;;;;Brunnenstraße 26;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/3401474681;48.806567;9.215891
+Orient Food Falafel;Imbiss;Imbiss;;;;Brunnenstraße 26;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/4177246864;48.806557;9.215767
+Ya Ghali;Imbiss;Imbiss;;;https://yaghali-badcannstatt.eatbu.com/;Brunnenstraße 33;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/11532416660;48.806443;9.21513
+Cannstatter Treff;Kneipe;Gastro;;;;Brunnenstraße 35;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/5312645720;48.806631;9.215273
+Greek Natura;Lebensmittel;Einzelhandel;;+49 711 556387;https://greek-natura.de/;Brunnenstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/10148965542;48.805976;9.214679
+Imbiss Bagdad;Imbiss;Imbiss;;+49 711 88842461;http://imbissbagdad.com;Brunnenstraße 53;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5312645718;48.807211;9.216428
+San Gennaro;Restaurant;Gastro;;;;Brählesgasse 12;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3731956738;48.805042;9.213079
+Sideways;Bar;Gastro;;;;Brählesgasse 14;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3174748998;48.805036;9.212964
+HiFi-Studios;HiFi;Einzelhandel;info@fastaudio.com;+497114808888;;Brählesgasse 21;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13202579812;48.804938;9.212655
+Zäpfles Haartreff;Friseur;Friseur;;;;Brählesgasse 4;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13251891032;48.805032;9.213215
+Lea Sweets;Süßwaren;Einzelhandel;;;;Brückenstraße 13;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/5595811156;48.807136;9.211053
+Palm Tree African Restaurant;Restaurant;Gastro;;;;Brückenstraße 15;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/1272938091;48.807206;9.210977
+Toky-Diana;Restaurant;Gastro;;+4971150494999;https://tokydianastuttgart.de;Brückenstraße 18;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/1272938097;48.807447;9.211172
+Afrika Bella;Lebensmittel;Einzelhandel;;;;Brückenstraße 35;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3845708471;48.807927;9.210556
+Imbiss Jamil;Imbiss;Imbiss;;;;Brückenstraße 39;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/2316426400;48.808111;9.210452
+Easy Friseur;Friseur;Friseur;;;;Brückenstraße 41;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/4361824983;48.808257;9.210316
+Simparts;KFZ-Teile;Einzelhandel;;;https://www.simparts.eu/;Brückenstraße 42;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3845708480;48.808825;9.210206
+Oki´s Shisha Bar;Kneipe;Gastro;;;;Brückenstraße 55;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/9826627334;48.809128;9.209813
+Side Döner;Imbiss;Imbiss;;;;Daimlerstraße 101;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/2517566374;48.800013;9.22058
+Bravoo;Friseur;Friseur;;;;Daimlerstraße 103;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3762959143;48.799931;9.220602
+Gaststätte Cronmüller;Kneipe;Gastro;;;;Daimlerstraße 107;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/2517568901;48.799672;9.220657
+Gaststätte Karlseck;Kneipe;Gastro;;;;Daimlerstraße 125;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/2517565789;48.798464;9.220882
+Pop's Burger Sportsbar;Restaurant;Gastro;;;;Daimlerstraße 127;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/10800358605;48.797928;9.221034
+Damici;Friseur;Friseur;;;;Daimlerstraße 47;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6357626838;48.803589;9.219728
+Thai Orchidee;Restaurant;Gastro;;;;Daimlerstraße 63;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4773294426;48.802332;9.220174
+Rebell Lounge;Bar;Gastro;;;;Daimlerstraße 65;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/5305429325;48.80218;9.220118
+Makso Markt;Lebensmittel;Einzelhandel;;;;Daimlerstraße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 16 m;;node/14125810249;48.801718;9.219899
+blu Sanitätshaus;Sanitätshaus;Einzelhandel;;+49 711 40053850;https://www.saniblu.de/cannstatt.html;Daimlerstraße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/9400673370;48.801846;9.219852
+Maydonoz Döner;Restaurant;Gastro;;;;Daimlerstraße 67;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/10778240872;48.801959;9.220215
+Ngon Deli;Restaurant;Gastro;;+49 711 55049770;;Daimlerstraße 69;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1572657951;48.801523;9.222449
+Pizzeria Pizzico;Restaurant;Gastro;;+4971146907667;http://www.wde.de/carre/firmen-pizzico.html;Daimlerstraße 71;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/1572715815;48.801676;9.220433
+Wellmetic;Kosmetikstudio;Kosmetik/Nagel;;+49 711 30543300;http://www.wellmetic.com;Daimlerstraße 71;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3073264907;48.801618;9.220449
+Miss Beauty;Kosmetikstudio;Kosmetik/Nagel;;;;Daimlerstraße 73;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/1572715837;48.801472;9.220801
+Nail Fashion;Kosmetikstudio;Kosmetik/Nagel;;;;Daimlerstraße 73;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;node/1572715729;48.80142;9.220912
+Syrian Market;Lebensmittel;Einzelhandel;;;;Daimlerstraße 92;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4213073331;48.799678;9.220368
+Köz Restaurant;Restaurant;Gastro;;;;Daimlerstraße 97;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3165798821;48.800284;9.220519
+Zitadelle;Restaurant;Gastro;;;;Deckerstraße 51;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/942677887;48.800208;9.225833
+Match;Restaurant;Gastro;;;;Dennerstraße 36;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/2530436055;48.80807;9.227636
+Fahrrad Topshop;Fahrradhandel;Einzelhandel;info@fahrradtopshop.de;+49 711 50484847;https://www.fahrradtopshop.com/;Dennerstraße 62;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1494535079;48.805821;9.229905
+Alena Kosmetik Studio;Kosmetikstudio;Kosmetik/Nagel;;+49 711 55081919;;Ebitzweg 12;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12810118337;48.803721;9.233456
+Kosmetikstudio ISABELL;Kosmetikstudio;Kosmetik/Nagel;;+49 711 5284140;;Ebitzweg 20;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/146754179;48.803639;9.234496
+Three Sisters Cosmetic Salon;Kosmetikstudio;Kosmetik/Nagel;;;3sisterscosmetic.de;Ebitzweg 44;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12802175126;48.803526;9.236747
+Gärtnerei Zeyfang;Gartenbedarf;Einzelhandel;;;;Einsteinstraße 22;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 17 m;;node/3460568810;48.819648;9.234933
+Chef's Imbissstation;Imbiss;Imbiss;;;;Eisenbahnstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/6424298585;48.802115;9.216772
+Schwemme;Kneipe;Gastro;;;;Eisenbahnstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/2517585662;48.802066;9.216893
+Abschleppdienst Meixner;KFZ-Werkstatt;Handwerk;;;http://www.meixner24.de/;Elwertstraße 8;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/109650872;48.799703;9.21709
+Restaurant Flori;Restaurant;Gastro;;+49 711 81070179;https://www.restaurant-flori.de/;Emil-Kiemlen-Weg 51;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4197636624;48.815137;9.201415
+Pirates.;Bar;Gastro;;;https://www.pirates-badcannstatt.de;Erbsenbrunnengasse 15;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3827543479;48.804135;9.213192
+Weinstube Zaiß bei Holger Waiblinger;Restaurant;Gastro;;;https://www.weinstube-zaiss.de/;Erbsenbrunnengasse 5;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3701961068;48.804206;9.213722
+Adam Shrebati;Schmuck;Einzelhandel;;;;Erbsenbrunnengasse 6;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3728096615;48.804309;9.213487
+pretty lady;Kosmetikstudio;Kosmetik/Nagel;;;;Felgergasse 5;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 15 m;;node/4392757278;48.80375;9.215048
+Schuhmacherei Mayer;Schuhmacher;Handwerk;;;;Felgergasse 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/3848398835;48.803939;9.214875
+J7 Hairstyling;Friseur;Friseur;;;http://www.friseur-stuttgart.j-7.de/hs-bad-cannstatt;Felgergasse 7;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/3843819962;48.803703;9.21495
+Sophies Brauhaus;Restaurant;Gastro;;+49 711 90797286;https://www.sophies-brauhaus.de/;Felgergasse 7;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3843819963;48.803761;9.214768
+Chola Restaurant;Restaurant;Gastro;;;;Ferdinand-Hanauer-Straße 4-6;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/766434555;48.818361;9.235925
+Brenner;Fensterbau;Handwerk;;+49 711 567425;https://www.fensterbau-brenner.de/;Flurstr. 16a;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12672485981;48.811338;9.22351
+Kulturinsel - Biergarten;Biergarten;Gastro;;;;Frachtstraße 25;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 26 m;;node/4828298375;48.797259;9.226542
+Salon Sybille;Friseur;Friseur;;;;Frankfurter Straße 39;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/6935927674;48.810325;9.202407
+Café am Kurpark;Café;Gastro;;;;Freiligrathstraße 3;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/2518546884;48.80669;9.227505
+Exis Haarstudio;Friseur;Friseur;;;;Frösnerstraße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/6174547725;48.80258;9.218426
+La Santé;Restaurant;Gastro;;+49 1590 1771166;https://www.lasante-stuttgart.de/;Frösnerstraße 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/7714862860;48.802517;9.218329
+Stern Reinigung;Reinigung;Einzelhandel;;;;Frösnerstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/6174547724;48.802403;9.218268
+Tsimpo;Café;Gastro;;;;Frösnerstraße 6;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6174547723;48.802239;9.218087
+Çakir Haushaltswaren;Haushaltswaren;Einzelhandel;;;;Frösnerstraße 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/6548372748;48.80229;9.218137
+Adnan Kiosk;Kiosk;Einzelhandel;;;;Gnesener Straße 74;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/276108499;48.812157;9.229775
+Top Hair;Friseur;Friseur;;+49 711 544514;;Haldenstraße 38;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/5614686438;48.809093;9.209142
+Scharfes Eck;Kneipe;Gastro;;;;Haldenstraße 44;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/3306272113;48.809398;9.209888
+"Barbershop ""Kasanova""";Friseur;Friseur;;+49 711 95358960;;Hallschlag 17;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/10562264035;48.812749;9.209202
+Haarika;Friseur;Friseur;;;;Hallschlag 19;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 5 m;;node/5739231586;48.81286;9.20904
+Hähnchen & Nudelhaus;Imbiss;Imbiss;;;;Hallschlag 21;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 3 m;;node/5651277503;48.812915;9.208963
+Auto Galerie Stuttgart;Autohaus;Einzelhandel;;;;Hallschlag 23;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 6 m;;node/11150727326;48.812984;9.208763
+Tabak& Zeitschriften;Kiosk;Einzelhandel;;;;Hallschlag 25;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 5 m;;node/3870326211;48.813159;9.208674
+Balkan Bäckerei;Bäckerei;Einzelhandel;;;;Hallschlag 27;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 4 m;;node/3870309152;48.813222;9.208587
+Demet's Döner & Pizza;Imbiss;Imbiss;;;;Hallschlag 27;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 7 m;;node/3870309149;48.813296;9.208486
+Café Demet;Café;Gastro;;;;Hallschlag 29;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 5 m;;node/3870309148;48.813258;9.208236
+Hopfenbörse;Kneipe;Gastro;;;;Hallstraße 36;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/144147345;48.808317;9.210817
+Centro Sicilia;Feinkost;Einzelhandel;;;https://centro-sicilia.de/;Heimsche Gasse 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3663357445;48.804555;9.21489
+Hochflurbesen;Restaurant;Gastro;;;https://weinbau-glock.de/besenwirtschaft;Hochflur 22;;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/12119801611;48.821633;9.243861
+Restaurant Spvgg Cannstatt;Restaurant;Gastro;;;http://www.spvgg-restaurant.de/Startseite;Hofener Straße 115;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/84506865;48.814799;9.224822
+M&M Bikes;Fahrradhandel;Einzelhandel;service@mmbikes.de;;https://mmbikes.de/;Hofener Straße 140;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3924688881;48.81564;9.227957
+Mercado da Saudade;Feinkost;Einzelhandel;;;https://www.mercadosaudade.de/;James-F.-Byrnes-Straße 41;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4162594389;48.817554;9.190831
+Thomas Iglauer Automobile;KFZ-Werkstatt;Handwerk;;;http://www.iglauer.de/;Kapuzinerweg 1;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/140065803;48.817701;9.251192
+Kopp Nutzfahrzeuge GmbH;KFZ-Werkstatt;Handwerk;;;;Kapuzinerweg 28;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;node/11550175146;48.817577;9.253312
+Hildebrand;Blumen;Einzelhandel;post@blumen-hildebrand.de;+49 711 560 484;http://www.blumen-hildebrand.de;Karlsbader Straße 11;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5049950312;48.802802;9.226434
+Müller Fensterbau;Fensterbau;Handwerk;;+49 711 567 913;https://www.qualitaetsfenster.com/;Karlsbader Straße 12;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5049950315;48.802703;9.226231
+Karla21;Café;Gastro;;;;Karlsbader Straße 21;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/14064952737;48.801989;9.226763
+Sanitär Kublig;Sanitär & Heizung;Handwerk;info@kublig.de;+49 711 9547 500;http://www.kublig.de;Karlsbader Straße 23;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5040899834;48.801855;9.226839
+Maler Kreder;Maler & Lackierer;Handwerk;info@maler-kreder.de;+49 711 561 706;http://www.maler-kreder.de;Karlsbader Straße 28;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5040899833;48.801661;9.226661
+Hundesalon bei Anna;Hundesalon;Einzelhandel;;;;Karlsbader Straße 6;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/108917124;48.803048;9.225995
+clubCANN;Club;Gastro;;;https://clubcann.de/;Kegelenstraße 21;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/10693206305;48.800318;9.218392
+Bakir Supermarkt;Lebensmittel;Einzelhandel;;;;Kissinger Straße 35;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1258074773;48.802328;9.226387
+Just Be;Friseur;Friseur;info@justbe-hairstyle.de;+49 711 5044 4466;http://www.justbe-hairstyle.de;Kissinger Straße 48a;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5029926721;48.80241;9.227929
+Schlosserei Bürkle;Schlüsseldienst;Handwerk;;;;Kissinger Straße 51;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5040899835;48.80282;9.228135
+Mörfi Tattoo;Tattoostudio;Kosmetik/Nagel;info@leamurphy.de;;https://www.moerfitattoo.de/;Kissinger Straße 53;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/14004374002;48.802712;9.228471
+Bibi's Café & Bakery;Café;Gastro;;;;Kissinger Straße 54;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1258074732;48.802509;9.228586
+Bäckerei & Stehcafe Malik;Kiosk;Einzelhandel;;;;Kolpingstraße 98;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 25 m;;node/3905225851;48.827873;9.231715
+Kantine Krämer;Imbiss;Imbiss;;;;Krefelder Straße 12;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 16 m;Betriebsgastronomie, nur für Belegschaft;node/8576394499;48.810045;9.214422
+Das Kaufhaus;Secondhand;Einzelhandel;;;https://www.daskaufhaus.de/;Kreuznacher Straße 53;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5059489503;48.80274;9.222288
+Äquator;Restaurant;Gastro;;+49 711 5920137;http://www.restaurant-equator.de/;Kreuznacher Straße 57;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2315072545;48.802382;9.222427
+o2 Shop;Handyshop;Einzelhandel;;;https://www.lotto-bw.de/;Kreuznacher Straße 64;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/1572657968;48.801476;9.221851
+Boutique Niveau;Mode;Einzelhandel;;;;König-Karl-Straße;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1779123830;48.802547;9.21609
+Call Shop;Handyshop;Einzelhandel;;;;König-Karl-Straße;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2190103607;48.802525;9.216037
+Bestattungen Haas;Bestattungen;Einzelhandel;;+49 711 567981;https://walter-haas.de/;König-Karl-Straße 15;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/9212406732;48.8067;9.221124
+Mühlrad Cannstatt;Obst & Gemüse;Einzelhandel;;+49 711 50439526;https://muehlrad-cannstatt.sumupstore.com;König-Karl-Straße 26;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/428256410;48.806069;9.219769
+Beauty Professional;Kosmetikstudio;Kosmetik/Nagel;;;;König-Karl-Straße 32;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3682569814;48.805654;9.219239
+"Sanitätshaus Glotz am ""Daimlerplatz""";Sanitätshaus;Einzelhandel;;+49 711 565498;https://www.glotz.de/;König-Karl-Straße 32;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3682569816;48.805589;9.219156
+Brezel-Frank;Café;Gastro;;;;König-Karl-Straße 33;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/4133884837;48.805401;9.219419
+Gottlieb;Café;Gastro;;+49 711 39684307;https://www.instagram.com/gottliebstuttgart/;König-Karl-Straße 35;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/7805467496;48.804948;9.21879
+Luxus Cut;Friseur;Friseur;;;;König-Karl-Straße 36;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/11690144271;48.805083;9.218477
+Salon Umperto;Friseur;Friseur;;;;König-Karl-Straße 39;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/7805467495;48.804667;9.218464
+Harmony Nails & Beauty;Kosmetikstudio;Kosmetik/Nagel;;;;König-Karl-Straße 41;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/10215139491;48.804536;9.218281
+Taraba;Café;Gastro;;;;König-Karl-Straße 44;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12703026587;48.804579;9.217862
+Houot Mode;Schneiderei;Handwerk;;;;König-Karl-Straße 46;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/11690099280;48.804448;9.217675
+Hanadi Beauty;Kosmetikstudio;Kosmetik/Nagel;;;;König-Karl-Straße 49;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/7805467494;48.804179;9.217803
+Bera Gold & Diamond;Schmuck;Einzelhandel;;;;König-Karl-Straße 53;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/7805467493;48.803858;9.217395
+Osman Markt;Lebensmittel;Einzelhandel;;+491639768109;;König-Karl-Straße 59;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/382369417;48.802848;9.216793
+Chan's Kitchen;Imbiss;Imbiss;;;;König-Karl-Straße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/11975907951;48.802836;9.21547
+Galaxy Fashion;Mode;Einzelhandel;;;;König-Karl-Straße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/9231039876;48.802734;9.215427
+Ya Hala;Restaurant;Gastro;;;;König-Karl-Straße 70;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1404763957;48.802519;9.215144
+Sonnenstudio City Sun;Kosmetikstudio;Kosmetik/Nagel;;;;König-Karl-Straße 81;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/12802287261;48.801186;9.213928
+Polsterei Terre;Polsterei;Handwerk;;+49 711 655 84 385;https://www.polsterei-terre.de/;König-Karl-Straße 83;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 22 m;;node/6344560488;48.800898;9.214058
+Wohnart natürliche Raumgestaltung GmbH;Bodenbeläge;Einzelhandel;;+49 711 5508888;http://www.parkett-naturbaustoffe.de;König-Karl-Straße 83;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6206956461;48.801062;9.213762
+Cardicuno;Spielwaren;Einzelhandel;kontakt@cardicuno.de;+49 711 50464937;https://cardicuno.de/;König-Karl-Straße 84;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/8579090944;48.801004;9.213064
+La Braids Afroamerikanische Frisuren;Friseur;Friseur;;;;König-Karl-Straße 85;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/12802242538;48.800931;9.213622
+Augustiner Biergarten;Biergarten;Gastro;;;;Königsplatz 1;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 44 m UNSICHER;;node/385126376;48.80789;9.224023
+Kursaal Cannstatt;Restaurant;Gastro;;+4971199777241;https://www.kursaal-cannstatt.de;Königsplatz 1;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3167403331;48.808032;9.223458
+TeeMagazin;Teehandel;Einzelhandel;;+49 711 569592;https://teemagazin-cannstatt.de;Küblergasse 10;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3778752969;48.804649;9.215477
+Küfer-Stüble;Kneipe;Gastro;;;;Küblergasse 4;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2415882334;48.804421;9.215551
+Mon Petit Café;Café;Gastro;;+49 711 50569270;;Küblergasse 5;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1765982031;48.804498;9.215422
+Shishabar Istanblue;Kneipe;Gastro;;;;Küblergasse 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/2416395758;48.804487;9.215543
+L´uomo;Mode;Einzelhandel;;;https://luomofashion.de/;Küblergasse 7;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3810593990;48.80466;9.215365
+Gamba Eiscafé;Café;Gastro;;+49 711 56 95 70;;Kühlbrunnengasse 1;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/2423821765;48.804176;9.214172
+Zur alten Schmiede;Restaurant;Gastro;info@cannstatts-alte-schmiede.de;+49 711 65843955;https://www.cannstatts-alte-schmiede.de/;Kühlbrunnengasse 12;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/1766412966;48.803656;9.213759
+Sepideh;Kosmetikstudio;Kosmetik/Nagel;;;;"Kühlbrunnengasse 2;4";70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3665201111;48.80412;9.214049
+Sattlerei;Restaurant;Gastro;;+49711552604;https://www.zur-sattlerei.de;Lammgasse 1;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3325987536;48.804943;9.215028
+Bestattungsdienst Rentschler;Bestattungen;Einzelhandel;;+49 711 557782;https://bestattungsdienst-rentschler.de/;Lammgasse 4;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/8968271274;48.80512;9.215358
+Antonio Dello Russo;KFZ-Werkstatt;Handwerk;;;;Lehmfeldstraße 16;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 26 m;;node/11994820293;48.81997;9.239873
+CarTech;KFZ-Werkstatt;Handwerk;;;;Lehmfeldstraße 4;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3460660807;48.818729;9.240307
+Treiber;Bäckerei;Einzelhandel;;;;Lenore-Volz-Straße 23;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 33 m UNSICHER;;node/13134702707;48.796805;9.22488
+Jin's Wok;Imbiss;Imbiss;;;;Liebenzeller Straße 13;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/6066212752;48.805504;9.218537
+Le Journal;Kneipe;Gastro;;+49 173 6150125;;Liebenzeller Straße 13;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3352085517;48.805526;9.218438
+Haarstudio Meti;Friseur;Friseur;;;;Liebenzeller Straße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/8789073603;48.805491;9.218604
+Käse und Köstlich;Lebensmittel;Einzelhandel;;;https://www.kaeseundkoestlich.de/;Liebenzeller Straße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/558876479;48.805495;9.218679
+My Spa;Kosmetikstudio;Kosmetik/Nagel;service@myspa.me;+49 711 38980930;https://www.myspa.me/filialen/stuttgart;Löwentorstraße 42;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11587429886;48.807901;9.190045
+Theaterbar;Bar;Gastro;;;;Löwentorstraße 68;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 22 m;;node/8007458024;48.808745;9.195137
+CAP2;Friseur;Friseur;burgholzhof@captwo.de;+49 711 9 12 19 69;https://www.captwo.de;Mahatma-Gandhi-Straße 5;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1189305273;48.818156;9.191181
+Georgs Biereck;Kneipe;Gastro;;;;Marienbader Straße 36;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/5172971911;48.800473;9.228502
+Nauras;Schmuck;Einzelhandel;;;;Marktstraße 14;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3665224526;48.804056;9.215737
+Harman;Bäckerei;Einzelhandel;;;;Marktstraße 15;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3886001040;48.803974;9.215553
+Harman Bäckerei;Bäckerei;Einzelhandel;;+49 711 41430306;;Marktstraße 15A;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/135583152;48.803848;9.215445
+Hans Martin Trautwein Frisuren;Friseur;Friseur;;;;Marktstraße 18;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3665228069;48.80418;9.215311
+Juwelier Heliwi;Schmuck;Einzelhandel;;;;Marktstraße 19;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3848398838;48.804085;9.215247
+Atelier Feine Linie;Tattoostudio;Kosmetik/Nagel;;;;Marktstraße 22;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3665228067;48.804242;9.215089
+Pitapanic;Restaurant;Gastro;;;;Marktstraße 23;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/3848398839;48.804154;9.214816
+Afamya;Parfümerie;Kosmetik/Nagel;;;https://afamya-perfumes.de/;Marktstraße 27;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3735095027;48.804187;9.214675
+Goldstar;Schmuck;Einzelhandel;;;http://www.gold-mode.de/;Marktstraße 27;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3735095026;48.804206;9.2146
+Kares;Friseur;Friseur;;;;Marktstraße 27;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/3735095025;48.804224;9.214524
+La Belle;Friseur;Friseur;;;;Marktstraße 30;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4133884835;48.804296;9.214801
+Schlüsseldienst + Schuhreparatur;Schuhreparatur;Handwerk;;;;Marktstraße 30;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3665224529;48.804306;9.214734
+Galerie Keim;Kunsthandel;Einzelhandel;;;http://www.galerie-keim.de/;Marktstraße 31;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3663370724;48.804035;9.214492
+dolcefumo;Tabakwaren;Einzelhandel;;;;Marktstraße 31;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/762936739;48.804182;9.214295
+Hoffmann - Optik, Uhren und Schmuck;Optiker;Einzelhandel;;;https://www.hoffmann-cannstatt.de/;Marktstraße 36;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/762936741;48.804372;9.214493
+Karamellino;Konditorei;Einzelhandel;;;;Marktstraße 38;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/3663357468;48.804403;9.214361
+Marktstube;Restaurant;Gastro;;;;Marktstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/3487577188;48.803768;9.216364
+Ratsstüble;Restaurant;Gastro;;;;Marktstraße 41;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3487580195;48.804579;9.213842
+Nagelstudio;Kosmetikstudio;Kosmetik/Nagel;;;;Marktstraße 42;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3774132012;48.804517;9.214088
+Spielwaren Glaser;Spielwaren;Einzelhandel;;;https://www.spielwaren-glaser.de/index.html;Marktstraße 43;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3670885185;48.804656;9.213817
+Dolce Vita Kaffeehaus;Café;Gastro;;;;Marktstraße 44;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/682216772;48.804595;9.214016
+Little Buddha Thaimassage;Massage;Kosmetik/Nagel;;+49 711 13497893;https://www.littlebuddha-stuttgart.de/;Marktstraße 45;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4633581181;48.804745;9.213726
+Reformhaus Escher;Lebensmittel;Einzelhandel;;;;Marktstraße 45;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 13 m;;node/3668982679;48.804789;9.213946
+Der Rote Hirsch;Restaurant;Gastro;info@derrotehirsch.de;+49 711 84969373;https://www.derrotehirsch.de;Marktstraße 46;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3326002076;48.804748;9.21438
+Auric Hörgeräte;Hörgeräte;Einzelhandel;;;https://www.auric-hoercenter.de/stuttgart;Marktstraße 48;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 15 m;;node/3665239114;48.804921;9.213914
+Hong Kong Imbiss;Imbiss;Imbiss;;;http://www.asiaimbiss-cannstatt.de/;Marktstraße 48;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/3833405765;48.804874;9.213925
+Barbarino;Kiosk;Einzelhandel;;;;Marktstraße 51;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3665224525;48.804982;9.213703
+Eis Café Italia;Eiscafé;Gastro;;;;Marktstraße 54;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3683081874;48.805579;9.213552
+Backzeit;Bäckerei;Einzelhandel;;;https://www.back-zeit.de/;Marktstraße 55;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3832632062;48.805251;9.213728
+Model Haarstudio;Friseur;Friseur;;+49 711 935 3457;;Marktstraße 56;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3733460980;48.805644;9.213525
+Cafe am Rathaus;Café;Gastro;info@cafeamrathaus.com;+49 711 567180;http://www.cafeamrathaus.com;Marktstraße 57;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/762936740;48.805319;9.213711
+Modern Nails;Kosmetikstudio;Kosmetik/Nagel;;;http://www.stuttgarter-nagelstudio.de/;Marktstraße 6;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3668960177;48.803848;9.216213
+Café Tratsch;Café;Gastro;;;https://www.cafe-tratsch.com/;Marktstraße 60;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/762936745;48.80579;9.213339
+Queen Nails & Beauty;Kosmetikstudio;Kosmetik/Nagel;;;;Marktstraße 63;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/3774238143;48.805549;9.213385
+Rasul Call Shop;Handyshop;Einzelhandel;;;;Marktstraße 63;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3774238144;48.805574;9.21331
+Second Hand Boutique;Mode;Einzelhandel;;;;Marktstraße 65;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/3774238146;48.805655;9.213154
+Weinstube Klösterle;Restaurant;Gastro;;;https://www.weinstube-kloesterle.de/;Marktstraße 71;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/1488935374;48.805454;9.212797
+Toto-Lotto Schreibwaren Frühwald;Kiosk;Einzelhandel;;;;Martha-Schmidtmann-Straße 7;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1157638872;48.80825;9.233711
+Bäckerei Frank;Bäckerei;Einzelhandel;;;;Martha-Schmidtmann-Straße 9;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/420304187;48.80838;9.23365
+Salon Brosch;Friseur;Friseur;;;;Martin-Luther-Straße 103;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3547084595;48.800294;9.226265
+Sikler GmbH & Co KG;Dachdecker;Handwerk;;;https://www.sikler.de/;Martin-Luther-Straße 4;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12658481098;48.807223;9.222843
+Khaleesi;Bar;Gastro;;+49 711 560003;;Martin-Luther-Straße 63;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5061769204;48.803069;9.225036
+Bäckerei am Eck;Bäckerei;Einzelhandel;;;;Martin-Luther-Straße 65;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5057721399;48.802928;9.225101
+Halan;Friseur;Friseur;;;;Martin-Luther-Straße 65;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5061769203;48.802855;9.225117
+Schreinerei Klingler;Schreinerei;Handwerk;info@schreinerei-klingler.de;+49 711 551108;http://www.schreinerei-klingler.de;Martin-Luther-Straße 80;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/5042251623;48.80183;9.225202
+CoralCafe;Café;Gastro;;;;Martin-Luther-Straße 89;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/8074009607;48.801127;9.225901
+Böhm Stukkateuermeisterbetrieb;Gerüstbau;Handwerk;;+49 711 330095;;Martin-Luther-Straße 93/1;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3009077545;48.800888;9.226296
+J. Gerdes;Blumen;Einzelhandel;;;;Masurenstraße 15;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/138409044;48.811409;9.248185
+Weingut Frank J Haller;Weinhandel;Einzelhandel;;;;Masurenstraße 60;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/11778485499;48.814727;9.247326
+Backzauber;Bäckerei;Einzelhandel;;;;Melanchthonstraße 23;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/9881784354;48.807471;9.231446
+Thai Spa & Massage;Massage;Kosmetik/Nagel;;;;Melanchthonstraße 30;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 14 m;;node/1485681094;48.807909;9.231495
+Restaurant im Mercedes-Benz Museum;Restaurant;Gastro;;+49 711 1730000;https://automuseum-stuttgart.de/gastronomie;Mercedesstraße 100;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;auf fremdem Gelände, Entscheider oft extern;node/4225713690;48.787985;9.232594
+1893 Clubrestaurant;Restaurant;Gastro;;+49 711 90791080;http://1893-stuttgart.de;Mercedesstraße 109;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3182871678;48.789874;9.23462
+Wasen Bistro;Restaurant;Gastro;;;;Mercedesstraße 40;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 35 m UNSICHER;;way/129021636;48.794246;9.219046
+Adria Market;Lebensmittel;Einzelhandel;;;;Mercedesstraße 5;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/6344556421;48.800594;9.213998
+Grandls;Bar;Gastro;;;;Mercedesstraße 69;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 42 m UNSICHER;;node/588462054;48.793152;9.227729
+Sanitär Wahl GmbH;Sanitary;Einzelhandel;verkauf@sanitaer-wahl.de;+49 711 6 56 59 44;http://www.sanitaer-wahl.de;Mercedesstraße 7;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3429598010;48.800423;9.214098
+VfB Fan-Center;Fan;Einzelhandel;;;https://shop.vfb.de/fanshops;Mercedesstraße 73a;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/438908089;48.792419;9.229263
+Palm Beach Stuttgart;Kneipe;Gastro;;+49 711 16221199;http://palmbeach-stuttgart.de;Mercedesstraße 73b;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/438908088;48.793027;9.229885
+Palm Beach Stuttgart Raum Cancun;Kneipe;Gastro;;+49 711 16221199;http://palmbeach-stuttgart.de;Mercedesstraße 73b;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 52 m UNSICHER;;way/438908087;48.79352;9.230494
+Orchid Thai-Massage;Massage;Kosmetik/Nagel;;;;Namurstraße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/4208678372;48.808207;9.243059
+flo Spezialitätenbäckerei Dieringer;Bäckerei;Einzelhandel;;;;Narzissenweg 1;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/267164321;48.815191;9.246147
+Ristorante Rusticone;Restaurant;Gastro;sg.lavorato@web.de;+49 711 4708119;http://www.ristorante-rusticone.de;Naststraße 15D;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/439355347;48.813413;9.208806
+Eiscafé Tonka;Café;Gastro;;;;Naststraße 15c;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/439355344;48.813112;9.209186
+Genkin Haarmode;Friseur;Friseur;;;;Naststraße 15c;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/11150727320;48.813144;9.20911
+Maurer;Bäckerei;Einzelhandel;;;https://www.baecker-maurer.de/;Naststraße 17;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/439355346;48.813479;9.209575
+Phoenix;Wäscherei;Einzelhandel;;;;Naststraße 17;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 11 m;;way/439355341;48.813618;9.209364
+Studio Samthaut;Kosmetikstudio;Kosmetik/Nagel;;+49 711 2551961;https://www.samthaut-studio.de;Naststraße 17;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/439355339;48.813543;9.209466
+APS Glass & Bar Supply;Kitchenware;Einzelhandel;;;;Naststraße 39;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/707786315;48.814614;9.213106
+Pilum;Restaurant;Gastro;info@daspilum.de;+49 711 65 84 700;https://www.daspilum.de/p/;Naststraße 5;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/290600650;48.814019;9.21317
+Palmyra Schawarma;Restaurant;Gastro;;;;Nauheimer Straße 11;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5312661300;48.80963;9.220688
+Tina's Haarstudio;Friseur;Friseur;;;;Nauheimer Straße 71;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/5305429334;48.804568;9.22292
+Das Kantoor;Modellbau;Einzelhandel;;"+49 7151 908454;+49 711 544429";https://www.das-kantoor.de;Neckartalstraße 129;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11229594843;48.80973;9.215387
+Neckar-Käpt'n;Ticketverkauf;Einzelhandel;;;https://www.neckar-kaeptn.de/;Neckartalstraße 40;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/89641589;48.803074;9.208339
+Ali Kiosk Bad Cannstatt;Kiosk;Einzelhandel;;;;Neckartalstraße 73;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;way/218921217;48.806218;9.211195
+Alter Hasen;Restaurant;Gastro;;;http://www.alter-hasen.de/;Neckartalstraße 73;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1859956073;48.806219;9.211042
+Amazonica;Restaurant;Gastro;;;;Neckartalstraße 9;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 32 m UNSICHER;;way/51165000;48.805622;9.209473
+CENTa;Lebensmittel;Einzelhandel;;;;Normannstraße 2;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2645657847;48.809104;9.248942
+"Döner und Pizza;GÖZ Kebab";Imbiss;Imbiss;;+49 711 5506176;;Nürnberger Straße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/471949929;48.806037;9.231406
+GÖZ Supermarkt;Lebensmittel;Einzelhandel;;+49 15758193130;;Nürnberger Straße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 16 m;;node/2166912400;48.806195;9.231211
+Amphon Thaimassage;Massage;Kosmetik/Nagel;;;;Nürnberger Straße 106;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/5148921872;48.808307;9.243979
+Christo's Stuben;Restaurant;Gastro;;;;Nürnberger Straße 172;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3488191102;48.808825;9.247239
+Danziger-Stüble;Kneipe;Gastro;;;;Nürnberger Straße 215;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/48986858;48.810195;9.252805
+Gärtnerei Steinle;Gartenbedarf;Einzelhandel;;;;Nürnberger Straße 251;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/12168340059;48.811464;9.254031
+Domingo Pizza Service;Imbiss;Imbiss;;+49 711 5286722;;Nürnberger Straße 52;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/4208678371;48.807031;9.238197
+Meze Meze;Restaurant;Gastro;meze@mezemeze.de;+49 711 20303980;https://mezemeze.de/;Obere Waiblinger Straße 110;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/47120892;48.806303;9.231678
+Krehl's Linde;Restaurant;Gastro;;+49 711 5204900;https://krehl-gastronomie.de/;Obere Waiblinger Straße 113;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/47120891;48.806722;9.231874
+Taverne Porto Eliá;Restaurant;Gastro;;;;Obere Waiblinger Straße 153;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2515310990;48.808138;9.237561
+Distelfarm;Restaurant;Gastro;;;;Paul-Hahn-Weg 10;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/321255708;48.814961;9.182821
+Restaurant am Schaubauernhof;Restaurant;Gastro;wilhelma@marche-int.com;+49 711 50560620;;Pragstraße 9;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/144313399;48.806333;9.197792
+Rosensteintunnel Betriebszentrale Pragstraße;Heizung & Klima;Handwerk;;;;Pragstraße 9;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 51 m UNSICHER;;way/996180252;48.80665;9.198295
+Zum Zwickel;Kneipe;Gastro;;;;Prießnitzweg 1;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3150421552;48.807975;9.237004
+Cafeteria Krankenhaus Bad Cannstatt;Café;Gastro;;;;Prießnitzweg 24;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;Einrichtung, Entscheider zentral;node/9032500366;48.810654;9.236804
+Kiosk Krankenhaus Bad Cannstatt;Kiosk;Einzelhandel;;;;Prießnitzweg 24;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;Einrichtung, Entscheider zentral;node/9032500365;48.810711;9.237151
+Café 24;Café;Gastro;;;;Prießnitzweg 26;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 48 m UNSICHER;;node/12137884285;48.811334;9.238954
+Atelier Bernhard Walz;Handwerk;Handwerk;info@bernhard-walz.de;+49 711 607 60 41;https://www.bernhard-walz.de/;Quellenstraße 7;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6593320503;48.80803;9.199805
+Frieder Daubenberger;Fotograf;Handwerk;;;;Quellenstraße 7;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6593320504;48.808026;9.199912
+Happen;Restaurant;Gastro;;;https://www.imwizemann.de/happen;Quellenstraße 7;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3359025665;48.808092;9.20014
+Pförtnerhäuschen;Café;Gastro;start@pfoertnerhaeuschen.de;+49 171 3344006;http://pfoertnerhaeuschen.de;Quellenstraße 7;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/469959397;48.808207;9.201195
+Folien-Box;Copyshop;Einzelhandel;info@folien-box.de;+49 711 505 90 72;https://www.folien-box.de/;Quellenstraße 7a;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/6499795184;48.807995;9.201413
+Änderungsschneiderei;Schneiderei;Handwerk;;;;Reichenhaller Straße 23;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/9164551082;48.801476;9.226685
+Okyanus;Restaurant;Gastro;;;;Remscheider Straße 12;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/3839981949;48.807944;9.212337
+Neckar Imbiss;Imbiss;Imbiss;;;;Remscheider Straße 14;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/2458106469;48.808104;9.212293
+Weinfactum;Weingut;Handwerk;;;;Rommelstraße 20;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/397374284;48.81463;9.214619
+Textildruck - StadtLandDruck;Druckerei;Handwerk;;;;Rosenaustraße 12;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2458106635;48.808806;9.212801
+Café Fossil;Restaurant;Gastro;info@cafefossil.de;+49 711 55070146;https://www.cafefossil.de/;Rosenstein 3;70191;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3357371410;48.805192;9.190508
+Hofladen Albert Lörcher;Hofladen;Einzelhandel;;;;Rosmarinweg 111;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 16 m;;node/3462151977;48.818437;9.248191
+Lauxmann Elektro und Klimatechnik;Elektrotechnik;Handwerk;;;;Rosmarinweg 37;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/12009916866;48.816257;9.24111
+Stern Markt;Lebensmittel;Einzelhandel;;;;Rostocker Straße 3;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 15 m;;node/3915481300;48.816006;9.208115
+Elektro Böhle;Elektrotechnik;Handwerk;;+49 711 547432;https://www.elektroboehle-cannstatt.de/;Rostocker Straße 6;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/2150117161;48.816559;9.208303
+Pizza Don Carlo;Restaurant;Gastro;;+49 711 50079585;;Ruhrstraße 21;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12810118336;48.803991;9.23359
+Classic;Kneipe;Gastro;;;;Ruhrstraße 79;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/2272681358;48.80087;9.236468
+Bei Felix;Kneipe;Gastro;;;;Schmidener Straße 102;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/5313304690;48.812043;9.227857
+Aydin;Friseur;Friseur;;;;Schmidener Straße 108;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/5313304688;48.812178;9.22834
+Schmidener Eck;Kneipe;Gastro;;;;Schmidener Straße 116;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/5313307103;48.812395;9.229144
+Al Reefai;Café;Gastro;;;;Schmidener Straße 12;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13101227807;48.808638;9.219083
+Parkett Haus Stuttgart;Bodenbeläge;Einzelhandel;;;;Schmidener Straße 148;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/13057672304;48.813247;9.231841
+Mahrem;Restaurant;Gastro;info@mahrem-restaurant.de;+49 711 27310063;https://mahrem-restaurant.de/;Schmidener Straße 153;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13246510401;48.813853;9.232515
+Kiosk T`Orangé;Kiosk;Einzelhandel;;;;Schmidener Straße 184;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/13057657634;48.814927;9.235434
+DAZ Car Service;KFZ-Werkstatt;Handwerk;;;;Schmidener Straße 210b;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/11869447051;48.816317;9.237954
+Autoglas Europa;KFZ-Werkstatt;Handwerk;;;;Schmidener Straße 210c;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 13 m;;node/11869512706;48.816405;9.238179
+Hausgerätewelt;Elektronik;Einzelhandel;;;;Schmidener Straße 231;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2156635492;48.818693;9.240981
+KFZ-Technik Peter;KFZ-Werkstatt;Handwerk;;;;Schmidener Straße 255;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/1161460382;48.819544;9.243112
+Vana;Friseur;Friseur;;;;Schmidener Straße 47;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/5865650758;48.810343;9.221181
+Schmidener Stüble;Kneipe;Gastro;;;;Schmidener Straße 50;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3461102723;48.810387;9.222035
+Beroia;Imbiss;Imbiss;;;https://www.beroia-stuttgart.de;Schmidener Straße 98;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3460800673;48.811911;9.227426
+<<Elli>>;Friseur;Friseur;;+49 711 4000771;;Schorndorfer Straße 1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/2122335225;48.80773;9.241153
+özne;Imbiss;Imbiss;;;;Seelbergstraße 14;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/6174547726;48.802666;9.218331
+Koffer Wahl;Taschen;Einzelhandel;;;;Seelbergstraße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 8 m;;node/6548372751;48.802648;9.218845
+Foto Serkan;Fotograf;Handwerk;;;;Seelbergstraße 16;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13104174264;48.802462;9.218743
+Henpoint;Restaurant;Gastro;info@henpoint.de;+49 711 55068577;https://henpoint.de/;Seelbergstraße 19;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11783301157;48.802549;9.219035
+Hüte H+M Schmid-Rupp;Mode;Einzelhandel;;;;Seelbergstraße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/13082224211;48.802289;9.219105
+Schuh-Man;Schuhe;Einzelhandel;;;;Seelbergstraße 23-25;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3832631457;48.802387;9.219324
+Kösem Market;Lebensmittel;Einzelhandel;;+49 711 55347438;;Seelbergstraße 26;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12066203491;48.802034;9.219649
+Computer Upgrade Store;Computer;Einzelhandel;;;https://computer-laden.de/;Seelbergstraße 29;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 1 m;;node/451695347;48.80232;9.219526
+Divan II - Pizza & Kebap;Imbiss;Imbiss;;+49 711 3582390;;Seelbergstraße 31;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3165787675;48.802248;9.219687
+Try it;Café;Gastro;;;;Seelbergstraße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/6174547728;48.803009;9.217661
+Cadre;Café;Gastro;;;;Seelbergstraße 7;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 17 m;;node/1521793822;48.80316;9.21795
+Sherazade Oro;Schmuck;Einzelhandel;;;;Seelbergstraße 7;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/6548372753;48.802974;9.218174
+Gaststätte Kernerhaus;Restaurant;Gastro;;;;Seilerstraße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/1766418341;48.803442;9.212112
+Stadtstrand;Kneipe;Gastro;info@stadtstrand.com;+49 711 2260782;https://stadtstrand.com;Seilerwasen 6;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/277750148;48.802953;9.210637
+Angie's Bar;Bar;Gastro;;;;Sommerrainstraße 90;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/140065848;48.815193;9.247407
+Blumenhaus Heerman;Blumen;Einzelhandel;;;;Sparrhärmlingweg 14;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;way/143413724;48.812551;9.20745
+Opium;Kneipe;Gastro;;;;Sparrhärmlingweg 2;70376;Stuttgart;Bad Cannstatt;Ja;Nachbarpunkt 5 m;;node/6357044664;48.812576;9.209403
+Monika's Frisörlädle;Friseur;Friseur;monika-dautel@t-online.de;+49 711 566830;https://friseur-cannstatt.alcina.de;Spreuergasse 11;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3833405772;48.804774;9.215861
+DMC Bar;Bar;Gastro;;;;Spreuergasse 16;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3810593989;48.805073;9.21606
+Gaziantep;Bäckerei;Einzelhandel;;;;Spreuergasse 24;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3735079203;48.805444;9.216278
+Araz Friseur;Friseur;Friseur;;+4971175480606;;Spreuergasse 25;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/3839964824;48.805506;9.216052
+Die Schallplatte;Musikhandel;Einzelhandel;;;;Spreuergasse 3;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/4273785422;48.80434;9.215893
+Zum Ackerbürger;Restaurant;Gastro;;+49 711 560893;https://www.ackerbuerger.de/;Spreuergasse 38;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/135863414;48.805942;9.216124
+Niki Samothraki;Kneipe;Gastro;;;;Spreuergasse 46;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/3306253415;48.806223;9.215886
+Café Luv;Café;Gastro;;;;Spreuergasse 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/3833405766;48.804213;9.216183
+Fotoagentur Stuttgart;Fotofachhandel;Einzelhandel;;;https://www.fotoagentur-stuttgart.de/;Steinhaldenstraße 169;70378;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5911826191;48.82712;9.231557
+Bettina Hofmann;Friseur;Friseur;;;;Steinhaldenstraße 171;70378;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5911826194;48.827361;9.23154
+Restaurant Steinhalde;Restaurant;Gastro;;;;Steinhaldenstraße 41;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/766434572;48.819301;9.236054
+Häberle Steinwerkstatt;Steinmetz;Handwerk;;;;Steinhaldenstraße 42A;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 10 m;;node/3460613382;48.819565;9.236516
+Fuchs Grabmale;Steinmetz;Handwerk;;;;Steinhaldenstraße 44;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3460613381;48.819888;9.236351
+Die weiße Lilie;Bestattungen;Einzelhandel;;+49 711 7071611;https://www.die-weisse-lilie.de/;Steinhaldenstraße 51a;70378;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/8968311455;48.820044;9.235321
+Blumen Zeyfang;Blumen;Einzelhandel;;;;Steinhaldenstraße 53;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 16 m;;node/3460568807;48.820016;9.234922
+Blumen Noz;Blumen;Einzelhandel;;;;Steinhaldenstraße 55;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 19 m;;node/3460568805;48.820002;9.234772
+Exner Bohnert;Blumen;Einzelhandel;;;;Steinhaldenstraße 57;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 1 m;;node/3460568809;48.820003;9.234352
+Bohnert Bauer;Blumen;Einzelhandel;;;;Steinhaldenstraße 59;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/3460568808;48.819992;9.233992
+Blumen Reim;Blumen;Einzelhandel;;;;Steinhaldenstraße 67;70378;Stuttgart;Bad Cannstatt;;Nachbarpunkt 15 m;;node/3460568806;48.81992;9.233317
+Glaszauber am Markt;Geschenkartikel;Einzelhandel;;;https://www.glaszauber.de/;Sulzbachgasse 12;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3787891646;48.804798;9.21508
+Funfo's;Restaurant;Gastro;info@funfos.de;+49 711 54019199;https://www.funfos.de;Sulzbachgasse 14;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1731542577;48.804858;9.215373
+Mittelpunkt Fotostudio;Fotograf;Handwerk;;;https://www.mittelpunkt-fotostudio.de/;Sulzbachgasse 16;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5734805746;48.80489;9.215541
+Cannstatter Reisebüro;Reisebüro;Einzelhandel;;;;Sulzbachgasse 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3663363310;48.8046;9.21468
+Mann+Röthele;Handwerk;Handwerk;;;;Sulzbachgasse 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3663364947;48.804592;9.21471
+Weingut Stadt Stuttgart Direktverkauf;Weinhandel;Einzelhandel;;;;Sulzerrainstraße 24;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/5312684370;48.81069;9.223558
+KathrEA Travel Service e.K.;Reisebüro;Einzelhandel;;;http://www.kathrea.de;Taubenheimstraße 14 A;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4076071532;48.806522;9.224494
+Haller Bestattungshaus;Bestattungen;Einzelhandel;;+49 711 505 1003;http://bestattungshaus-haller.de;Taubenheimstraße 31;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5044018029;48.805146;9.226968
+Hohenstaufen;Restaurant;Gastro;;;;Taubenheimstraße 80;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/3517749817;48.801068;9.230553
+Namaskar;Restaurant;Gastro;;+49 711 91463570;https://namaskaronline.de/;Teinacher Straße 15;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3802664385;48.810526;9.221574
+Frank;Bäckerei;Einzelhandel;;;;Teinacher Straße 29;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/561386612;48.809526;9.222355
+Schönthaler Fliesen;Fliesenleger;Handwerk;info@schoenthaler-fliesen.de;+49 711 50450036;https://www.schoenthaler-fliesen.de/;Theodor-Veiel-Straße 1;70374;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3001427144;48.808057;9.237032
+de Leo;Friseur;Friseur;;;;Thorner Straße 13;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/2887068160;48.8136;9.234275
+Jakobsbrunnen;Restaurant;Gastro;;+49711 5590671;https://www.jakobsbrunnen-stuttgart.de;Tuchmachergasse 5;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4273792695;48.804364;9.216277
+Farbtex;Farben & Lacke;Einzelhandel;;;;Veielbrunnenweg 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 44 m UNSICHER;;node/7004922659;48.798242;9.21846
+Babbsadd-Grill;Imbiss;Imbiss;;;;Voltastraße 13;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 37 m UNSICHER;;node/3715557840;48.811726;9.21789
+Schanz Schlosserei;Metallbau;Handwerk;;;;Voltastraße 13;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 14 m;;node/10586704356;48.811917;9.217689
+PicksRaus;Zoohandlung;Einzelhandel;;;http://www.josera-partner.de/heimtierland-cannstatt;Voltastraße 2;70376;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3715557439;48.810723;9.217396
+Medical Beauty Cosmetic;Kosmetikstudio;Kosmetik/Nagel;;+49 162 4555 495;https://mbc-stuttgart.de/;Voltastraße 4;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/11748952081;48.811047;9.217492
+Aydin Markt;Lebensmittel;Einzelhandel;;;;Waiblinger Straße 1-3;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3836686258;48.80363;9.217372
+M&S Market;Lebensmittel;Einzelhandel;;;;Waiblinger Straße 1-3;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/12703026585;48.803595;9.217386
+ASIA Viet Long;Restaurant;Gastro;;;;Waiblinger Straße 12;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12700158025;48.80326;9.218232
+Bliss;Café;Gastro;;;;Waiblinger Straße 12;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 14 m;;node/12700158022;48.803202;9.218066
+Sportsbar;Bar;Gastro;;;;Waiblinger Straße 12;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12703026586;48.803304;9.218363
+C4;Bar;Gastro;;;;Waiblinger Straße 14;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;node/2315561301;48.803395;9.218858
+Habesha M&S Market;Sonderposten;Einzelhandel;;+49 162 6333777;;Waiblinger Straße 20;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/9290654105;48.803653;9.220054
+Meteora;Restaurant;Gastro;;;;Waiblinger Straße 44;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1258074722;48.804275;9.223008
+Tala Juwelier;Schmuck;Einzelhandel;;;;Waiblinger Straße 57;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/10053220427;48.804711;9.22393
+Selma's Kiosk;Café;Gastro;;;;Waiblinger Straße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 31 m UNSICHER;;way/255332059;48.804837;9.226086
+Café Evelina;Bar;Gastro;;;;Waiblinger Straße 7;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2547668556;48.803657;9.217824
+SJ Sportbar;Bar;Gastro;;;;Waiblinger Straße 7;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/2547668554;48.803661;9.217901
+Latina Waxing Studio;Kosmetikstudio;Kosmetik/Nagel;;+4917654051889;;Waiblinger Straße 82;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/14086960880;48.805443;9.228162
+Nostalgie & Kunst;Antiquitäten;Einzelhandel;;;;Waiblinger Straße 84;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/7804725031;48.805523;9.228503
+Alanya Friseursalon;Friseur;Friseur;;+4971146918264;http://www.alanya-friseursalon.de;Waiblinger Straße 9;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1819772360;48.803728;9.218313
+Damen+Herren Änderungsschneiderei;Schneiderei;Handwerk;;;;Wiesbadener Straße 24;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/5857137221;48.805653;9.222132
+das frisurenTeam;Friseur;Friseur;;;https://www.das-frisurenteam.de/;Wiesbadener Straße 4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/5857137226;48.805201;9.219684
+Bread Pita;Imbiss;Imbiss;;;;Wildunger Straße 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5047407612;48.80135;9.221078
+Pop's Burger;Imbiss;Imbiss;;;;Wildunger Straße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/1572658003;48.801702;9.220463
+Schreibfant;Schreibwaren;Einzelhandel;;;https://schreibfant.de/;Wildunger Straße 2;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1572657973;48.801299;9.221676
+Scholz Haare;Friseur;Friseur;;;https://www.scholz-haare.de/;Wildunger Straße 2-4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 2 m;;node/1572715839;48.801558;9.221487
+Star Schlüsseldienst;Schlüsseldienst;Handwerk;;+49 711 4694 2736;;Wildunger Straße 2-4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/5047393733;48.801552;9.221911
+TimeZ;Uhren;Einzelhandel;;;;Wildunger Straße 2-4;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;node/12043197200;48.801686;9.220753
+Wissothek;Buchhandlung;Einzelhandel;;+49 711 9 55 66 77;https://www.wissothek.de/;Wildunger Straße 27;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12658288806;48.802717;9.222787
+cocox datentechnik;Computer;Einzelhandel;;;https://www.cocox.de/;Wildunger Straße 27;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12658278137;48.802635;9.222693
+Diamant Nagelstudio;Kosmetikstudio;Kosmetik/Nagel;;;;Wildunger Straße 28;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/10961131151;48.802549;9.223159
+Holz Klotz;Kneipe;Gastro;;+49 711 560003;;Wildunger Straße 32;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2638006980;48.80289;9.224083
+Schneider;Wohnaccessoires;Einzelhandel;info@raumausstatter-schneider.de;+49 711 560691;http://www.raumausstatter-schneider.de/;Wildunger Straße 33;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 6 m;;node/5059489500;48.802754;9.223386
+Orient Street Market;Lebensmittel;Einzelhandel;;;;Wildunger Straße 35;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5062127703;48.802788;9.223625
+Midnight Pizzeria;Restaurant;Gastro;;+4971190037671;;Wildunger Straße 39;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5062127704;48.802857;9.223906
+Fritz Sanitärtechnik;Sanitär & Heizung;Handwerk;info@fritz-bad.de;+49 711 5499600;http://www.fritz-bad.de;Wildunger Straße 47;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5059489505;48.80299;9.22467
+Hob's - Hut of Burger;Restaurant;Gastro;service@hobs-burger.de;;https://www.hobs-burger.de;Wildunger Straße 5;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11061518306;48.802276;9.220223
+Samay;Bar;Gastro;;+49 163 6669633;https://www.samay-stuttgart.com;Wildunger Straße 5;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4013340180;48.802351;9.220338
+ELKooP;Electrical;Einzelhandel;;+49 711 565531;;Wildunger Straße 54;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5059489498;48.803188;9.226643
+Salon Helene;Friseur;Friseur;;+49 711 536 879;;Wildunger Straße 56;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5057721396;48.803232;9.226781
+Al-Ameen;Feinkost;Einzelhandel;;+49 1578 1025901;;Wildunger Straße 58;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/11163019747;48.803273;9.226999
+Ariell Pizza-Service;Imbiss;Imbiss;webmaster@Pizza-Ariell.de;+49 711 500 0727;http://www.pizza-ariell.de;Wildunger Straße 58;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1258074687;48.803303;9.227153
+Hairtistic;Friseur;Friseur;;;;Wildunger Straße 60;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/1258074671;48.803344;9.227273
+wash&go;Wäscherei;Einzelhandel;;;;Wildunger Straße 66;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/13625400681;48.803481;9.228047
+Harald Müller GmbH;Sanitär & Heizung;Handwerk;;+49 711 525163;;Wildunger Straße 96;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/12810118339;48.803665;9.230967
+Yildirim;Café;Gastro;;;;Wilhelmaplatz 4;70376;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/5557717202;48.806456;9.209492
+Brillen Kugler;Optiker;Einzelhandel;;;http://www.brillen-kugler.de/;Wilhelmstraße 1;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 12 m;;node/4438341872;48.804033;9.216879
+The Corner;Kneipe;Gastro;;;http://www.das-corner.de/index.php?seite=index;Wilhelmstraße 1;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/2686661719;48.803922;9.216871
+Balkan Feinkost;Grocery;Einzelhandel;;;;Wilhelmstraße 18;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/14024680801;48.80565;9.216818
+Oskar Zeeb;Metzgerei;Einzelhandel;;;;Wilhelmstraße 19;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3682704695;48.805116;9.216507
+Göckelmann;Eisenwaren;Einzelhandel;;;http://www.eisenwaren-goeckelmann.de/;Wilhelmstraße 21;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3682704691;48.805287;9.216594
+Chillout;Bar;Gastro;;;;Wilhelmstraße 24;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/6473152728;48.806062;9.216648
+Ruckh;Nähbedarf;Einzelhandel;;;https://ruckh-handarbeiten.de;Wilhelmstraße 25;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/3682711105;48.80554;9.216541
+The Little Greek Taverna;Restaurant;Gastro;;+49 711 5000177;https://www.littlegreektaverna.de/;Wilhelmstraße 27;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3201840060;48.805646;9.216493
+Asmin Kebap-Haus;Imbiss;Imbiss;;;;Wilhelmstraße 33;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 4 m;;node/3683573193;48.806117;9.216296
+SUSHI LE;Restaurant;Gastro;;+49 711 95861939;https://sushi-le-stuttgart.de/;Wilhelmstraße 9;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/4360365492;48.804406;9.216766
+Hühner-Stall;Bar;Gastro;;;;Winterhalden 1/1;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/3575429496;48.798733;9.238414
+La Ferrara;Friseur;Friseur;;+49 711 523135;;Winterhaldenstraße 30;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/2166912413;48.801983;9.236952
+Sperl Photography;Fotograf;Handwerk;wolfgang-sperl@t-online.de;+49 711 470 3661;;Wörishofener Straße 7;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5041205478;48.800355;9.226888
+Rollladen Röhrle;Sonnenschutz;Einzelhandel;;+49 711 565796;;Wörishofener Straße 9;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/5040899830;48.800407;9.227169
+Da Guiseppe;Restaurant;Gastro;;;;Zaisgasse 1;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/3487577184;48.805961;9.214154
+Zur Schreinerei;Restaurant;Gastro;info@restaurant-zurschreinerei.de;+49 711 5490433;https://restaurant-zurschreinerei.de;Zaisgasse 4;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3675091478;48.806094;9.214129
+Stilbewusst Wohnen;Möbel;Einzelhandel;;;https://www.stilbewusstwohnen.de;Zaisgasse 6;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 7 m;;node/14022728796;48.806208;9.213995
+Essam Car Service;KFZ-Werkstatt;Handwerk;;;;Ziegelbrennerstraße 13;70374;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/12046232427;48.820038;9.241613
+Level Shisha Lounge;Bar;Gastro;;;;Zieglergasse 11;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/3976847420;48.80422;9.212751
+VacuRep;Hausgeräte;Einzelhandel;;+49 711 55374488;http://www.VacuRep.de;Zieglergasse 11;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3827543481;48.804144;9.212625
+Tina Morcher Schmuckdesign;Schmuck;Einzelhandel;;;;Zieglergasse 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 5 m;;node/3798760620;48.804482;9.213626
+Figaro Haargenau!;Friseur;Friseur;;+49 711 563616;;Zieglergasse 3;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3728096614;48.804325;9.213573
+Pacals´s;Friseur;Friseur;;+49 711 88814305;;Zieglergasse 7;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/3728096616;48.804235;9.213337
+Polka Stuttgart;Restaurant;Gastro;;;;Zuckerbergstraße 151;70378;Stuttgart;Bad Cannstatt;;OSM-Tag;;node/13094415388;48.825474;9.234636
+Kostümverkauf im Zentrallager der Staatstheater Stuttgart;Secondhand;Einzelhandel;;;https://www.staatstheater-stuttgart.de/service/gut-zu-wissen/;Zuckerfabrik 19;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;Großhandel/Lager, kaum Laufkundschaft;node/3714451990;48.819856;9.215782
+Arachne SM Shop;Erotikshop;Einzelhandel;;+49 711 7940811;https://www.shop-arachne.de/;Zuckerfabrik 24;70376;Stuttgart;Bad Cannstatt;Ja;OSM-Tag;;node/3940588301;48.818531;9.216009
+Bandipur Bistrot;Imbiss;Imbiss;;;https://www.wilhelma.de/besuch/service/gastronomie;;;Stuttgart;Bad Cannstatt;;keine Adresse;;node/13574400917;48.80672;9.198567
+Betriebsrestaurant und Shop;Restaurant;Gastro;;;;;;Stuttgart;Bad Cannstatt;;keine Adresse;Betriebsgastronomie, nur für Belegschaft;node/5528215754;48.796346;9.232156
+Bistro Belvedere;Restaurant;Gastro;;;;;;Stuttgart;Bad Cannstatt;;keine Adresse;;node/663609554;48.806675;9.203985
+Brezel Fritz;Kiosk;Einzelhandel;;;;;;Stuttgart;Bad Cannstatt;;keine Adresse;;node/1727495151;48.806672;9.203918
+Dürrs Zoo-Shop;Geschenkartikel;Einzelhandel;;;http://www.zoo-shop-duerr.de;;;Stuttgart;Bad Cannstatt;;keine Adresse;;way/137242510;48.804559;9.208149
+VfB Clearing-Point;Ticketverkauf;Einzelhandel;;;;;;Stuttgart;Bad Cannstatt;;keine Adresse;;node/2794699274;48.791595;9.230599
+Neckarbiergarten;Biergarten;Gastro;;+49 711 9005390;http://www.neckarbiergarten.de/n/;Überkinger Straße 13;70372;Stuttgart;Bad Cannstatt;;OSM-Tag;;way/124461645;48.806713;9.21417
+Manna;Lebensmittel;Einzelhandel;;;https://agrofolio.de/;Überkinger Straße 15;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 9 m;;node/3835060459;48.807444;9.215295
+L'incontro;Bar;Gastro;;+49 1573 9488292;;Überkinger Straße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 3 m;;node/11034921906;48.805905;9.213305
+Reinigungswelt;Reinigung;Einzelhandel;;;https://www.reinigungswelt-stuttgart.de/;Überkinger Straße 2;70372;Stuttgart;Bad Cannstatt;;Nachbarpunkt 11 m;;node/1385351436;48.805865;9.213193
+Restaurant TSV Steinhaldenfeld;Restaurant;Gastro;;;;Schmollerstraße 185;70378;Stuttgart;Bad Cannstatt (Grenzlage 19 m);;OSM-Tag;;way/34261104;48.829788;9.240153
+Siegfried Geist Gartenbau;Gartenbedarf;Einzelhandel;;;;Kapuzinerweg 28;70374;Stuttgart;Bad Cannstatt (Grenzlage 64 m);;Nachbarpunkt 69 m UNSICHER;;way/226946208;48.817354;9.254266
+Plakat Total;Printshop;Einzelhandel;;+49 711 6070144;https://www.plakat-total.de/;Austraße 12;70376;Stuttgart;Münster;;Nachbarpunkt 16 m;;node/3738282221;48.820808;9.226455
+Zom Bäcka Dais;Restaurant;Gastro;kontakt@zombaeckadais.de;+49 711 94576633;http://www.zombaeckadais.de/;Austraße 12;70376;Stuttgart;Münster;;OSM-Tag;;node/3714460712;48.820838;9.226235
+Autoservice & Reifendienst Münster;KFZ-Werkstatt;Handwerk;;;;Austraße 133;70376;Stuttgart;Münster;;Nachbarpunkt 3 m;;node/3458629133;48.824377;9.218034
+Da Mamma Maria Pizzaria;Restaurant;Gastro;;+49 711 594084;;Austraße 189;70376;Stuttgart;Münster;;OSM-Tag;;node/1079742723;48.825185;9.212605
+Riverhouse;Restaurant;Gastro;riverhouse@cool-tours.de;+49 711 550422444;https://www.riverhouse.de;Austraße 370;70376;Stuttgart;Münster;;Nachbarpunkt 0 m;;node/246269520;48.831677;9.207222
+Zaißerei;Weingut;Handwerk;;+49 711 8709709;https://zaisserei-weingut.de/;Austraße 371;70376;Stuttgart;Münster;;OSM-Tag;;way/100464353;48.832382;9.207093
+Aubesen;Restaurant;Gastro;info@aubesen.de;+49 711 594104;;Austraße 66;70376;Stuttgart;Münster;;OSM-Tag;;node/6333641616;48.822936;9.223548
+M&O Weidmann;Metallbau;Handwerk;;;https://www.weidmann-gmbh.com/;Burgholzstraße 21;70376;Stuttgart;Münster;;OSM-Tag;;node/4203244546;48.821793;9.208853
+Vohmann;Sanitär & Heizung;Handwerk;;;https://www.z-online.de/kunden_homepages/sanitaer/vohmann/;Burgholzstraße 27;70376;Stuttgart;Münster;;OSM-Tag;;node/4203244544;48.821948;9.208093
+Werner Schick;Metallbau;Handwerk;;;http://www.werner-schick-gmbh.de;Burgholzstraße 29;70376;Stuttgart;Münster;;OSM-Tag;;node/4203244549;48.821718;9.208419
+Zur alten Ziegelei;Restaurant;Gastro;;+49 711 542400;https://www.lang-gaststaetten.de/;Burgholzstraße 45;70376;Stuttgart;Münster;;OSM-Tag;;way/143827552;48.821514;9.205804
+Schützenhaus Tell;Restaurant;Gastro;;+49 711 544552;;Burgholzstraße 91;70376;Stuttgart;Münster;;Nachbarpunkt 3 m;;node/3198407801;48.822264;9.201916
+HasenBar;Kneipe;Gastro;;;;Echazstraße 1;70376;Stuttgart;Münster;;Nachbarpunkt 6 m;;node/3458641185;48.819917;9.223919
+Cool-Tours;Reisebüro;Einzelhandel;info@cool-tours.de;+49 711 550422400;http://www.cool-tours.de/;Echazstraße 13;70376;Stuttgart;Münster;;OSM-Tag;;node/4354029837;48.82058;9.223403
+Heidis Haarstudio;Friseur;Friseur;;;http://heidishaarstudio.de;Elbestraße 10;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750275;48.820494;9.222059
+andrea höpfner Creativ - Haare & Kosmetik;Friseur;Friseur;;;http://www.ahcreativ.de/;Elbestraße 11;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750279;48.820444;9.221932
+Gärtnerei Moser GbR;Blumen;Einzelhandel;;;;Elbestraße 18;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750274;48.820755;9.22156
+Schreibwaren Feulner;Schreibwaren;Einzelhandel;;;;Elbestraße 23;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750277;48.820785;9.221278
+Creative Hair by Eva;Friseur;Friseur;;+49 711 51865922;http://www.creativehairbyeva.de/impressum/;Elbestraße 26;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750272;48.821123;9.220864
+Bonus;Lebensmittel;Einzelhandel;;;https://bonus-markt.de/;Freibergstraße;70376;Stuttgart;Münster;;OSM-Tag;;node/478559515;48.823132;9.217425
+Schlag;Metzgerei;Einzelhandel;;;https://www.metzgerei-schlag.de/;Freibergstraße 31;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750276;48.822898;9.218029
+Pizzalicious;Imbiss;Imbiss;;+49 711 41419006;https://shop.liefersoft.de/pizzalicious-70376-57;Illerstraße 8;70376;Stuttgart;Münster;;OSM-Tag;;node/14163301001;48.822151;9.224355
+Das Reiselädle Münster;Reisebüro;Einzelhandel;si@reiselaedle-muenster.de;+49 711 65848200;http://www.reiselaedle-muenster.de/;Jagststraße 34;70376;Stuttgart;Münster;;OSM-Tag;;node/4354029838;48.819893;9.223583
+Natalie's Schneiderstube;Schneiderei;Handwerk;;;;Jagststraße 45;70376;Stuttgart;Münster;;OSM-Tag;;node/3982865857;48.819932;9.222755
+Rössle;Restaurant;Gastro;;+49 711 91274336;;Kocherstraße 23;70376;Stuttgart;Münster;;Nachbarpunkt 4 m;;node/4931127621;48.820525;9.223732
+Friseursalon Dani Coiffeur & Esthetique;Friseur;Friseur;;+49 711 59816;;Kocherstraße 30;70376;Stuttgart;Münster;;OSM-Tag;;node/4354029839;48.820208;9.22303
+Givebox;Sozialkaufhaus;Einzelhandel;;;;Mainstraße 69;70376;Stuttgart;Münster;;Nachbarpunkt 3 m;;node/4327921992;48.823641;9.218862
+hauptsache haar;Friseur;Friseur;;;http://www.hs-haar.de;Murgtalstraße 20;70376;Stuttgart;Münster;;OSM-Tag;;node/3882750280;48.820895;9.220952
+Sports-Factory;Sportartikel;Einzelhandel;;;;Murgtalstraße 60;70376;Stuttgart;Münster;;Nachbarpunkt 30 m;;node/3458666999;48.818914;9.219432
+Münster Kebap & Pizza House;Imbiss;Imbiss;;+49 711 40187088;;Nagoldstr. 55;70376;Stuttgart;Münster;;OSM-Tag;;way/1020410721;48.820159;9.218147
+Sehne;Bäckerei;Einzelhandel;;;;Nagoldstraße 40;70376;Stuttgart;Münster;;Nachbarpunkt 3 m;;node/4561882992;48.820514;9.219449
+Schwaben Bräu Stube;Restaurant;Gastro;;;;Nagoldstraße 46;70376;Stuttgart;Münster;;Nachbarpunkt 4 m;;node/3472068524;48.820624;9.218948
+Fisherman´s Partner;Angelbedarf;Einzelhandel;;;https://www.fishermans-partner.eu/fachmaerkte/de/stuttgart/start/;Nagoldstraße 49;70376;Stuttgart;Münster;;OSM-Tag;;way/125746666;48.819292;9.219052
+Fisherman‘s Partner;Angelbedarf;Einzelhandel;;;;Nagoldstraße 49;70376;Stuttgart;Münster;;OSM-Tag;;node/13112366601;48.819287;9.21906
+E. Scheurle Messebau GmbH Messebau & Messeplanung Stuttgart;Handwerk;Handwerk;;+49 711 617067;https://www.scheurle-messebau.de/;Nagoldstraße 57/65;70376;Stuttgart;Münster;;OSM-Tag;;node/2731625021;48.820551;9.217979
+Salon Bertsch;Friseur;Friseur;;;;Nagoldstraße 72;70376;Stuttgart;Münster;;Nachbarpunkt 4 m;;node/4580989683;48.820992;9.217027
+Neckar-Mobile;Autohaus;Einzelhandel;;;;Neckartalstraße 298;70376;Stuttgart;Münster;;Nachbarpunkt 20 m;;way/367534209;48.8184;9.225847
+Cafe Vernissage;Café;Gastro;;;http://www.udfm.de/index.php/Cafe-Vernissage-Stuttgart-Muenster/167/0/;Schussengasse 3;70376;Stuttgart;Münster;;Nachbarpunkt 23 m;;node/3715557437;48.819792;9.226233

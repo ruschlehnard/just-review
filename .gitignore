@@ -1,0 +1,8 @@
+web/config.js
+.env
+*.env
+service-account*.json
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
