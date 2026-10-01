@@ -438,6 +438,24 @@ label > input, label > select, label > textarea { width: 100%; }
 .log-row .when { font-family: var(--ff-mono); font-size: 11px; color: var(--faint); }
 .log-row .what { color: var(--muted); }
 .log-row .what b { color: var(--ink); font-weight: 600; }
+.log-row .what s { color: var(--faint); text-decoration-thickness: 1px; }
+
+.log-undo {
+  appearance: none;
+  font: inherit;
+  font-family: var(--ff-mono);
+  font-size: 10.5px;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 2px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.log-undo:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
 /* ------------------------------------------------------------------ Sonstiges */
 

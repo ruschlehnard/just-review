@@ -674,6 +674,43 @@ const FELDNAMEN = {
   place_id: "Place-ID", bewertungslink: "Bewertungslink",
 };
 
+/** Die Protokolltabelle speichert alle Werte als Text. Für das Zurückschreiben
+ *  muss daraus wieder der Typ der Spalte werden, sonst lehnt PostgREST ab. */
+const FELD_TYP = Object.fromEntries(
+  FELDER.flatMap((g) => g.felder.map((f) => [f.k, f.typ]))
+);
+
+function wertAusText(feld, text) {
+  const typ = FELD_TYP[feld];
+  const leer = text === null || text === undefined || text === "";
+  if (typ === "zahl") return leer ? null : Number(text);
+  if (typ === "datum") return leer ? null : text;
+  if (typ === "janein") return leer ? null : text === "true";
+  if (typ === "team") return leer ? null : text;   // uuid oder nicht zugeordnet
+  return leer ? "" : text;                         // Textspalten sind NOT NULL
+}
+
+/** Anzeigefassung eines protokollierten Werts. */
+function verlaufWert(feld, roh) {
+  if (roh === null || roh === undefined || roh === "") return "leer";
+  if (feld === "bearbeiter") {
+    return state.team.find((t) => t.id === roh)?.name || "nicht zugeordnet";
+  }
+  if (FELD_TYP[feld] === "datum") return datumDe(roh);
+  if (FELD_TYP[feld] === "janein") return roh === "true" ? "Ja" : "Nein";
+  return roh.length > 60 ? roh.slice(0, 60) + "…" : roh;
+}
+
+async function stelleWiederHer(feld, altText, beschriftung) {
+  const lead = state.offen;
+  if (!lead) return;
+  const wert = wertAusText(feld, altText);
+  merkeVorzustand(lead, { [feld]: wert }, "Wiederherstellung von " + beschriftung);
+  await schreibe({ [feld]: wert });
+  zeichneSchublade();
+  toast(`${beschriftung} auf „${verlaufWert(feld, altText)}" zurückgesetzt.`);
+}
+
 async function ladeVerlauf(leadId) {
   const { data, error } = await sb
     .from("aktivitaet")
@@ -686,19 +723,30 @@ async function ladeVerlauf(leadId) {
   if (error) { ziel.innerHTML = `<p class="note err">${esc(error.message)}</p>`; return; }
   if (!data.length) { ziel.innerHTML = '<p class="note">Noch keine Änderungen.</p>'; return; }
 
-  ziel.innerHTML = data.map((a) => {
+  ziel.innerHTML = data.map((a, i) => {
     const wer = state.team.find((t) => t.id === a.benutzer)?.name || "jemand";
     const feld = FELDNAMEN[a.feld] || a.feld;
-    let wert = a.neu || "leer";
-    if (a.feld === "bearbeiter") {
-      wert = state.team.find((t) => t.id === a.neu)?.name || "nicht zugeordnet";
-    }
-    if (wert.length > 80) wert = wert.slice(0, 80) + "…";
+    const alt = verlaufWert(a.feld, a.alt);
+    const neu = verlaufWert(a.feld, a.neu);
+    // Nur Felder, die das Formular auch kennt, lassen sich zurückschreiben.
+    const herstellbar = a.feld in FELD_TYP;
     return `<div class="log-row">
       <span class="when">${esc(zeitDe(a.zeit))}</span>
-      <span class="what">${esc(wer)}: ${esc(feld)} → <b>${esc(wert)}</b></span>
+      <span class="what">
+        ${esc(wer)}: ${esc(feld)}
+        <s>${esc(alt)}</s> → <b>${esc(neu)}</b>
+        ${herstellbar ? `<button class="log-undo" data-i="${i}"
+            title="Setzt ${esc(feld)} wieder auf ${esc(alt)}">↩ zurück auf ${esc(alt)}</button>` : ""}
+      </span>
     </div>`;
   }).join("");
+
+  ziel.querySelectorAll(".log-undo").forEach((b) => {
+    b.onclick = () => {
+      const a = data[Number(b.dataset.i)];
+      stelleWiederHer(a.feld, a.alt, FELDNAMEN[a.feld] || a.feld);
+    };
+  });
 }
 
 /* ------------------------------------------------------------------ Start */
