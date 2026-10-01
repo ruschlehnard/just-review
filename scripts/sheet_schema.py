@@ -23,8 +23,11 @@ SHEET_COLUMNS = [
     ("E-Mail", "email"),
     ("Telefon", "telefon"),
     ("Website", "website"),
-    ("Straße & Hausnr.", "strasse"),
-    ("Straße & Nr.", ""),          # Dublette im Sheet, bleibt leer
+    # Das Sheet hat zwei Straßenspalten. Im verbliebenen Bestand (OSM-Recherche
+    # Singen) ist I durchgehend leer und J gefüllt - geprüft am 01.10.2026 über
+    # alle 546 Zeilen. Deshalb ist J die Quelle, I bleibt ungenutzt.
+    ("Straße & Hausnr.", ""),
+    ("Straße & Nr.", "strasse"),
     ("PLZ", "plz"),
     ("Ort", "ort"),
     ("Land", "land"),
