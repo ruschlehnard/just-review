@@ -92,10 +92,13 @@ Zugang entziehen: `update public.profiles set aktiv = false where email = '…';
    Supabase unter **Settings → API** eintragen: **Project URL** und den
    **anon public** Schlüssel.
    Niemals den `service_role`-Schlüssel — der umgeht alle Rechte.
-3. Im Repository **Settings → Pages** → Source **Deploy from a branch**,
-   Branch `main`, Ordner `/web`.
+3. Im Repository **Settings → Pages** → Source auf **GitHub Actions** stellen.
+   Nicht „Deploy from a branch" — daraus lässt sich nur `/` oder `/docs`
+   ausliefern, und die Seite liegt in `web/`. Der Workflow
+   `.github/workflows/pages.yml` erledigt das stattdessen.
 4. Nach ein bis zwei Minuten ist die Seite unter
-   `https://deinname.github.io/just-review-dashboard/` erreichbar.
+   `https://deinname.github.io/just-review-dashboard/` erreichbar. Die genaue
+   Adresse steht nach dem ersten Lauf unter **Actions** beim Schritt „deploy".
 
 `config.js` steht in `.gitignore`. Für GitHub Pages musst du sie trotzdem
 mithochladen — beide Werte dürfen öffentlich sein, die Rechte liegen in den
