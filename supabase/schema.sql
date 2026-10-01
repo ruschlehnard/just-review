@@ -351,7 +351,11 @@ alter table public.leads replica identity full;
 
 -- "Faellig in (Tagen)" war im Sheet eine Formel. Hier als Sicht, weil der
 -- Wert vom heutigen Datum abhaengt und deshalb nicht gespeichert werden darf.
-create or replace view public.leads_ansicht as
+-- security_invoker ist hier zwingend: ohne diese Angabe läuft die Sicht mit den
+-- Rechten ihres Erstellers und umgeht damit sämtliche RLS-Regeln auf leads.
+-- Jeder angemeldete Nutzer könnte dann alles lesen, auch ohne Einladung.
+create or replace view public.leads_ansicht
+with (security_invoker = true) as
 select
   l.*,
   (l.wiedervorlage_am - current_date) as faellig_in_tagen,
