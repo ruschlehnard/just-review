@@ -91,7 +91,10 @@ body {
 
 /* ------------------------------------------------------------ Grundraster */
 
-.app { display: flex; flex-direction: column; min-height: 100vh; }
+/* Feste Fensterhöhe: Kopf, Kacheln und Filter stehen, nur die Tabelle scrollt.
+   Nötig, weil .tablewrap wegen overflow-x selbst zum Bezugspunkt für sticky
+   wird - eine am Fenster klebende Kopfzeile ist darin nicht möglich. */
+.app { display: flex; flex-direction: column; height: 100dvh; }
 
 .topbar {
   position: sticky;
@@ -159,7 +162,16 @@ h1 {
 .live[data-on="true"] { color: var(--good); }
 .live[data-on="true"]::before { background: var(--good); }
 
-main { max-width: 1540px; margin: 0 auto; width: 100%; padding: 20px 20px 40px; }
+main {
+  max-width: 1540px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px 20px 16px;
+  flex: 1;
+  min-height: 0;          /* sonst wächst der Flex-Kasten über das Fenster */
+  display: flex;
+  flex-direction: column;
+}
 
 /* ---------------------------------------------------------------- Kacheln */
 
@@ -256,20 +268,21 @@ button:focus-visible, a:focus-visible {
 /* --------------------------------------------------------------- Tabelle */
 
 .tablewrap {
-  overflow-x: auto;
+  overflow: auto;         /* eigener Scrollbereich, waagerecht und senkrecht */
+  flex: 1;
+  min-height: 0;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 3px;
   box-shadow: var(--shadow);
+  overscroll-behavior: contain;
 }
 
 table { border-collapse: collapse; width: 100%; min-width: 960px; }
 
 thead th {
-  /* Höhe der oberen Leiste wird in app.js gemessen und als --topbar-h
-     gesetzt. Fest verdrahtet schiebt sich sonst die erste Zeile dahinter
-     durch, sobald die Leiste umbricht oder der Zoom abweicht. */
-  position: sticky; top: var(--topbar-h, 56px); z-index: 2;
+  /* Klebt am oberen Rand des eigenen Scrollbereichs, nicht am Fenster. */
+  position: sticky; top: 0; z-index: 2;
   background: var(--surface);
   border-bottom: 1px solid var(--line);
   text-align: left;

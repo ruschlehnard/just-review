@@ -51,18 +51,6 @@ const state = {
    dauerhaft nachvollziehbar sein muss, steht unten in der Tabelle "Verlauf". */
 const rueckgaengig = new Map();
 
-/* Höhe der oberen Leiste messen, damit die Tabellen-Kopfzeile genau darunter
-   kleben bleibt. Die Leiste bricht je nach Breite um, eine feste Zahl passt
-   deshalb nicht. */
-function topbarHoehe() {
-  const bar = document.querySelector(".topbar");
-  if (!bar) return;
-  document.documentElement.style.setProperty("--topbar-h", bar.offsetHeight + "px");
-}
-
-addEventListener("resize", topbarHoehe);
-addEventListener("load", topbarHoehe);
-
 /* ------------------------------------------------------------- Werkzeuge */
 
 let toastTimer;
@@ -169,7 +157,6 @@ async function start() {
   state.profil = profil;
   el("gate").hidden = true;
   el("app").hidden = false;
-  topbarHoehe(); // erst jetzt sichtbar, vorher wäre die Höhe 0
   el("username").textContent = profil.name || profil.email;
   el("avatar").textContent = initialen(profil.name || profil.email);
 
