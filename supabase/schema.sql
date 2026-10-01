@@ -75,6 +75,48 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- Gegenstueck: Die Einladung kommt oft erst, NACHDEM sich jemand erfolglos
+-- angemeldet hat. Sein auth.users-Eintrag existiert dann schon, und der
+-- Trigger oben feuert nie wieder. Dieser hier legt das Profil beim Eintragen
+-- der Einladung an.
+create or replace function public.profil_bei_einladung()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  benutzer auth.users%rowtype;
+begin
+  select * into benutzer
+  from auth.users
+  where lower(email) = lower(new.email)
+  limit 1;
+
+  if found then
+    insert into public.profiles (id, name, email, rolle)
+    values (
+      benutzer.id,
+      coalesce(nullif(new.name, ''), benutzer.raw_user_meta_data->>'full_name', benutzer.email),
+      benutzer.email,
+      new.rolle
+    )
+    on conflict (id) do update
+      set rolle = excluded.rolle, aktiv = true;
+    new.eingeloest := true;
+  end if;
+
+  return new;
+end;
+$$;
+
+-- BEFORE, damit new.eingeloest direkt gesetzt werden kann, ohne dass ein
+-- UPDATE auf einladungen den Trigger erneut ausloest.
+drop trigger if exists einladung_profil on public.einladungen;
+create trigger einladung_profil
+  before insert or update on public.einladungen
+  for each row execute function public.profil_bei_einladung();
+
 -- ============================================================== listen
 
 create table if not exists public.listen (
