@@ -45,6 +45,12 @@ const state = {
   sort: { k: "firmenname", dir: 1 },
 };
 
+/* Letzte Änderung je Lead, damit sie zurückgenommen werden kann:
+   lead-id -> { label, vorher: {feld: Wert davor} }
+   Nur im Speicher - nach dem Neuladen der Seite ist der Verlauf weg. Was
+   dauerhaft nachvollziehbar sein muss, steht unten in der Tabelle "Verlauf". */
+const rueckgaengig = new Map();
+
 /* Höhe der oberen Leiste messen, damit die Tabellen-Kopfzeile genau darunter
    kleben bleibt. Die Leiste bricht je nach Breite um, eine feste Zahl passt
    deshalb nicht. */
@@ -516,16 +522,7 @@ function zeichneSchublade() {
 
   el("d-title").textContent = lead.firmenname || lead.ansprechpartner || "Ohne Namen";
 
-  el("d-quick").innerHTML = `
-    <button class="btn small" data-q="angerufen">Angerufen</button>
-    <button class="btn ghost small" data-q="erreicht">Erreicht, Follow-up</button>
-    <button class="btn ghost small" data-q="mir">Mir zuweisen</button>
-    <button class="btn ghost small" data-q="plus7">Wiedervorlage +7 Tage</button>
-    ${lead.telefon ? `<a class="btn ghost small" href="tel:${esc(lead.telefon)}">Anrufen</a>` : ""}`;
-
-  el("d-quick").querySelectorAll("[data-q]").forEach((b) => {
-    b.onclick = () => schnellaktion(b.dataset.q);
-  });
+  zeichneQuick();
 
   el("d-form").innerHTML = FELDER.map((gruppe) => `
     <fieldset>
@@ -537,6 +534,28 @@ function zeichneSchublade() {
     const ereignis = eingabe.tagName === "SELECT" ? "change" : "blur";
     eingabe.addEventListener(ereignis, () => speichereFeld(eingabe));
   });
+}
+
+/** Nur die Knopfleiste neu zeichnen - das Formular bleibt stehen, damit der
+ *  Fokus beim Weiterarbeiten nicht springt. */
+function zeichneQuick() {
+  const lead = state.offen;
+  if (!lead) return;
+  const zurueck = rueckgaengig.get(lead.id);
+  el("d-quick").innerHTML = `
+    <button class="btn small" data-q="angerufen">Angerufen</button>
+    <button class="btn ghost small" data-q="erreicht">Erreicht, Follow-up</button>
+    <button class="btn ghost small" data-q="mir">Mir zuweisen</button>
+    <button class="btn ghost small" data-q="plus7">Wiedervorlage +7 Tage</button>
+    ${lead.telefon ? `<a class="btn ghost small" href="tel:${esc(lead.telefon)}">Anrufen</a>` : ""}
+    ${zurueck ? `<button class="btn danger small" id="d-undo"
+        title="Stellt den Stand vor dieser Änderung wieder her"
+      >↩ ${esc(zurueck.label)} zurücknehmen</button>` : ""}`;
+
+  el("d-quick").querySelectorAll("[data-q]").forEach((b) => {
+    b.onclick = () => schnellaktion(b.dataset.q);
+  });
+  if (el("d-undo")) el("d-undo").onclick = zuruecknehmen;
 }
 
 function leseFeld(eingabe) {
@@ -559,6 +578,8 @@ async function speichereFeld(eingabe) {
   const alt = lead[feld] ?? (typeof neu === "string" ? "" : null);
   if (String(alt ?? "") === String(neu ?? "")) return;
 
+  const beschriftung = FELDNAMEN[feld] || feld;
+  merkeVorzustand(lead, { [feld]: neu }, "Änderung an " + beschriftung);
   await schreibe({ [feld]: neu });
 }
 
@@ -588,8 +609,34 @@ async function schnellaktion(welche) {
     aenderung.wiedervorlage_am = basis.toISOString().slice(0, 10);
   }
 
+  const LABELS = {
+    angerufen: "Angerufen",
+    erreicht: "Erreicht, Follow-up",
+    mir: "Mir zuweisen",
+    plus7: "Wiedervorlage +7 Tage",
+  };
+  merkeVorzustand(lead, aenderung, LABELS[welche]);
+
   await schreibe(aenderung);
   zeichneSchublade();
+}
+
+/** Werte sichern, die eine Änderung überschreibt. */
+function merkeVorzustand(lead, aenderung, label) {
+  const vorher = {};
+  for (const feld of Object.keys(aenderung)) vorher[feld] = lead[feld] ?? null;
+  rueckgaengig.set(lead.id, { label, vorher });
+}
+
+async function zuruecknehmen() {
+  const lead = state.offen;
+  const eintrag = lead && rueckgaengig.get(lead.id);
+  if (!eintrag) return;
+
+  rueckgaengig.delete(lead.id);   // das Zurücknehmen selbst ist nicht umkehrbar
+  await schreibe(eintrag.vorher);
+  zeichneSchublade();
+  toast(`„${eintrag.label}" zurückgenommen.`);
 }
 
 async function schreibe(aenderung) {
@@ -622,6 +669,7 @@ async function schreibe(aenderung) {
   melde.textContent = "gespeichert " + new Date().toLocaleTimeString("de-DE");
   melde.dataset.state = "ok";
   zeichne();
+  zeichneQuick();   // lässt den Rückgängig-Knopf erscheinen bzw. verschwinden
   ladeVerlauf(lead.id);
 }
 
