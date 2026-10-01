@@ -266,7 +266,10 @@ button:focus-visible, a:focus-visible {
 table { border-collapse: collapse; width: 100%; min-width: 960px; }
 
 thead th {
-  position: sticky; top: 51px; z-index: 2;
+  /* Höhe der oberen Leiste wird in app.js gemessen und als --topbar-h
+     gesetzt. Fest verdrahtet schiebt sich sonst die erste Zeile dahinter
+     durch, sobald die Leiste umbricht oder der Zoom abweicht. */
+  position: sticky; top: var(--topbar-h, 56px); z-index: 2;
   background: var(--surface);
   border-bottom: 1px solid var(--line);
   text-align: left;
@@ -441,7 +444,6 @@ label > input, label > select, label > textarea { width: 100%; }
 .note.err { color: var(--hot); }
 
 @media (max-width: 760px) {
-  thead th { top: 0; }
   .grid2 { grid-template-columns: 1fr; }
   .tile .num { font-size: 21px; }
 }

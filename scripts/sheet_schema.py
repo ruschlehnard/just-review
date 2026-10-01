@@ -49,7 +49,9 @@ SHEET_COLUMNS = [
     ("Google-Profil vorhanden", "google_profil_vorhanden"),
     ("Zuletzt geprüft", "zuletzt_geprueft"),
     ("Lead-Quelle", "lead_quelle"),
-    ("Place-ID", "place_id"),
+    # Überschrift wortgleich wie im Sheet, damit der Export sie unverändert
+    # zurückschreibt und die Kopfzeilenprüfung aussagekräftig bleibt.
+    ("Place-ID https://search.google.com/local/writereview?placeid=[PLACE_ID]", "place_id"),
     ("Bewertungslink", "bewertungslink"),
     ("Kurzlink", "kurzlink"),
     ("Link-Herkunft", "link_herkunft"),
