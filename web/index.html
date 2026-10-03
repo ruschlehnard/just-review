@@ -103,10 +103,35 @@
 
       <!-- -------------------------------------------- Bereich Mein Bereich -->
       <section class="bereich" id="b-mein" hidden>
-        <div class="platzhalter">
-          <h2>Mein Bereich</h2>
-          <p>Hier kommen Termine, deine priorisierten Leads und was heute ansteht.
-             Die Datenbank dafür steht bereits — die Oberfläche folgt im nächsten Schritt.</p>
+        <div class="mein-raster">
+
+          <section class="block block-breit">
+            <header class="block-kopf">
+              <h2>Termine</h2>
+              <label class="schalter">
+                <input type="checkbox" id="termine-alle"> auch die der anderen
+              </label>
+              <button class="btn small" id="termin-oeffnen">+ Termin</button>
+            </header>
+            <div class="liste" id="termin-liste"></div>
+          </section>
+
+          <section class="block">
+            <header class="block-kopf">
+              <h2>Priorisierte Leads</h2>
+              <span class="note" id="prio-zahl"></span>
+            </header>
+            <div class="liste" id="prio-liste"></div>
+          </section>
+
+          <section class="block">
+            <header class="block-kopf">
+              <h2>Heute dran</h2>
+              <span class="note" id="heute-zahl"></span>
+            </header>
+            <div class="liste" id="heute-liste"></div>
+          </section>
+
         </div>
       </section>
     </main>
@@ -177,6 +202,38 @@
   <div class="modal-foot">
     <p class="note" id="neu-melde"></p>
     <button class="btn" id="neu-speichern">Lead anlegen</button>
+  </div>
+</div>
+
+<!-- ========================================================== Termin -->
+<div class="scrim" id="termin-scrim" hidden></div>
+<div class="modal" id="termin-modal" hidden role="dialog" aria-modal="true" aria-labelledby="termin-titel">
+  <div class="modal-head">
+    <h2 id="termin-titel">Neuer Termin</h2>
+    <button class="btn ghost small" id="termin-close">Abbrechen</button>
+  </div>
+  <div class="modal-body">
+    <div class="grid2">
+      <label class="full" for="t-titel">Titel
+        <input type="text" id="t-titel" placeholder="z. B. Aufsteller vorbeibringen"></label>
+      <label for="t-beginn">Beginn<input type="datetime-local" id="t-beginn"></label>
+      <label for="t-dauer">Dauer (Minuten)<input type="number" id="t-dauer" min="5" step="5" value="60"></label>
+      <label class="full" for="t-ort">Ort<input type="text" id="t-ort" placeholder="Adresse oder Treffpunkt"></label>
+
+      <div class="full">
+        <label for="t-suche">Betrieb (optional)
+          <input type="text" id="t-suche" placeholder="Firmenname suchen …" autocomplete="off"></label>
+        <div class="lead-treffer" id="t-treffer" hidden></div>
+        <div class="lead-gewaehlt" id="t-gewaehlt" hidden></div>
+      </div>
+
+      <label class="full" for="t-notiz">Notiz<textarea id="t-notiz"></textarea></label>
+    </div>
+  </div>
+  <div class="modal-foot">
+    <p class="note" id="termin-melde"></p>
+    <button class="btn danger small" id="termin-loeschen" hidden>Löschen</button>
+    <button class="btn" id="termin-speichern">Termin anlegen</button>
   </div>
 </div>
 

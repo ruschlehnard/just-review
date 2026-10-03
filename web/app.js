@@ -244,7 +244,11 @@ function abonniere() {
           zeichneSchublade();
         }
       }
-      zeichne();
+      if (state.bereich === "mein") zeichneMein(); else zeichne();
+    })
+    .on("postgres_changes", { event: "*", schema: "public", table: "termine" }, () => {
+      // Termine aendern sich selten - einfach neu laden statt einzeln pflegen.
+      if (state.bereich === "mein") ladeTermine().then(zeichneMein);
     })
     .subscribe((status) => {
       const an = status === "SUBSCRIBED";
@@ -779,6 +783,10 @@ function zeigeBereich(name) {
     b.setAttribute("aria-pressed", String(b.dataset.bereich === name)));
   seitenleisteZu();
   if (name === "leads") zeichne();
+  if (name === "mein") {
+    zeichneMein();                       // sofort mit dem, was schon da ist
+    ladeTermine().then(zeichneMein);     // dann mit frischen Terminen
+  }
 }
 
 document.querySelectorAll(".nav-btn").forEach((b) => {
@@ -1117,6 +1125,270 @@ async function schreibe(aenderung) {
   zeichneQuick();
   ladeVerlauf(lead.id);
 }
+
+/* ===================================================== Bereich: Mein Bereich */
+
+state.termine = [];
+state.termineAlle = false;
+state.terminOffen = null;     // Termin, der gerade bearbeitet wird
+state.terminLead = null;      // im Formular gewählter Betrieb
+
+async function ladeTermine() {
+  const { data, error } = await sb.from("termine_ansicht")
+    .select("*").order("beginn", { ascending: true });
+  if (error) { toast("Termine konnten nicht geladen werden: " + error.message); return; }
+  state.termine = data || [];
+}
+
+function terminZeit(iso) {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  return d.toLocaleString("de-DE",
+    { weekday: "short", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+/** Vergangene Termine graufärben, heutige hervorheben. */
+function terminLage(iso) {
+  const t = new Date(iso), jetzt = new Date();
+  if (t < jetzt) return "vorbei";
+  if (t.toDateString() === jetzt.toDateString()) return "heute";
+  return "";
+}
+
+async function zeichneMein() {
+  // --- Termine ---
+  const meine = state.termineAlle
+    ? state.termine
+    : state.termine.filter((t) => t.benutzer === state.profil.id);
+
+  el("termin-liste").innerHTML = meine.length ? meine.map((t) => `
+    <button class="eintrag ${terminLage(t.beginn)}" data-termin="${t.id}">
+      <span class="wann">${esc(terminZeit(t.beginn))}</span>
+      <span class="mitte">
+        <span class="nm">${esc(t.titel) || "Ohne Titel"}</span>
+        <span class="sub">${[
+          t.lead_name && `bei ${esc(t.lead_name)}`,
+          t.ort && esc(t.ort),
+          t.dauer_min && `${t.dauer_min} Min`,
+          state.termineAlle && t.benutzer_name ? esc(t.benutzer_name) : "",
+        ].filter(Boolean).join(" · ")}</span>
+        ${t.notiz ? `<span class="sub notiz-text">${esc(t.notiz)}</span>` : ""}
+      </span>
+      ${t.benutzer === state.profil.id ? '<span class="tag mine">meiner</span>' : ""}
+    </button>`).join("")
+    : `<p class="leer">${state.termineAlle ? "Keine Termine." : "Du hast keine Termine eingetragen."}</p>`;
+
+  el("termin-liste").querySelectorAll("[data-termin]").forEach((b) => {
+    b.onclick = () => oeffneTermin(state.termine.find((t) => t.id === b.dataset.termin));
+  });
+
+  // --- Priorisierte Leads ---
+  const prio = state.leads
+    .filter((l) => l.prioritaet && !ERLEDIGT.has(l.status))
+    .sort((a, b) => a.prioritaet - b.prioritaet
+      || (a.firmenname || "").localeCompare(b.firmenname || "", "de"));
+
+  el("prio-zahl").textContent = prio.length ? `${prio.length} offen` : "";
+  el("prio-liste").innerHTML = prio.length
+    ? prio.map((l) => leadEintrag(l, PRIO_NAME[l.prioritaet])).join("")
+    : '<p class="leer">Noch nichts priorisiert. In der Liste links auf die Balken klicken.</p>';
+
+  // --- Heute dran ---
+  const heuteListe = state.leads.filter((l) => {
+    if (ERLEDIGT.has(l.status)) return false;
+    const t = tageBis(l.wiedervorlage_am);
+    if (t !== null && t <= 0) return true;
+    return l.bearbeiter === state.profil.id && !l.letzter_kontakt_am;
+  }).sort((a, b) => {
+    // Priorisierte zuerst, dann die am längsten überfälligen.
+    const pa = a.prioritaet || 9, pb = b.prioritaet || 9;
+    if (pa !== pb) return pa - pb;
+    const ta = tageBis(a.wiedervorlage_am), tb = tageBis(b.wiedervorlage_am);
+    if (ta !== null && tb === null) return -1;
+    if (ta === null && tb !== null) return 1;
+    if (ta !== null && tb !== null && ta !== tb) return ta - tb;
+    return (a.strasse || "").localeCompare(b.strasse || "", "de", { numeric: true });
+  }).slice(0, 60);
+
+  el("heute-zahl").textContent = heuteListe.length ? `${heuteListe.length} offen` : "";
+  el("heute-liste").innerHTML = heuteListe.length
+    ? heuteListe.map((l) => {
+        const t = tageBis(l.wiedervorlage_am);
+        const hinweis = t === null ? "nie kontaktiert"
+          : t === 0 ? "heute fällig" : `${-t} Tage überfällig`;
+        return leadEintrag(l, hinweis);
+      }).join("")
+    : '<p class="leer">Nichts fällig und nichts Offenes zugewiesen.</p>';
+
+  el("b-mein").querySelectorAll("[data-lead]").forEach((b) => {
+    b.onclick = () => oeffne(b.dataset.lead);
+  });
+}
+
+function leadEintrag(l, hinweis) {
+  return `
+    <button class="eintrag" data-lead="${l.id}">
+      <span class="prio-marke" data-p="${l.prioritaet || 0}"></span>
+      <span class="mitte">
+        <span class="nm">${esc(l.firmenname) || "ohne Namen"}</span>
+        <span class="sub">${esc(l.branche)}${l.strasse ? " · " + esc(l.strasse) : ""}${l.ort ? " · " + esc(l.ort) : ""}</span>
+      </span>
+      <span class="sub rechts">${esc(hinweis)}</span>
+    </button>`;
+}
+
+/* ------------------------------------------------------- Termin anlegen */
+
+function oeffneTermin(termin) {
+  state.terminOffen = termin || null;
+  state.terminLead = termin?.lead_id
+    ? state.leads.find((l) => l.id === termin.lead_id) || null
+    : null;
+
+  const eigener = !termin || termin.benutzer === state.profil.id;
+
+  el("termin-titel").textContent = termin ? "Termin bearbeiten" : "Neuer Termin";
+  el("t-titel").value = termin?.titel || "";
+  el("t-beginn").value = termin
+    ? new Date(new Date(termin.beginn).getTime()
+        - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 16)
+    : naechsteStunde();
+  el("t-dauer").value = termin?.dauer_min ?? 60;
+  el("t-ort").value = termin?.ort || "";
+  el("t-notiz").value = termin?.notiz || "";
+  el("t-suche").value = "";
+  el("t-treffer").hidden = true;
+
+  zeigeGewaehltenLead();
+
+  el("termin-speichern").textContent = termin ? "Änderungen speichern" : "Termin anlegen";
+  el("termin-speichern").hidden = !eigener;
+  el("termin-loeschen").hidden = !termin || !eigener;
+  el("termin-melde").textContent = eigener ? "" : `Termin von ${termin.benutzer_name || "jemand anderem"} — nur lesbar.`;
+  el("termin-melde").className = "note";
+
+  el("termin-scrim").hidden = false;
+  el("termin-modal").hidden = false;
+  if (eigener) el("t-titel").focus();
+}
+
+function naechsteStunde() {
+  const d = new Date();
+  d.setMinutes(0, 0, 0);
+  d.setHours(d.getHours() + 1);
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+}
+
+function schliesseTermin() {
+  el("termin-scrim").hidden = true;
+  el("termin-modal").hidden = true;
+  state.terminOffen = null;
+  state.terminLead = null;
+}
+
+function zeigeGewaehltenLead() {
+  const kasten = el("t-gewaehlt");
+  const l = state.terminLead;
+  if (!l) { kasten.hidden = true; kasten.innerHTML = ""; return; }
+  kasten.hidden = false;
+  kasten.innerHTML = `
+    <span class="nm">${esc(l.firmenname) || "ohne Namen"}</span>
+    <span class="sub">${esc(l.strasse)}${l.ort ? " · " + esc(l.ort) : ""}</span>
+    <button class="btn ghost small" id="t-loesen">entfernen</button>`;
+  el("t-loesen").onclick = () => { state.terminLead = null; zeigeGewaehltenLead(); };
+}
+
+el("t-suche").addEventListener("input", (e) => {
+  const q = leerString(e.target.value);
+  const kasten = el("t-treffer");
+  if (q.length < 2) { kasten.hidden = true; return; }
+
+  const treffer = state.leads
+    .filter((l) => leerString(l.firmenname).includes(q))
+    .slice(0, 8);
+
+  if (!treffer.length) { kasten.hidden = true; return; }
+  kasten.hidden = false;
+  kasten.innerHTML = treffer.map((l) => `
+    <button class="treffer" data-id="${l.id}">
+      <span class="nm">${esc(l.firmenname)}</span>
+      <span class="sub">${esc(l.strasse)}${l.ort ? " · " + esc(l.ort) : ""}</span>
+    </button>`).join("");
+
+  kasten.querySelectorAll(".treffer").forEach((b) => {
+    b.onclick = () => {
+      state.terminLead = state.leads.find((l) => l.id === b.dataset.id) || null;
+      el("t-suche").value = "";
+      kasten.hidden = true;
+      zeigeGewaehltenLead();
+    };
+  });
+});
+
+async function terminSpeichern() {
+  const beginn = el("t-beginn").value;
+  if (!beginn) {
+    el("termin-melde").textContent = "Ohne Beginn geht es nicht.";
+    el("termin-melde").className = "note err";
+    return;
+  }
+
+  const datensatz = {
+    titel: el("t-titel").value.trim(),
+    beginn: new Date(beginn).toISOString(),
+    dauer_min: Number(el("t-dauer").value) || 60,
+    ort: el("t-ort").value.trim(),
+    notiz: el("t-notiz").value.trim(),
+    lead_id: state.terminLead?.id || null,
+    benutzer: state.profil.id,
+  };
+
+  el("termin-melde").textContent = "speichert …";
+  el("termin-melde").className = "note";
+  el("termin-speichern").disabled = true;
+
+  const { error } = state.terminOffen
+    ? await sb.from("termine").update(datensatz).eq("id", state.terminOffen.id)
+    : await sb.from("termine").insert(datensatz);
+
+  el("termin-speichern").disabled = false;
+
+  if (error) {
+    el("termin-melde").textContent = "Nicht gespeichert: " + error.message;
+    el("termin-melde").className = "note err";
+    return;
+  }
+
+  schliesseTermin();
+  await ladeTermine();
+  zeichneMein();
+  toast("Termin gespeichert.");
+}
+
+async function terminLoeschen() {
+  const t = state.terminOffen;
+  if (!t) return;
+  if (!confirm(`Termin „${t.titel || "ohne Titel"}“ am ${terminZeit(t.beginn)} löschen?`)) return;
+
+  const { error } = await sb.from("termine").delete().eq("id", t.id);
+  if (error) return toast("Nicht gelöscht: " + error.message);
+
+  schliesseTermin();
+  await ladeTermine();
+  zeichneMein();
+  toast("Termin gelöscht.");
+}
+
+el("termin-oeffnen").onclick = () => oeffneTermin(null);
+el("termin-close").onclick = schliesseTermin;
+el("termin-scrim").onclick = schliesseTermin;
+el("termin-speichern").onclick = terminSpeichern;
+el("termin-loeschen").onclick = terminLoeschen;
+el("termine-alle").onchange = (e) => { state.termineAlle = e.target.checked; zeichneMein(); };
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !el("termin-modal").hidden) schliesseTermin();
+});
 
 /* ------------------------------------------------------------ Neuer Lead */
 

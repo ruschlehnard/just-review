@@ -156,6 +156,95 @@ h1 {
 
 .bereich { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
 
+/* ------------------------------------------------------- Mein Bereich */
+
+.mein-raster {
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  align-content: start; padding-right: 2px;
+}
+
+.block {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 3px; box-shadow: var(--shadow);
+  display: flex; flex-direction: column; min-width: 0;
+}
+
+.block-breit { grid-column: 1 / -1; }
+
+.block-kopf {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px 10px; border-bottom: 1px solid var(--line-soft);
+}
+
+.block-kopf h2 {
+  font-family: var(--ff-head); font-size: 15px; font-weight: 600;
+  margin: 0 auto 0 0; letter-spacing: -.01em;
+}
+
+.schalter { flex-direction: row; align-items: center; gap: 6px; font-size: 12.5px; }
+
+.liste { display: flex; flex-direction: column; max-height: 420px; overflow-y: auto; }
+.liste .leer { padding: 22px 14px; color: var(--muted); font-size: 13px; margin: 0; }
+
+.eintrag {
+  appearance: none; font: inherit; text-align: left; cursor: pointer;
+  background: transparent; border: 0; border-bottom: 1px solid var(--line-soft);
+  padding: 9px 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+
+.eintrag:last-child { border-bottom: 0; }
+.eintrag:hover { background: var(--raised); }
+.eintrag .mitte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.eintrag .nm { font-weight: 600; font-size: 13.5px; }
+.eintrag .sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.eintrag .rechts { flex: none; font-size: 12px; text-align: right; }
+.eintrag .notiz-text { color: var(--faint); font-style: italic; }
+
+.eintrag .wann {
+  flex: none; width: 112px;
+  font-family: var(--ff-mono); font-size: 12px; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.eintrag.heute .wann { color: var(--warn); font-weight: 500; }
+.eintrag.vorbei { opacity: .5; }
+
+.prio-marke {
+  flex: none; width: 4px; height: 20px; border-radius: 2px; background: var(--line-soft);
+}
+
+.prio-marke[data-p="1"] { background: var(--hot); }
+.prio-marke[data-p="2"] { background: var(--warn); }
+.prio-marke[data-p="3"] { background: var(--faint); }
+
+/* Betriebssuche im Terminformular */
+
+.lead-treffer {
+  margin-top: 5px; border: 1px solid var(--line); border-radius: 2px;
+  background: var(--raised); max-height: 190px; overflow-y: auto;
+}
+
+.treffer {
+  appearance: none; font: inherit; text-align: left; cursor: pointer; width: 100%;
+  background: transparent; border: 0; border-bottom: 1px solid var(--line-soft);
+  padding: 7px 10px; display: flex; flex-direction: column; gap: 1px;
+}
+
+.treffer:last-child { border-bottom: 0; }
+.treffer:hover { background: var(--accent-soft); }
+.treffer .nm { font-weight: 600; font-size: 13px; }
+
+.lead-gewaehlt {
+  margin-top: 6px; padding: 8px 10px;
+  border: 1px solid var(--accent); background: var(--accent-soft); border-radius: 2px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+
+.lead-gewaehlt .nm { font-weight: 600; font-size: 13px; }
+.lead-gewaehlt .sub { flex: 1; min-width: 0; }
+
 .platzhalter { padding: 40px 4px; max-width: 60ch; }
 .platzhalter h2 { font-family: var(--ff-head); font-size: 20px; margin: 0 0 8px; }
 .platzhalter p { color: var(--muted); margin: 0; }
@@ -717,6 +806,10 @@ label > input, label > select, label > textarea { width: 100%; }
 
   .drawer { width: 100%; }
   .grid2 { grid-template-columns: 1fr; }
+  .mein-raster { grid-template-columns: 1fr; }
+  .liste { max-height: none; }
+  .eintrag .wann { width: 92px; }
+  .modal { width: calc(100vw - 16px); max-height: 92dvh; }
   .bulkbar-inner { padding: 9px 12px; gap: 7px; }
   .bulkbar-inner select, .bulkbar-inner .bulk-date { flex: 1 1 100%; }
   #toast { bottom: 90px; }
