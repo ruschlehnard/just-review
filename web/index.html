@@ -77,12 +77,13 @@
               <thead>
                 <tr>
                   <th class="pick"><input type="checkbox" id="pick-all" aria-label="Alle angezeigten auswählen"></th>
+                  <th class="prio sortable" data-k="prioritaet" title="Priorität">Prio<span class="arrow">↓</span></th>
                   <th class="stripe" aria-label="Kennzeichnung"></th>
                   <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
                   <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
                   <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
                   <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
-                  <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="notizen">Notiz<span class="arrow">↓</span></th>
                   <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
                   <th>Kontakt</th>
                 </tr>
@@ -150,6 +151,12 @@
       <summary>Verlauf</summary>
       <div class="log" id="d-log"><p class="note">wird geladen …</p></div>
     </details>
+
+    <div class="gefahrenzone">
+      <button class="btn danger" id="d-delete">Lead endgültig löschen</button>
+      <p class="note">Nimmt auch den Verlauf mit. Nicht umkehrbar.
+         Für Datenmüll ist der Status „Nicht relevant“ der sanftere Weg.</p>
+    </div>
   </div>
 </aside>
 

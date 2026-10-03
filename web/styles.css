@@ -307,6 +307,61 @@ thead th.sortable:hover { color: var(--accent); }
 thead th .arrow { opacity: 0; margin-left: 3px; }
 thead th[data-dir] .arrow { opacity: 1; color: var(--accent); }
 th.pick, td.pick { width: 34px; padding-left: 12px; padding-right: 2px; }
+th.prio, td.prio { width: 40px; padding-left: 4px; padding-right: 4px; }
+
+/* Priorität als drei Segmente, von unten gefüllt: hoch = alle drei. */
+/* Aufsteigende Balken wie eine Pegelanzeige - hoch füllt alle drei. */
+.prio-btn {
+  appearance: none; cursor: pointer;
+  background: transparent; border: 0; padding: 4px 2px;
+  display: flex; align-items: flex-end; gap: 2px; height: 22px;
+}
+
+.prio-btn i {
+  display: block; width: 4px; border-radius: 1px; background: var(--line-soft);
+  border: 1px solid var(--line);
+}
+
+.prio-btn i:nth-child(1) { height: 6px; }
+.prio-btn i:nth-child(2) { height: 10px; }
+.prio-btn i:nth-child(3) { height: 14px; }
+
+.prio-btn:hover i { border-color: var(--faint); }
+
+.prio-btn[data-p="3"] i:nth-child(1) { background: var(--faint); border-color: var(--faint); }
+
+.prio-btn[data-p="2"] i:nth-child(1),
+.prio-btn[data-p="2"] i:nth-child(2) { background: var(--warn); border-color: var(--warn); }
+
+.prio-btn[data-p="1"] i { background: var(--hot); border-color: var(--hot); }
+
+/* ------------------------------------------------------------- Notiz */
+
+.notiz-zelle { max-width: 260px; }
+
+.notiz {
+  cursor: text; min-height: 19px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  border-bottom: 1px dashed transparent; padding-bottom: 1px;
+}
+
+.notiz:hover { border-bottom-color: var(--line); }
+.notiz:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.notiz-feld {
+  width: 100%; padding: 3px 5px; font-size: 13px;
+  border-color: var(--accent); background: var(--surface);
+}
+
+/* --------------------------------------------------------- Gefahrenzone */
+
+.gefahrenzone {
+  margin-top: 26px; padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 6px; align-items: flex-start;
+}
+
+.gefahrenzone .note { max-width: 46ch; }
 
 tbody td { border-bottom: 1px solid var(--line-soft); padding: 8px 10px; vertical-align: top; }
 tbody tr:last-child td { border-bottom: 0; }

@@ -355,6 +355,12 @@ function sichtbar() {
 
   const { k, dir } = state.sort;
   out.sort((a, b) => {
+    // Priorisierte stehen immer oben, erst danach greift die Spaltensortierung.
+    // Ausser man sortiert ausdruecklich nach der Prio-Spalte selbst.
+    if (k !== "prioritaet") {
+      const pa = a.prioritaet || 9, pb = b.prioritaet || 9;
+      if (pa !== pb) return pa - pb;
+    }
     const av = a[k] ?? "", bv = b[k] ?? "";
     if (!av && bv) return 1;
     if (av && !bv) return -1;
@@ -410,13 +416,33 @@ function marken(l) {
   ].filter(Boolean).join("");
 }
 
+/* ------------------------------------------------- Priorität und Google */
+
+const PRIO_NAME = { 1: "hoch", 2: "mittel", 3: "niedrig" };
+
+/** Google-Suche aus Name und Adresse - dieselbe Zusammensetzung wie Spalte N
+ *  im Google Sheet. Funktioniert auch bei Leads ganz ohne Kontaktdaten. */
+function googleSuche(l) {
+  const begriff = [l.firmenname, l.strasse, l.plz, l.ort].filter(Boolean).join(" ");
+  return "https://www.google.com/search?q=" + encodeURIComponent(begriff);
+}
+
+function prioZelle(l) {
+  const p = l.prioritaet || 0;
+  const titel = p ? `Priorität ${PRIO_NAME[p]} — klicken zum Wechseln` : "Keine Priorität — klicken zum Setzen";
+  return `<button class="prio-btn" data-p="${p}" title="${esc(titel)}"
+    aria-label="${esc(titel)}"><i></i><i></i><i></i></button>`;
+}
+
 function kontaktZellen(l) {
   return `
     ${l.telefon ? `<a class="tel" href="tel:${esc(l.telefon)}" onclick="event.stopPropagation()">${esc(l.telefon)}</a>`
       : '<span class="dot">T</span>'}
     ${l.email ? `<a class="dot on" href="mailto:${esc(l.email)}" title="${esc(l.email)}" onclick="event.stopPropagation()">@</a>` : ""}
     ${l.website ? `<a class="dot on" href="${esc(l.website)}" target="_blank" rel="noopener noreferrer" title="${esc(l.website)}" onclick="event.stopPropagation()">W</a>` : ""}
-    ${l.google_profil_link ? `<a class="dot on" href="${esc(l.google_profil_link)}" target="_blank" rel="noopener noreferrer" title="Google-Profil" onclick="event.stopPropagation()">G</a>` : ""}`;
+    <a class="dot on google" href="${esc(googleSuche(l))}" target="_blank" rel="noopener noreferrer"
+       title="Bei Google suchen" onclick="event.stopPropagation()">G</a>
+    ${l.google_profil_link ? `<a class="dot on" href="${esc(l.google_profil_link)}" target="_blank" rel="noopener noreferrer" title="Hinterlegtes Google-Profil" onclick="event.stopPropagation()">P</a>` : ""}`;
 }
 
 /* --------------------------------------------------------- Ansicht Liste */
@@ -431,6 +457,7 @@ function zeichneTabelle(rows) {
     <tr data-id="${l.id}" class="${zeilenKlasse(l)}" aria-selected="${state.offen?.id === l.id}">
       <td class="pick"><input type="checkbox" ${state.auswahl.has(l.id) ? "checked" : ""}
           aria-label="${esc(l.firmenname || "Lead")} auswählen"></td>
+      <td class="prio" data-label="Prio">${prioZelle(l)}</td>
       <td class="stripe"><i></i></td>
       <td class="klick zelle-name">
         <span class="nm">${esc(l.firmenname) || '<span class="sub">ohne Firmenname</span>'}</span>
@@ -440,8 +467,8 @@ function zeichneTabelle(rows) {
       <td class="klick" data-label="Ort">${esc(l.ort)}<div class="sub mono">${esc(l.plz)}</div></td>
       <td class="klick" data-label="Status"><span class="status" data-s="${esc(l.status)}">${esc(l.status)}</span></td>
       <td class="klick" data-label="Bearbeiter">${esc(l.bearbeiter_name) || '<span class="sub">—</span>'}</td>
-      <td class="klick mono" data-label="Letzter Kontakt">${datumDe(l.letzter_kontakt_am) || '<span class="sub">nie</span>'}${
-        l.anzahl_kontakte ? `<div class="sub">${l.anzahl_kontakte}× Kontakt</div>` : ""}</td>
+      <td class="notiz-zelle" data-label="Notiz"><div class="notiz" tabindex="0"
+          title="Klicken zum Bearbeiten">${esc(l.notizen) || '<span class="sub">—</span>'}</div></td>
       <td class="klick mono" data-label="Wiedervorlage">${datumDe(l.wiedervorlage_am) || '<span class="sub">—</span>'}</td>
       <td class="zelle-kontakt">${kontaktZellen(l)}</td>
     </tr>`).join("");
@@ -450,11 +477,90 @@ function zeichneTabelle(rows) {
     const id = tr.dataset.id;
     tr.querySelectorAll("td.klick").forEach((td) => { td.onclick = () => oeffne(id); });
     tr.querySelector("td.pick input").onchange = (e) => waehle(id, e.target.checked);
+    tr.querySelector(".prio-btn").onclick = (e) => { e.stopPropagation(); prioWeiter(id); };
+    const notiz = tr.querySelector(".notiz");
+    notiz.onclick = (e) => { e.stopPropagation(); notizBearbeiten(notiz, id); };
+    notiz.onkeydown = (e) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); notizBearbeiten(notiz, id); }
+    };
   });
 
   const alleGewaehlt = rows.length > 0 && rows.every((l) => state.auswahl.has(l.id));
   el("pick-all").checked = alleGewaehlt;
   el("pick-all").indeterminate = !alleGewaehlt && rows.some((l) => state.auswahl.has(l.id));
+}
+
+/* ------------------------------------------ Bearbeiten direkt in der Zeile */
+
+/** Schreibt eine Änderung an einen beliebigen Lead, auch ohne offene
+ *  Schublade. Gibt den aktualisierten Datensatz zurück oder null. */
+async function speichereLead(id, aenderung) {
+  const { data, error } = await sb.from("leads")
+    .update({ ...aenderung, geaendert_von: state.profil.id })
+    .eq("id", id).select().single();
+
+  if (error) { toast("Nicht gespeichert: " + error.message); return null; }
+
+  const i = state.leads.findIndex((l) => l.id === id);
+  if (i >= 0) {
+    Object.assign(state.leads[i], data, {
+      bearbeiter_name: state.team.find((t) => t.id === data.bearbeiter)?.name || "",
+      faellig_in_tagen: tageBis(data.wiedervorlage_am),
+    });
+  }
+  return data;
+}
+
+/** keine -> hoch -> mittel -> niedrig -> keine */
+async function prioWeiter(id) {
+  const lead = state.leads.find((l) => l.id === id);
+  if (!lead) return;
+  const naechste = { 0: 1, 1: 2, 2: 3, 3: null }[lead.prioritaet || 0];
+  merkeVorzustand(lead, { prioritaet: naechste }, "Priorität");
+  if (await speichereLead(id, { prioritaet: naechste })) {
+    toast(naechste ? `Priorität ${PRIO_NAME[naechste]}` : "Priorität entfernt");
+    zeichne();
+    if (state.offen?.id === id) zeichneSchublade();
+  }
+}
+
+/** Notiz an Ort und Stelle bearbeiten: Klick macht ein Eingabefeld daraus. */
+function notizBearbeiten(zelle, id) {
+  if (zelle.querySelector("input")) return;        // schon offen
+  const lead = state.leads.find((l) => l.id === id);
+  if (!lead) return;
+
+  const alt = lead.notizen || "";
+  const feld = document.createElement("input");
+  feld.type = "text";
+  feld.value = alt;
+  feld.className = "notiz-feld";
+  feld.setAttribute("aria-label", "Notiz bearbeiten");
+
+  zelle.textContent = "";
+  zelle.appendChild(feld);
+  feld.focus();
+  feld.select();
+
+  let fertig = false;
+  const beenden = async (speichern) => {
+    if (fertig) return;
+    fertig = true;
+    const neu = feld.value.trim();
+    if (speichern && neu !== alt) {
+      merkeVorzustand(lead, { notizen: neu }, "Notiz");
+      await speichereLead(id, { notizen: neu });
+      if (state.offen?.id === id) zeichneSchublade();
+    }
+    zeichne();
+  };
+
+  feld.onblur = () => beenden(true);
+  feld.onkeydown = (e) => {
+    e.stopPropagation();
+    if (e.key === "Enter") { e.preventDefault(); beenden(true); }
+    if (e.key === "Escape") { e.preventDefault(); beenden(false); }
+  };
 }
 
 /* ------------------------------------------------------- Ansicht Straße */
@@ -709,6 +815,7 @@ document.querySelectorAll("th.sortable").forEach((th) => {
 const FELDER = [
   { legend: "Beim Gespräch", kern: true, felder: [
     { k: "status", t: "Status", typ: "liste", liste: "status" },
+    { k: "prioritaet", t: "Priorität", typ: "prio" },
     { k: "bearbeiter", t: "Bearbeiter", typ: "team" },
     { k: "wiedervorlage_am", t: "Wiedervorlage am", typ: "datum" },
     { k: "kontaktkanal", t: "Kontaktkanal", typ: "liste", liste: "kontaktkanal" },
@@ -777,6 +884,26 @@ function blaettern(richtung) {
   ladeVerlauf(ziel.id);
 }
 
+/** Endgültig löschen. Der Verlauf hängt per CASCADE daran und geht mit. */
+async function leadLoeschen() {
+  const lead = state.offen;
+  if (!lead) return;
+  const name = lead.firmenname || lead.ansprechpartner || "dieser Lead";
+  if (!confirm(`„${name}“ endgültig löschen?\n\n`
+    + "Der komplette Verlauf geht mit verloren und lässt sich nicht "
+    + "wiederherstellen.")) return;
+
+  const { error } = await sb.from("leads").delete().eq("id", lead.id);
+  if (error) return toast("Nicht gelöscht: " + error.message);
+
+  state.leads = state.leads.filter((l) => l.id !== lead.id);
+  state.auswahl.delete(lead.id);
+  rueckgaengig.delete(lead.id);
+  schliesse();
+  toast(`„${name}“ gelöscht.`);
+}
+
+el("d-delete").onclick = leadLoeschen;
 el("d-close").onclick = schliesse;
 el("scrim").onclick = schliesse;
 el("d-prev").onclick = () => blaettern(-1);
@@ -797,19 +924,22 @@ function feldHtml(f, lead) {
   const cls = f.voll ? ' class="full"' : "";
   let eingabe;
 
-  if (f.typ === "liste" || f.typ === "team" || f.typ === "janein") {
+  if (f.typ === "liste" || f.typ === "team" || f.typ === "janein" || f.typ === "prio") {
     let opts;
     if (f.typ === "team") {
       opts = [{ v: "", t: "– nicht zugeordnet –" },
         ...state.team.map((t) => ({ v: t.id, t: t.name || t.email }))];
     } else if (f.typ === "janein") {
       opts = [{ v: "", t: "– offen –" }, { v: "true", t: "Ja" }, { v: "false", t: "Nein" }];
+    } else if (f.typ === "prio") {
+      opts = [{ v: "", t: "– keine –" },
+        { v: "1", t: "1 – hoch" }, { v: "2", t: "2 – mittel" }, { v: "3", t: "3 – niedrig" }];
     } else {
       const werte = state.listen[f.liste] || [];
       const extra = wert && !werte.includes(wert) ? [wert] : [];
       opts = [{ v: "", t: "– leer –" }, ...[...extra, ...werte].map((w) => ({ v: w, t: w }))];
     }
-    const aktuell = f.typ === "janein"
+    const aktuell = (f.typ === "janein" || f.typ === "prio")
       ? (wert === null || wert === undefined ? "" : String(wert))
       : (wert ?? "");
     eingabe = `<select id="${id}" name="${f.k}">${opts.map((o) =>
@@ -880,9 +1010,10 @@ function leseFeld(eingabe) {
   const { name, value, type } = eingabe;
   if (value === "") {
     return ["date", "number"].includes(type) || name === "bearbeiter"
-      || name === "google_profil_vorhanden" ? null : "";
+      || name === "google_profil_vorhanden" || name === "prioritaet" ? null : "";
   }
   if (name === "google_profil_vorhanden") return value === "true";
+  if (name === "prioritaet") return Number(value);
   if (type === "number") return Number(value);
   return value;
 }
@@ -997,7 +1128,7 @@ const FELDNAMEN = {
   strasse: "Straße", plz: "PLZ", ort: "Ort", branche: "Branche",
   ansprechpartner: "Ansprechpartner", position: "Position",
   place_id: "Place-ID", bewertungslink: "Bewertungslink",
-  produktinteresse: "Produktinteresse",
+  produktinteresse: "Produktinteresse", prioritaet: "Priorität",
 };
 
 /** Das Protokoll speichert alles als Text. Fürs Zurückschreiben muss daraus
@@ -1007,6 +1138,7 @@ const FELD_TYP = Object.fromEntries(FELDER.flatMap((g) => g.felder.map((f) => [f
 function wertAusText(feld, text) {
   const typ = FELD_TYP[feld];
   const leer = text === null || text === undefined || text === "";
+  if (typ === "prio") return leer ? null : Number(text);
   if (typ === "zahl") return leer ? null : Number(text);
   if (typ === "datum") return leer ? null : text;
   if (typ === "janein") return leer ? null : text === "true";
@@ -1017,6 +1149,7 @@ function wertAusText(feld, text) {
 function verlaufWert(feld, roh) {
   if (roh === null || roh === undefined || roh === "") return "leer";
   if (feld === "bearbeiter") return state.team.find((t) => t.id === roh)?.name || "nicht zugeordnet";
+  if (feld === "prioritaet") return PRIO_NAME[roh] || roh;
   if (FELD_TYP[feld] === "datum") return datumDe(roh);
   if (FELD_TYP[feld] === "janein") return roh === "true" ? "Ja" : "Nein";
   return roh.length > 60 ? roh.slice(0, 60) + "…" : roh;
