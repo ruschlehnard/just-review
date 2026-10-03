@@ -111,19 +111,54 @@ h1 {
   margin: 0; text-wrap: balance;
 }
 
-.views { display: flex; gap: 2px; margin-right: auto; }
+.brand { margin-right: auto; }
 
-.view-btn {
-  appearance: none; font: inherit; font-size: 13px; font-weight: 500;
-  cursor: pointer; padding: 6px 12px;
-  border: 1px solid var(--line); background: var(--raised); color: var(--muted);
-  border-radius: 0;
+.burger {
+  appearance: none; cursor: pointer;
+  background: transparent; border: 1px solid var(--line);
+  border-radius: 2px; color: var(--ink);
+  font-size: 16px; line-height: 1; padding: 7px 10px;
 }
 
-.view-btn:first-child { border-radius: 3px 0 0 3px; }
-.view-btn:last-child { border-radius: 0 3px 3px 0; }
-.view-btn + .view-btn { border-left: 0; }
-.view-btn[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+/* ---------------------------------------------------------- Seitenleiste */
+
+.layout { flex: 1; min-height: 0; display: flex; }
+
+.sidebar {
+  flex: none; width: 180px;
+  background: var(--surface); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px 12px;
+}
+
+.nav { display: flex; flex-direction: column; gap: 3px; }
+
+.nav-btn {
+  appearance: none; font: inherit; font-size: 13.5px; font-weight: 500;
+  text-align: left; cursor: pointer;
+  padding: 9px 11px; border-radius: 3px;
+  border: 1px solid transparent; background: transparent; color: var(--muted);
+}
+
+.nav-btn:hover { background: var(--raised); color: var(--ink); }
+
+.nav-btn[aria-pressed="true"] {
+  background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600;
+}
+
+.sidebar-foot {
+  margin-top: auto; display: flex; flex-direction: column; gap: 7px;
+  border-top: 1px solid var(--line-soft); padding-top: 11px;
+}
+
+.sidebar-foot .btn { width: 100%; }
+.sidebar-scrim { position: fixed; inset: 0; z-index: 14; background: rgba(10, 18, 17, .34); }
+
+.bereich { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; }
+
+.platzhalter { padding: 40px 4px; max-width: 60ch; }
+.platzhalter h2 { font-family: var(--ff-head); font-size: 20px; margin: 0 0 8px; }
+.platzhalter p { color: var(--muted); margin: 0; }
 
 .whoami { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
 
@@ -146,10 +181,10 @@ h1 {
 .live[data-on="true"]::before { background: var(--good); }
 
 main {
-  max-width: 1540px; margin: 0 auto; width: 100%;
+  max-width: 1440px; width: 100%;
   padding: 16px 20px 12px;
   flex: 1; min-height: 0;
-  display: flex; flex-direction: column; gap: 12px;
+  display: flex; flex-direction: column;
 }
 
 .viewport { flex: 1; min-height: 0; display: flex; }
@@ -505,9 +540,17 @@ label > input, label > select, label > textarea { width: 100%; }
   main { padding: 12px 12px 10px; gap: 10px; }
   .topbar-inner { padding: 9px 12px; gap: 9px; }
   .brand h1 { font-size: 17px; }
-  .views { order: 10; width: 100%; }
-  .view-btn { flex: 1; text-align: center; padding: 9px 8px; }
-  .whoami span:not(.avatar) { display: none; }
+
+  /* Leiste schiebt sich über den Inhalt statt ihn zu verdrängen */
+  .sidebar {
+    position: fixed; inset: 0 auto 0 0; z-index: 15;
+    width: 230px; transform: translateX(-100%);
+    transition: transform .18s ease;
+    box-shadow: 10px 0 36px -24px rgba(0, 0, 0, .6);
+  }
+
+  .sidebar.offen { transform: translateX(0); }
+  .nav-btn { padding: 12px 12px; font-size: 15px; }
   /* Kacheln in eine Zeile zum Wischen, statt drei Reihen Höhe zu fressen */
   .tiles {
     display: flex; gap: 6px;
@@ -543,7 +586,7 @@ label > input, label > select, label > textarea { width: 100%; }
   tbody td[data-label] { flex: 0 0 auto; font-size: 12.5px; }
   /* Platzhalter wie "nie" und "—" inline lassen, sonst steht die
      Beschriftung ohne Wert da. */
-  tbody td[data-label] .sub { display: inline; font-size: 12.5px; }
+  tbody td[data-label] .sub { display: inline; font-size: 12.5px; margin-left: 5px; }
 
   tbody tr:hover td, tbody tr[aria-selected="true"] td, tbody tr.gewaehlt td { background: transparent; }
   tbody tr.gewaehlt { background: var(--accent-soft); }

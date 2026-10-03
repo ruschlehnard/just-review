@@ -42,6 +42,9 @@ const state = {
   team: [],
   listen: {},
   offen: null,
+  bereich: "leads",     // leads | mein
+  // Ansicht innerhalb von "leads". "strasse" und "heute" sind gebaut, aber
+  // derzeit nicht verlinkt - siehe #streets im HTML.
   view: "liste",
   q: "", ort: "", bearbeiter: "", branche: "",
   status: new Set(),
@@ -657,14 +660,38 @@ el("filter-reset").onclick = () => {
   zeichne();
 };
 
-el("views").querySelectorAll(".view-btn").forEach((b) => {
-  b.onclick = () => {
-    state.view = b.dataset.view;
-    el("views").querySelectorAll(".view-btn").forEach((o) =>
-      o.setAttribute("aria-pressed", String(o === b)));
-    zeichne();
-  };
+/* ------------------------------------------------------------- Bereiche */
+
+const TITEL = { leads: "Leads", mein: "Mein Bereich" };
+
+function zeigeBereich(name) {
+  state.bereich = name;
+  el("b-leads").hidden = name !== "leads";
+  el("b-mein").hidden = name !== "mein";
+  el("bereich-titel").textContent = TITEL[name] || "Leads";
+  document.querySelectorAll(".nav-btn").forEach((b) =>
+    b.setAttribute("aria-pressed", String(b.dataset.bereich === name)));
+  seitenleisteZu();
+  if (name === "leads") zeichne();
+}
+
+document.querySelectorAll(".nav-btn").forEach((b) => {
+  b.addEventListener("click", () => zeigeBereich(b.dataset.bereich));
 });
+
+/* Seitenleiste auf dem Handy */
+
+function seitenleisteAuf(an) {
+  el("sidebar").classList.toggle("offen", an);
+  el("sidebar-scrim").hidden = !an;
+  el("burger").setAttribute("aria-expanded", String(an));
+}
+
+const seitenleisteZu = () => seitenleisteAuf(false);
+
+el("burger").addEventListener("click", () =>
+  seitenleisteAuf(!el("sidebar").classList.contains("offen")));
+el("sidebar-scrim").addEventListener("click", seitenleisteZu);
 
 document.querySelectorAll("th.sortable").forEach((th) => {
   th.onclick = () => {

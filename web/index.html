@@ -25,74 +25,90 @@
 <div class="app" id="app" hidden>
 
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <span class="eyebrow">just-review</span>
-        <h1>Leads</h1>
-      </div>
-
-      <nav class="views" id="views" aria-label="Ansicht">
-        <button class="view-btn" data-view="liste" aria-pressed="true">Liste</button>
-        <button class="view-btn" data-view="strasse" aria-pressed="false">Straße</button>
-        <button class="view-btn" data-view="heute" aria-pressed="false">Heute</button>
-      </nav>
-
-      <span class="live" id="live" data-on="false">verbinde…</span>
-      <button class="btn ghost small" id="stats-toggle" aria-expanded="false">Fortschritt</button>
-      <div class="whoami">
-        <span class="avatar" id="avatar">–</span>
-        <span id="username"></span>
-      </div>
-      <button class="btn ghost small" id="logout">Abmelden</button>
+    <button class="burger nur-handy" id="burger" aria-label="Menü" aria-expanded="false">☰</button>
+    <div class="brand">
+      <span class="eyebrow">just-review</span>
+      <h1 id="bereich-titel">Leads</h1>
     </div>
+    <span class="live" id="live" data-on="false">verbinde…</span>
   </header>
 
-  <main>
-    <!-- Fortschritt je Person, ausklappbar -->
-    <section class="stats" id="stats" hidden aria-label="Fortschritt"></section>
+  <div class="layout">
 
-    <div class="tiles" id="tiles"></div>
-
-    <div class="filters">
-      <input type="search" id="q" placeholder="Firma, Branche, Straße oder Ort suchen …" autocomplete="off">
-      <button class="btn ghost small nur-handy" id="filter-toggle" aria-expanded="false">Filter</button>
-      <div class="filter-mehr" id="filter-mehr">
-        <select id="f-ort" aria-label="Ort"><option value="">Alle Orte</option></select>
-        <select id="f-bearbeiter" aria-label="Bearbeiter"><option value="">Alle Bearbeiter</option></select>
-        <select id="f-branche" aria-label="Branche"><option value="">Alle Branchen</option></select>
-        <button class="btn ghost small" id="filter-reset" hidden>Filter zurücksetzen</button>
-        <div class="chips" id="status-chips"></div>
+    <!-- Seitenleiste -->
+    <div class="sidebar-scrim" id="sidebar-scrim" hidden></div>
+    <aside class="sidebar" id="sidebar">
+      <nav class="nav" aria-label="Bereiche">
+        <button class="nav-btn" data-bereich="leads" aria-pressed="true">Leads</button>
+        <button class="nav-btn" data-bereich="mein" aria-pressed="false">Mein Bereich</button>
+      </nav>
+      <div class="sidebar-foot">
+        <div class="whoami">
+          <span class="avatar" id="avatar">–</span>
+          <span id="username"></span>
+        </div>
+        <button class="btn ghost small" id="stats-toggle" aria-expanded="false">Fortschritt</button>
+        <button class="btn ghost small" id="logout">Abmelden</button>
       </div>
-    </div>
+    </aside>
 
-    <div class="viewport" id="viewport">
-      <!-- Liste und Heute -->
-      <div class="tablewrap" id="tablewrap">
-        <table>
-          <thead>
-            <tr>
-              <th class="pick"><input type="checkbox" id="pick-all" aria-label="Alle angezeigten auswählen"></th>
-              <th class="stripe" aria-label="Kennzeichnung"></th>
-              <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
-              <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
-              <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
-              <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
-              <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
-              <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
-              <th>Kontakt</th>
-            </tr>
-          </thead>
-          <tbody id="tb"></tbody>
-        </table>
-        <div class="empty" id="empty" hidden></div>
-      </div>
+    <main>
+      <!-- ------------------------------------------------- Bereich Leads -->
+      <section class="bereich" id="b-leads">
+        <section class="stats" id="stats" hidden aria-label="Fortschritt"></section>
 
-      <!-- Straßen-Modus -->
-      <div class="streets" id="streets" hidden></div>
-    </div>
+        <div class="tiles" id="tiles"></div>
 
-    <p class="note" id="count"></p>
-  </main>
+        <div class="filters">
+          <input type="search" id="q" placeholder="Firma, Branche, Straße oder Ort suchen …" autocomplete="off">
+          <button class="btn ghost small nur-handy" id="filter-toggle" aria-expanded="false">Filter</button>
+          <div class="filter-mehr" id="filter-mehr">
+            <select id="f-ort" aria-label="Ort"><option value="">Alle Orte</option></select>
+            <select id="f-bearbeiter" aria-label="Bearbeiter"><option value="">Alle Bearbeiter</option></select>
+            <select id="f-branche" aria-label="Branche"><option value="">Alle Branchen</option></select>
+            <button class="btn ghost small" id="filter-reset" hidden>Filter zurücksetzen</button>
+            <div class="chips" id="status-chips"></div>
+          </div>
+        </div>
+
+        <div class="viewport">
+          <div class="tablewrap" id="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="pick"><input type="checkbox" id="pick-all" aria-label="Alle angezeigten auswählen"></th>
+                  <th class="stripe" aria-label="Kennzeichnung"></th>
+                  <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
+                  <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
+                  <th>Kontakt</th>
+                </tr>
+              </thead>
+              <tbody id="tb"></tbody>
+            </table>
+            <div class="empty" id="empty" hidden></div>
+          </div>
+
+          <!-- Straßen-Modus: aktuell nicht verlinkt, Code bleibt für später -->
+          <div class="streets" id="streets" hidden></div>
+        </div>
+
+        <p class="note" id="count"></p>
+      </section>
+
+      <!-- -------------------------------------------- Bereich Mein Bereich -->
+      <section class="bereich" id="b-mein" hidden>
+        <div class="platzhalter">
+          <h2>Mein Bereich</h2>
+          <p>Hier kommen Termine, deine priorisierten Leads und was heute ansteht.
+             Die Datenbank dafür steht bereits — die Oberfläche folgt im nächsten Schritt.</p>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <!-- Sammelaktionen, erscheint bei Auswahl -->
   <div class="bulkbar" id="bulkbar" hidden>
