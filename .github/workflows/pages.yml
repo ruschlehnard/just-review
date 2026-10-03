@@ -32,6 +32,20 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
+      # GitHub Pages liefert alles mit cache-control: max-age=600 aus. Der
+      # Browser haelt app.js und styles.css also zehn Minuten fest, auch wenn
+      # die Seite selbst frisch geladen wird - dann passt die Oberflaeche
+      # nicht mehr zum Skript. Der Commit-Kuerzel an der Adresse zwingt ihn,
+      # bei jeder Aenderung neu zu holen.
+      - name: Dateinamen versionieren
+        run: |
+          set -euo pipefail
+          V="${GITHUB_SHA::7}"
+          echo "Version: $V"
+          sed -i -E 's/(href|src)="(styles\.css|app\.js|config\.js)"/\1="\2?v='"$V"'"/g' web/index.html
+          echo "--- eingebundene Dateien ---"
+          grep -oE '(href|src)="[^"]*\?v=[^"]*"' web/index.html
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web
