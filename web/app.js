@@ -918,9 +918,11 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); blaettern(-1); }
 });
 
-function feldHtml(f, lead) {
+/** praefix trennt die IDs der Schublade von denen des Neu-Formulars -
+ *  doppelte IDs im Dokument hängen sonst die Beschriftungen falsch an. */
+function feldHtml(f, lead, praefix = "f") {
   const wert = lead[f.k];
-  const id = `f-${f.k}`;
+  const id = `${praefix}-${f.k}`;
   const cls = f.voll ? ' class="full"' : "";
   let eingabe;
 
@@ -1115,6 +1117,151 @@ async function schreibe(aenderung) {
   zeichneQuick();
   ladeVerlauf(lead.id);
 }
+
+/* ------------------------------------------------------------ Neuer Lead */
+
+const NEU_FELDER = [
+  { k: "firmenname", t: "Firmenname", typ: "text", voll: true },
+  { k: "branche", t: "Branche", typ: "liste", liste: "branche" },
+  { k: "status", t: "Status", typ: "liste", liste: "status" },
+  { k: "strasse", t: "Straße & Nr.", typ: "text", voll: true },
+  { k: "plz", t: "PLZ", typ: "text" },
+  { k: "ort", t: "Ort", typ: "text" },
+  { k: "telefon", t: "Telefon", typ: "tel" },
+  { k: "email", t: "E-Mail", typ: "email" },
+  { k: "website", t: "Website", typ: "url", voll: true },
+  { k: "ansprechpartner", t: "Ansprechpartner", typ: "text" },
+  { k: "bearbeiter", t: "Bearbeiter", typ: "team" },
+  { k: "prioritaet", t: "Priorität", typ: "prio" },
+  { k: "notizen", t: "Notiz", typ: "mehrzeilig", voll: true },
+];
+
+const leerString = (s) =>
+  (s || "").toLowerCase().replace(/[^\wäöüß\s]/g, " ").replace(/\s+/g, " ").trim();
+
+/** Leads suchen, die dem Eingetippten ähneln. Läuft gegen den bereits
+ *  geladenen Bestand, also ohne weitere Abfrage. */
+function findeDubletten(name, strasse, ort) {
+  const n = leerString(name);
+  const s = leerString(strasse);
+  if (n.length < 3 && s.length < 4) return [];
+
+  return state.leads.filter((l) => {
+    const ln = leerString(l.firmenname);
+    const ls = leerString(l.strasse);
+    if (ort && l.ort && leerString(l.ort) !== leerString(ort)) return false;
+    const nameTrifft = n.length >= 3 && (ln.includes(n) || n.includes(ln)) && ln.length >= 3;
+    const strasseTrifft = s.length >= 4 && ls === s;
+    return nameTrifft || strasseTrifft;
+  }).slice(0, 6);
+}
+
+function zeigeDubletten() {
+  const form = el("neu-form");
+  const hole = (k) => form.querySelector(`[name="${k}"]`)?.value || "";
+  const treffer = findeDubletten(hole("firmenname"), hole("strasse"), hole("ort"));
+  const kasten = el("neu-dubletten");
+
+  if (!treffer.length) { kasten.hidden = true; kasten.innerHTML = ""; return; }
+
+  kasten.hidden = false;
+  kasten.innerHTML = `
+    <p class="dubletten-kopf">Gibt es möglicherweise schon — anlegen geht trotzdem:</p>
+    ${treffer.map((l) => `
+      <button class="dublette" data-id="${l.id}">
+        <span class="nm">${esc(l.firmenname) || "ohne Namen"}</span>
+        <span class="sub">${esc(l.branche)}${l.strasse ? " · " + esc(l.strasse) : ""}${l.ort ? " · " + esc(l.ort) : ""}</span>
+        <span class="status" data-s="${esc(l.status)}">${esc(l.status)}</span>
+      </button>`).join("")}`;
+
+  kasten.querySelectorAll(".dublette").forEach((b) => {
+    b.onclick = () => { schliesseNeu(); oeffne(b.dataset.id); };
+  });
+}
+
+function oeffneNeu() {
+  const vorgabe = {
+    firmenname: "", branche: "", status: "Neu", strasse: "", plz: "", ort: "",
+    telefon: "", email: "", website: "", ansprechpartner: "",
+    bearbeiter: state.profil.id, prioritaet: null, notizen: "",
+    // Ort vorbelegen, wenn gerade nach einem gefiltert wird
+    ...(state.ort ? { ort: state.ort } : {}),
+  };
+
+  el("neu-form").innerHTML =
+    `<div class="grid2">${NEU_FELDER.map((f) => feldHtml(f, vorgabe, "n")).join("")}</div>`;
+  el("neu-melde").textContent = "";
+  el("neu-dubletten").hidden = true;
+  el("neu-scrim").hidden = false;
+  el("neu-modal").hidden = false;
+
+  el("neu-form").querySelectorAll('[name="firmenname"], [name="strasse"], [name="ort"]')
+    .forEach((e) => e.addEventListener("input", zeigeDubletten));
+
+  el("neu-form").querySelector('[name="firmenname"]').focus();
+}
+
+function schliesseNeu() {
+  el("neu-scrim").hidden = true;
+  el("neu-modal").hidden = true;
+}
+
+async function neuAnlegen() {
+  const form = el("neu-form");
+  const datensatz = {};
+  form.querySelectorAll("input, select, textarea").forEach((e) => {
+    datensatz[e.name] = leseFeld(e);
+  });
+
+  if (!datensatz.firmenname && !datensatz.ansprechpartner) {
+    el("neu-melde").textContent = "Firmenname oder Ansprechpartner wird gebraucht.";
+    el("neu-melde").className = "note err";
+    return;
+  }
+
+  datensatz.land = "Deutschland";
+  datensatz.status = datensatz.status || "Neu";
+  datensatz.lead_quelle = `Von Hand ${state.profil.name || ""} ${new Date().toLocaleDateString("de-DE")}`.trim();
+  datensatz.erstellt_von = state.profil.id;
+  datensatz.geaendert_von = state.profil.id;
+  // import_schluessel bleibt leer: Der ist eindeutig und wuerde das Anlegen
+  // eines bewusst doppelten Eintrags verhindern. Die Pruefung ist ein Hinweis,
+  // keine Sperre.
+
+  el("neu-melde").textContent = "legt an …";
+  el("neu-melde").className = "note";
+  el("neu-speichern").disabled = true;
+
+  const { data, error } = await sb.from("leads").insert(datensatz).select().single();
+  el("neu-speichern").disabled = false;
+
+  if (error) {
+    el("neu-melde").textContent = "Nicht angelegt: " + error.message;
+    el("neu-melde").className = "note err";
+    return;
+  }
+
+  state.leads.push({
+    ...data,
+    bearbeiter_name: state.team.find((t) => t.id === data.bearbeiter)?.name || "",
+    faellig_in_tagen: tageBis(data.wiedervorlage_am),
+  });
+
+  schliesseNeu();
+  zeichneFilter();
+  zeichne();
+  toast(`„${data.firmenname || data.ansprechpartner}" angelegt.`);
+  oeffne(data.id);
+}
+
+el("neu-oeffnen").onclick = oeffneNeu;
+el("neu-close").onclick = schliesseNeu;
+el("neu-scrim").onclick = schliesseNeu;
+el("neu-speichern").onclick = neuAnlegen;
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !el("neu-modal").hidden) schliesseNeu();
+});
 
 /* ---------------------------------------------------------------- Verlauf */
 

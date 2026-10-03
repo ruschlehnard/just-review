@@ -69,6 +69,7 @@
             <button class="btn ghost small" id="filter-reset" hidden>Filter zurücksetzen</button>
             <div class="chips" id="status-chips"></div>
           </div>
+          <button class="btn small" id="neu-oeffnen">+ Lead</button>
         </div>
 
         <div class="viewport">
@@ -159,6 +160,25 @@
     </div>
   </div>
 </aside>
+
+<!-- ====================================================== Neuer Lead -->
+<div class="scrim" id="neu-scrim" hidden></div>
+<div class="modal" id="neu-modal" hidden role="dialog" aria-modal="true" aria-labelledby="neu-titel">
+  <div class="modal-head">
+    <h2 id="neu-titel">Neuer Lead</h2>
+    <button class="btn ghost small" id="neu-close">Abbrechen</button>
+  </div>
+  <div class="modal-body">
+    <!-- Steht bewusst oben: unter dem Formular wäre der Hinweis beim
+         Tippen außerhalb des sichtbaren Bereichs. -->
+    <div class="dubletten" id="neu-dubletten" hidden></div>
+    <form id="neu-form" autocomplete="off"></form>
+  </div>
+  <div class="modal-foot">
+    <p class="note" id="neu-melde"></p>
+    <button class="btn" id="neu-speichern">Lead anlegen</button>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.47.10/dist/umd/supabase.min.js"></script>
 <script src="config.js"></script>
