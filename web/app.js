@@ -1068,8 +1068,33 @@ async function ladeVerlauf(leadId) {
 /* ------------------------------------------------------------------ Start */
 
 sb.auth.onAuthStateChange((ereignis) => {
-  if (ereignis === "SIGNED_IN" && el("app").hidden) start();
+  if (ereignis === "SIGNED_IN" && el("app").hidden) starten();
   if (ereignis === "SIGNED_OUT") zeigeGate();
 });
 
-start();
+/* Eine leere Seite ist das schlechteste Fehlerbild: Wirft start() irgendwo,
+   bleiben Anmeldemaske und Anwendung beide versteckt und niemand weiss warum.
+   Deshalb faengt diese Huelle alles ab und schreibt es sichtbar hin. */
+async function starten() {
+  try {
+    await start();
+  } catch (e) {
+    console.error("Start fehlgeschlagen:", e);
+    zeigeGate("Die Seite konnte nicht geladen werden: " + (e?.message || e));
+  }
+}
+
+// Auch Fehler, die ausserhalb von start() auftreten, sollen sichtbar werden.
+addEventListener("error", (e) => {
+  if (el("app").hidden && el("gate").hidden) {
+    zeigeGate("Fehler beim Laden: " + (e.message || "unbekannt"));
+  }
+});
+
+addEventListener("unhandledrejection", (e) => {
+  if (el("app").hidden && el("gate").hidden) {
+    zeigeGate("Fehler beim Laden: " + (e.reason?.message || e.reason || "unbekannt"));
+  }
+});
+
+starten();
