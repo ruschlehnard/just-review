@@ -174,7 +174,7 @@ async function start() {
   el("username").textContent = profil.name || profil.email;
   el("avatar").textContent = initialen(profil.name || profil.email);
 
-  await Promise.all([ladeTeam(), ladeListen()]);
+  await Promise.all([ladeTeam(), ladeListen(), ladeWatchlist()]);
   await ladeLeads();
   abonniere();
 }
@@ -415,6 +415,7 @@ function marken(l) {
   const t = tageBis(l.wiedervorlage_am);
   return [
     l.bearbeiter === state.profil.id ? '<span class="tag mine">meiner</span>' : "",
+    state.watch.has(l.id) ? '<span class="tag watch">Watchlist</span>' : "",
     t !== null && t <= 0 && !ERLEDIGT.has(l.status)
       ? `<span class="tag due">${t === 0 ? "heute fällig" : `${-t} T überfällig`}</span>` : "",
   ].filter(Boolean).join("");
@@ -528,13 +529,15 @@ async function prioWeiter(id) {
   }
 }
 
-/** Notiz an Ort und Stelle bearbeiten: Klick macht ein Eingabefeld daraus. */
-function notizBearbeiten(zelle, id) {
+/** Notiz an Ort und Stelle bearbeiten: Klick macht ein Eingabefeld daraus.
+ *  istWatch = true bearbeitet die persönliche Watchlist-Notiz statt der
+ *  Notiz am Lead, die das ganze Team sieht. */
+function notizBearbeiten(zelle, id, istWatch = false) {
   if (zelle.querySelector("input")) return;        // schon offen
   const lead = state.leads.find((l) => l.id === id);
   if (!lead) return;
 
-  const alt = lead.notizen || "";
+  const alt = istWatch ? (state.watch.get(id)?.notiz || "") : (lead.notizen || "");
   const feld = document.createElement("input");
   feld.type = "text";
   feld.value = alt;
@@ -552,11 +555,15 @@ function notizBearbeiten(zelle, id) {
     fertig = true;
     const neu = feld.value.trim();
     if (speichern && neu !== alt) {
-      merkeVorzustand(lead, { notizen: neu }, "Notiz");
-      await speichereLead(id, { notizen: neu });
-      if (state.offen?.id === id) zeichneSchublade();
+      if (istWatch) {
+        await watchNotiz(id, neu);
+      } else {
+        merkeVorzustand(lead, { notizen: neu }, "Notiz");
+        await speichereLead(id, { notizen: neu });
+        if (state.offen?.id === id) zeichneSchublade();
+      }
     }
-    zeichne();
+    if (state.bereich === "mein") zeichneMein(); else zeichne();
   };
 
   feld.onblur = () => beenden(true);
@@ -691,6 +698,25 @@ el("bulk-status").onchange = (e) => {
   if (!v) return;
   sammelAendern({ status: v }, `Status „${v}" setzen`);
   e.target.value = "";
+};
+
+el("bulk-mein").onclick = () =>
+  sammelAendern({ bearbeiter: state.profil.id }, "In deinen Bereich übernehmen");
+
+el("bulk-watch").onclick = async () => {
+  const ids = [...state.auswahl];
+  if (!ids.length) return;
+  if (!confirm(`${ids.length} Leads auf die Watchlist setzen?`)) return;
+
+  const zeilen = ids.map((lead_id) => ({ benutzer: state.profil.id, lead_id }));
+  for (let i = 0; i < zeilen.length; i += 200) {
+    const { error } = await sb.from("watchlist").upsert(zeilen.slice(i, i + 200));
+    if (error) return toast("Fehlgeschlagen: " + error.message);
+  }
+  ids.forEach((id) => state.watch.set(id, state.watch.get(id) || { notiz: "" }));
+  toast(`${ids.length} Leads auf der Watchlist.`);
+  state.auswahl.clear();
+  zeichne();
 };
 
 el("bulk-datum").onchange = (e) => {
@@ -1133,6 +1159,37 @@ state.termineAlle = false;
 state.terminOffen = null;     // Termin, der gerade bearbeitet wird
 state.terminLead = null;      // im Formular gewählter Betrieb
 
+state.watch = new Map();      // lead-id -> { notiz }
+
+async function ladeWatchlist() {
+  const { data, error } = await sb.from("watchlist")
+    .select("lead_id, notiz").eq("benutzer", state.profil.id);
+  if (error) { toast("Watchlist konnte nicht geladen werden: " + error.message); return; }
+  state.watch = new Map((data || []).map((w) => [w.lead_id, { notiz: w.notiz }]));
+}
+
+async function watchSetzen(leadId, drauf) {
+  if (drauf) {
+    const { error } = await sb.from("watchlist")
+      .upsert({ benutzer: state.profil.id, lead_id: leadId });
+    if (error) return toast("Nicht gemerkt: " + error.message);
+    state.watch.set(leadId, { notiz: "" });
+  } else {
+    const { error } = await sb.from("watchlist").delete()
+      .eq("benutzer", state.profil.id).eq("lead_id", leadId);
+    if (error) return toast("Nicht entfernt: " + error.message);
+    state.watch.delete(leadId);
+  }
+  if (state.bereich === "mein") zeichneMein(); else zeichne();
+}
+
+async function watchNotiz(leadId, notiz) {
+  const { error } = await sb.from("watchlist")
+    .update({ notiz }).eq("benutzer", state.profil.id).eq("lead_id", leadId);
+  if (error) return toast("Notiz nicht gespeichert: " + error.message);
+  state.watch.set(leadId, { notiz });
+}
+
 async function ladeTermine() {
   const { data, error } = await sb.from("termine_ansicht")
     .select("*").order("beginn", { ascending: true });
@@ -1182,6 +1239,46 @@ async function zeichneMein() {
     b.onclick = () => oeffneTermin(state.termine.find((t) => t.id === b.dataset.termin));
   });
 
+  // --- Meine Leads, getrennt nach schon angerufen ---
+  const meineLeads = state.leads.filter(
+    (l) => l.bearbeiter === state.profil.id && !ERLEDIGT.has(l.status));
+
+  const nochOffen = meineLeads
+    .filter((l) => !l.letzter_kontakt_am)
+    .sort((a, b) => (a.prioritaet || 9) - (b.prioritaet || 9)
+      || (a.firmenname || "").localeCompare(b.firmenname || "", "de"));
+
+  const schonAngerufen = meineLeads
+    .filter((l) => l.letzter_kontakt_am)
+    .sort((a, b) => (b.letzter_kontakt_am || "").localeCompare(a.letzter_kontakt_am || ""));
+
+  el("offen-zahl").textContent = nochOffen.length ? `${nochOffen.length} offen` : "";
+  el("offen-liste").innerHTML = nochOffen.length
+    ? nochOffen.slice(0, 200).map((l) => leadEintrag(l, { knopf: "angerufen", aktion: "angerufen" })).join("")
+    : '<p class="leer">Nichts offen. Oben suchen, um Leads hinzuzufügen.</p>';
+
+  el("erledigt-zahl").textContent = schonAngerufen.length ? `${schonAngerufen.length} erledigt` : "";
+  el("erledigt-liste").innerHTML = schonAngerufen.length
+    ? schonAngerufen.slice(0, 200).map((l) => leadEintrag(l, {
+        rechts: datumDe(l.letzter_kontakt_am) + (l.anzahl_kontakte > 1 ? ` · ${l.anzahl_kontakte}×` : ""),
+        knopf: "nochmal", aktion: "zurueck",
+      })).join("")
+    : '<p class="leer">Noch nichts angerufen.</p>';
+
+  // --- Watchlist ---
+  const gemerkt = [...state.watch.keys()]
+    .map((id) => state.leads.find((l) => l.id === id))
+    .filter(Boolean)
+    .sort((a, b) => (a.prioritaet || 9) - (b.prioritaet || 9)
+      || (a.firmenname || "").localeCompare(b.firmenname || "", "de"));
+
+  el("watch-zahl").textContent = gemerkt.length ? `${gemerkt.length} gemerkt` : "";
+  el("watch-liste").innerHTML = gemerkt.length
+    ? gemerkt.map((l) => leadEintrag(l, {
+        knopf: "entfernen", aktion: "unwatch", watch: true,
+      })).join("")
+    : '<p class="leer">Nichts gemerkt. Oben suchen oder in der Leads-Liste auswählen und „→ Watchlist“.</p>';
+
   // --- Priorisierte Leads ---
   const prio = state.leads
     .filter((l) => l.prioritaet && !ERLEDIGT.has(l.status))
@@ -1190,51 +1287,133 @@ async function zeichneMein() {
 
   el("prio-zahl").textContent = prio.length ? `${prio.length} offen` : "";
   el("prio-liste").innerHTML = prio.length
-    ? prio.map((l) => leadEintrag(l, PRIO_NAME[l.prioritaet])).join("")
+    ? prio.map((l) => leadEintrag(l, { rechts: PRIO_NAME[l.prioritaet] })).join("")
     : '<p class="leer">Noch nichts priorisiert. In der Liste links auf die Balken klicken.</p>';
 
-  // --- Heute dran ---
-  const heuteListe = state.leads.filter((l) => {
-    if (ERLEDIGT.has(l.status)) return false;
-    const t = tageBis(l.wiedervorlage_am);
-    if (t !== null && t <= 0) return true;
-    return l.bearbeiter === state.profil.id && !l.letzter_kontakt_am;
-  }).sort((a, b) => {
-    // Priorisierte zuerst, dann die am längsten überfälligen.
-    const pa = a.prioritaet || 9, pb = b.prioritaet || 9;
-    if (pa !== pb) return pa - pb;
-    const ta = tageBis(a.wiedervorlage_am), tb = tageBis(b.wiedervorlage_am);
-    if (ta !== null && tb === null) return -1;
-    if (ta === null && tb !== null) return 1;
-    if (ta !== null && tb !== null && ta !== tb) return ta - tb;
-    return (a.strasse || "").localeCompare(b.strasse || "", "de", { numeric: true });
-  }).slice(0, 60);
+  bindeEintraege();
+}
 
-  el("heute-zahl").textContent = heuteListe.length ? `${heuteListe.length} offen` : "";
-  el("heute-liste").innerHTML = heuteListe.length
-    ? heuteListe.map((l) => {
-        const t = tageBis(l.wiedervorlage_am);
-        const hinweis = t === null ? "nie kontaktiert"
-          : t === 0 ? "heute fällig" : `${-t} Tage überfällig`;
-        return leadEintrag(l, hinweis);
-      }).join("")
-    : '<p class="leer">Nichts fällig und nichts Offenes zugewiesen.</p>';
+/** Ein Lead als Zeile in Mein Bereich. opt: {rechts, knopf, aktion, watch} */
+function leadEintrag(l, opt = {}) {
+  const notiz = opt.watch ? (state.watch.get(l.id)?.notiz || "") : (l.notizen || "");
+  return `
+    <div class="eintrag" data-id="${l.id}">
+      <span class="prio-marke" data-p="${l.prioritaet || 0}"></span>
+      <span class="mitte">
+        <button class="nm nur-text" data-lead="${l.id}">${esc(l.firmenname) || "ohne Namen"}</button>
+        <span class="sub">${esc(l.branche)}${l.strasse ? " · " + esc(l.strasse) : ""}${l.ort ? " · " + esc(l.ort) : ""}</span>
+        <div class="notiz klein" tabindex="0" data-notiz="${opt.watch ? "watch" : "lead"}"
+             title="Klicken zum Bearbeiten">${esc(notiz) || '<span class="sub">Notiz …</span>'}</div>
+      </span>
+      ${opt.rechts ? `<span class="sub rechts">${esc(opt.rechts)}</span>` : ""}
+      ${opt.knopf ? `<button class="btn ghost small" data-aktion="${opt.aktion}">${esc(opt.knopf)}</button>` : ""}
+    </div>`;
+}
 
-  el("b-mein").querySelectorAll("[data-lead]").forEach((b) => {
-    b.onclick = () => oeffne(b.dataset.lead);
+function bindeEintraege() {
+  el("b-mein").querySelectorAll(".eintrag").forEach((zeile) => {
+    const id = zeile.dataset.id;
+
+    zeile.querySelector("[data-lead]").onclick = () => oeffne(id);
+
+    const notiz = zeile.querySelector("[data-notiz]");
+    if (notiz) {
+      const istWatch = notiz.dataset.notiz === "watch";
+      notiz.onclick = () => notizBearbeiten(notiz, id, istWatch);
+      notiz.onkeydown = (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); notizBearbeiten(notiz, id, istWatch); }
+      };
+    }
+
+    const knopf = zeile.querySelector("[data-aktion]");
+    if (knopf) knopf.onclick = () => meinAktion(id, knopf.dataset.aktion);
   });
 }
 
-function leadEintrag(l, hinweis) {
-  return `
-    <button class="eintrag" data-lead="${l.id}">
-      <span class="prio-marke" data-p="${l.prioritaet || 0}"></span>
-      <span class="mitte">
+async function meinAktion(id, aktion) {
+  const lead = state.leads.find((l) => l.id === id);
+  if (!lead) return;
+
+  if (aktion === "angerufen") {
+    const aenderung = {
+      letzter_kontakt_am: heute(),
+      anzahl_kontakte: (lead.anzahl_kontakte || 0) + 1,
+      kontaktkanal: lead.kontaktkanal || (lead.telefon ? "Telefon" : "Persönlich vor Ort"),
+    };
+    if (!lead.kontaktiert_am) aenderung.kontaktiert_am = heute();
+    if (lead.status === "Neu" || lead.status === "Recherchiert") aenderung.status = "Kontaktiert";
+    merkeVorzustand(lead, aenderung, "Angerufen");
+    await speichereLead(id, aenderung);
+    toast(`„${lead.firmenname}" als angerufen vermerkt.`);
+  } else if (aktion === "zurueck") {
+    const aenderung = { letzter_kontakt_am: null };
+    merkeVorzustand(lead, aenderung, "Zurück in die Anrufliste");
+    await speichereLead(id, aenderung);
+    toast(`„${lead.firmenname}" steht wieder zum Anrufen an.`);
+  } else if (aktion === "unwatch") {
+    return watchSetzen(id, false);
+  }
+  zeichneMein();
+}
+
+/* ------------------------------------------- Leads suchen und hinzufügen */
+
+document.querySelectorAll(".sucher").forEach((sucher) => {
+  const feld = sucher.querySelector("input");
+  const kasten = sucher.querySelector(".lead-treffer");
+  const ziel = sucher.dataset.ziel;
+
+  feld.addEventListener("input", () => {
+    const q = leerString(feld.value);
+    if (q.length < 2) { kasten.hidden = true; return; }
+
+    const treffer = state.leads
+      .filter((l) => leerString(l.firmenname).includes(q) || leerString(l.strasse).includes(q))
+      .slice(0, 8);
+
+    if (!treffer.length) { kasten.hidden = true; return; }
+    kasten.hidden = false;
+    kasten.innerHTML = treffer.map((l) => `
+      <button class="treffer" data-id="${l.id}">
         <span class="nm">${esc(l.firmenname) || "ohne Namen"}</span>
         <span class="sub">${esc(l.branche)}${l.strasse ? " · " + esc(l.strasse) : ""}${l.ort ? " · " + esc(l.ort) : ""}</span>
-      </span>
-      <span class="sub rechts">${esc(hinweis)}</span>
-    </button>`;
+      </button>`).join("");
+
+    kasten.querySelectorAll(".treffer").forEach((b) => {
+      b.onclick = async () => {
+        const id = b.dataset.id;
+        feld.value = "";
+        kasten.hidden = true;
+        await hinzufuegen(id, ziel);
+      };
+    });
+  });
+});
+
+async function hinzufuegen(id, ziel) {
+  const lead = state.leads.find((l) => l.id === id);
+  if (!lead) return;
+
+  if (ziel === "watch") {
+    await watchSetzen(id, true);
+    return toast(`„${lead.firmenname}" auf die Watchlist gesetzt.`);
+  }
+
+  const aenderung = { bearbeiter: state.profil.id };
+  // "Schon angerufen" heisst: Kontaktdatum setzen, sonst landet er im
+  // falschen Block.
+  if (ziel === "erledigt" && !lead.letzter_kontakt_am) {
+    aenderung.letzter_kontakt_am = heute();
+    aenderung.anzahl_kontakte = (lead.anzahl_kontakte || 0) + 1;
+    if (!lead.kontaktiert_am) aenderung.kontaktiert_am = heute();
+    if (lead.status === "Neu" || lead.status === "Recherchiert") aenderung.status = "Kontaktiert";
+  }
+  if (ziel === "offen" && lead.letzter_kontakt_am) aenderung.letzter_kontakt_am = null;
+
+  merkeVorzustand(lead, aenderung, "In Mein Bereich übernommen");
+  await speichereLead(id, aenderung);
+  zeichneMein();
+  toast(`„${lead.firmenname}" übernommen.`);
 }
 
 /* ------------------------------------------------------- Termin anlegen */

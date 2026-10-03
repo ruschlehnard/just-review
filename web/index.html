@@ -118,18 +118,46 @@
 
           <section class="block">
             <header class="block-kopf">
-              <h2>Priorisierte Leads</h2>
-              <span class="note" id="prio-zahl"></span>
+              <h2>Muss noch angerufen werden</h2>
+              <span class="note" id="offen-zahl"></span>
             </header>
-            <div class="liste" id="prio-liste"></div>
+            <div class="sucher" data-ziel="offen">
+              <input type="search" placeholder="Lead suchen und hinzufügen …" autocomplete="off">
+              <div class="lead-treffer" hidden></div>
+            </div>
+            <div class="liste" id="offen-liste"></div>
           </section>
 
           <section class="block">
             <header class="block-kopf">
-              <h2>Heute dran</h2>
-              <span class="note" id="heute-zahl"></span>
+              <h2>Schon angerufen</h2>
+              <span class="note" id="erledigt-zahl"></span>
             </header>
-            <div class="liste" id="heute-liste"></div>
+            <div class="sucher" data-ziel="erledigt">
+              <input type="search" placeholder="Lead suchen und hinzufügen …" autocomplete="off">
+              <div class="lead-treffer" hidden></div>
+            </div>
+            <div class="liste" id="erledigt-liste"></div>
+          </section>
+
+          <section class="block">
+            <header class="block-kopf">
+              <h2>Watchlist</h2>
+              <span class="note" id="watch-zahl"></span>
+            </header>
+            <div class="sucher" data-ziel="watch">
+              <input type="search" placeholder="Lead suchen und auf die Watchlist setzen …" autocomplete="off">
+              <div class="lead-treffer" hidden></div>
+            </div>
+            <div class="liste" id="watch-liste"></div>
+          </section>
+
+          <section class="block">
+            <header class="block-kopf">
+              <h2>Priorisierte Leads</h2>
+              <span class="note" id="prio-zahl"></span>
+            </header>
+            <div class="liste" id="prio-liste"></div>
           </section>
 
         </div>
@@ -150,6 +178,8 @@
       <label class="bulk-date">Wiedervorlage
         <input type="date" id="bulk-datum">
       </label>
+      <button class="btn small" id="bulk-mein">→ Mein Bereich</button>
+      <button class="btn ghost small" id="bulk-watch">→ Watchlist</button>
       <button class="btn ghost small" id="bulk-clear">Auswahl aufheben</button>
     </div>
   </div>

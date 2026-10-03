@@ -188,14 +188,31 @@ h1 {
 .liste .leer { padding: 22px 14px; color: var(--muted); font-size: 13px; margin: 0; }
 
 .eintrag {
-  appearance: none; font: inherit; text-align: left; cursor: pointer;
+  appearance: none; font: inherit; text-align: left;
   background: transparent; border: 0; border-bottom: 1px solid var(--line-soft);
   padding: 9px 14px;
   display: flex; align-items: center; gap: 10px;
 }
 
+button.eintrag { cursor: pointer; }
 .eintrag:last-child { border-bottom: 0; }
 .eintrag:hover { background: var(--raised); }
+
+/* Name als Knopf, sieht aber aus wie Text */
+.nur-text {
+  appearance: none; background: transparent; border: 0; padding: 0;
+  font: inherit; color: inherit; text-align: left; cursor: pointer;
+}
+
+.nur-text:hover { color: var(--accent); }
+
+.notiz.klein {
+  font-size: 12px; color: var(--muted); margin-top: 2px; max-width: 100%;
+}
+
+.sucher { padding: 9px 14px; border-bottom: 1px solid var(--line-soft); }
+.sucher input { width: 100%; }
+.tag.watch { border-color: var(--accent); color: var(--accent); }
 .eintrag .mitte { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .eintrag .nm { font-weight: 600; font-size: 13.5px; }
 .eintrag .sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
