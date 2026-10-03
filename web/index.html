@@ -13,7 +13,7 @@
 <!-- ===================================================== Anmeldung -->
 <div class="gate" id="gate" hidden>
   <div class="gate-card">
-    <span class="note" style="font-family:var(--ff-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)">just-review</span>
+    <span class="eyebrow">just-review</span>
     <h1 style="font-size:26px">Lead-Dashboard</h1>
     <p id="gate-text">Melde dich mit dem Google-Konto an, das für dich freigeschaltet wurde.</p>
     <button class="btn" id="login">Mit Google anmelden</button>
@@ -30,7 +30,15 @@
         <span class="eyebrow">just-review</span>
         <h1>Leads</h1>
       </div>
+
+      <nav class="views" id="views" aria-label="Ansicht">
+        <button class="view-btn" data-view="liste" aria-pressed="true">Liste</button>
+        <button class="view-btn" data-view="strasse" aria-pressed="false">Straße</button>
+        <button class="view-btn" data-view="heute" aria-pressed="false">Heute</button>
+      </nav>
+
       <span class="live" id="live" data-on="false">verbinde…</span>
+      <button class="btn ghost small" id="stats-toggle" aria-expanded="false">Fortschritt</button>
       <div class="whoami">
         <span class="avatar" id="avatar">–</span>
         <span id="username"></span>
@@ -40,55 +48,92 @@
   </header>
 
   <main>
+    <!-- Fortschritt je Person, ausklappbar -->
+    <section class="stats" id="stats" hidden aria-label="Fortschritt"></section>
+
     <div class="tiles" id="tiles"></div>
 
     <div class="filters">
       <input type="search" id="q" placeholder="Firma, Branche, Straße oder Ort suchen …" autocomplete="off">
-      <select id="f-ort" aria-label="Ort"><option value="">Alle Orte</option></select>
-      <select id="f-bearbeiter" aria-label="Bearbeiter"><option value="">Alle Bearbeiter</option></select>
-      <select id="f-branche" aria-label="Branche"><option value="">Alle Branchen</option></select>
-      <div class="chips" id="status-chips"></div>
+      <button class="btn ghost small nur-handy" id="filter-toggle" aria-expanded="false">Filter</button>
+      <div class="filter-mehr" id="filter-mehr">
+        <select id="f-ort" aria-label="Ort"><option value="">Alle Orte</option></select>
+        <select id="f-bearbeiter" aria-label="Bearbeiter"><option value="">Alle Bearbeiter</option></select>
+        <select id="f-branche" aria-label="Branche"><option value="">Alle Branchen</option></select>
+        <button class="btn ghost small" id="filter-reset" hidden>Filter zurücksetzen</button>
+        <div class="chips" id="status-chips"></div>
+      </div>
     </div>
 
-    <div class="tablewrap">
-      <table>
-        <thead>
-          <tr>
-            <th class="stripe" aria-label="Kennzeichnung"></th>
-            <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
-            <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
-            <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
-            <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
-            <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
-            <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
-            <th>Kontakt</th>
-          </tr>
-        </thead>
-        <tbody id="tb"></tbody>
-      </table>
-      <div class="empty" id="empty" hidden>Kein Treffer. Filter zurücksetzen.</div>
+    <div class="viewport" id="viewport">
+      <!-- Liste und Heute -->
+      <div class="tablewrap" id="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="pick"><input type="checkbox" id="pick-all" aria-label="Alle angezeigten auswählen"></th>
+              <th class="stripe" aria-label="Kennzeichnung"></th>
+              <th class="sortable" data-k="firmenname">Betrieb<span class="arrow">↓</span></th>
+              <th class="sortable" data-k="ort">Ort<span class="arrow">↓</span></th>
+              <th class="sortable" data-k="status">Status<span class="arrow">↓</span></th>
+              <th class="sortable" data-k="bearbeiter_name">Bearbeiter<span class="arrow">↓</span></th>
+              <th class="sortable" data-k="letzter_kontakt_am">Letzter Kontakt<span class="arrow">↓</span></th>
+              <th class="sortable" data-k="wiedervorlage_am">Wiedervorlage<span class="arrow">↓</span></th>
+              <th>Kontakt</th>
+            </tr>
+          </thead>
+          <tbody id="tb"></tbody>
+        </table>
+        <div class="empty" id="empty" hidden></div>
+      </div>
+
+      <!-- Straßen-Modus -->
+      <div class="streets" id="streets" hidden></div>
     </div>
 
-    <p class="note" id="count" style="margin-top:10px"></p>
+    <p class="note" id="count"></p>
   </main>
+
+  <!-- Sammelaktionen, erscheint bei Auswahl -->
+  <div class="bulkbar" id="bulkbar" hidden>
+    <div class="bulkbar-inner">
+      <strong id="bulk-count">0 ausgewählt</strong>
+      <select id="bulk-bearbeiter" aria-label="Bearbeiter zuweisen">
+        <option value="">Bearbeiter zuweisen …</option>
+      </select>
+      <select id="bulk-status" aria-label="Status setzen">
+        <option value="">Status setzen …</option>
+      </select>
+      <label class="bulk-date">Wiedervorlage
+        <input type="date" id="bulk-datum">
+      </label>
+      <button class="btn ghost small" id="bulk-clear">Auswahl aufheben</button>
+    </div>
+  </div>
 </div>
 
 <!-- ======================================================= Schublade -->
 <div class="scrim" id="scrim" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Lead bearbeiten">
   <div class="drawer-head">
-    <h2 id="d-title">—</h2>
-    <button class="btn ghost small" id="d-close">Schließen</button>
+    <div class="drawer-title">
+      <h2 id="d-title">—</h2>
+      <p class="sub" id="d-sub"></p>
+    </div>
+    <div class="drawer-nav">
+      <button class="btn ghost small" id="d-prev" title="Voriger Lead">↑</button>
+      <button class="btn ghost small" id="d-next" title="Nächster Lead">↓</button>
+      <button class="btn ghost small" id="d-close">Schließen</button>
+    </div>
   </div>
   <div class="drawer-body">
     <div class="quick" id="d-quick"></div>
     <p class="saving" id="d-saving"></p>
     <form id="d-form" autocomplete="off"></form>
-
-    <fieldset>
-      <legend>Verlauf</legend>
+    <details id="d-log-box">
+      <summary>Verlauf</summary>
       <div class="log" id="d-log"><p class="note">wird geladen …</p></div>
-    </fieldset>
+    </details>
   </div>
 </aside>
 

@@ -1,11 +1,10 @@
 /* just-review Lead-Dashboard
    Statische Seite, redet direkt mit Supabase. Kein eigener Server.
 
-   Ablauf:
-     1. Google-Anmeldung über Supabase Auth
-     2. Profil laden - wer keins hat, ist nicht eingeladen und sieht nichts
-     3. Leads laden, Echtzeit abonnieren
-     4. Änderungen gehen sofort an die Datenbank, der Trigger protokolliert sie
+   Drei Ansichten über denselben Datenbestand:
+     Liste    Tabelle mit Filtern, auf dem Handy als Kartenliste
+     Straße   nach Straße gruppiert, Hausnummern der Reihe nach - Außendienst
+     Heute    überfällige Wiedervorlagen und die nächsten offenen Leads
 */
 
 "use strict";
@@ -17,7 +16,7 @@ const esc = (s) => String(s ?? "").replace(/[&<>"]/g,
 if (!window.CONFIG || window.CONFIG.SUPABASE_URL.includes("DEIN-PROJEKT")) {
   document.body.innerHTML =
     '<div class="gate"><div class="gate-card"><h1>Einrichtung fehlt</h1>' +
-    '<p>Kopiere <code>config.example.js</code> zu <code>config.js</code> ' +
+    "<p>Kopiere <code>config.example.js</code> zu <code>config.js</code> " +
     "und trag die Werte aus Supabase ein.</p></div></div>";
   throw new Error("config.js fehlt oder ist nicht ausgefüllt");
 }
@@ -31,7 +30,11 @@ const sb = window.supabase.createClient(
 const STATUS = [
   "Neu", "Recherchiert", "Kontaktiert", "Follow-up", "Termin vereinbart",
   "Angebot gesendet", "Verhandlung", "Gewonnen", "Verloren / kein Interesse",
+  "Nicht relevant",
 ];
+
+// Status, die als abgeschlossen gelten - sie zählen nicht mehr als offen.
+const ERLEDIGT = new Set(["Gewonnen", "Verloren / kein Interesse", "Nicht relevant"]);
 
 const state = {
   profil: null,
@@ -39,16 +42,17 @@ const state = {
   team: [],
   listen: {},
   offen: null,
+  view: "liste",
   q: "", ort: "", bearbeiter: "", branche: "",
   status: new Set(),
   kachel: "",
   sort: { k: "firmenname", dir: 1 },
+  auswahl: new Set(),
 };
 
 /* Letzte Änderung je Lead, damit sie zurückgenommen werden kann:
    lead-id -> { label, vorher: {feld: Wert davor} }
-   Nur im Speicher - nach dem Neuladen der Seite ist der Verlauf weg. Was
-   dauerhaft nachvollziehbar sein muss, steht unten in der Tabelle "Verlauf". */
+   Nur im Speicher. Was dauerhaft nachvollziehbar sein muss, steht im Verlauf. */
 const rueckgaengig = new Map();
 
 /* ------------------------------------------------------------- Werkzeuge */
@@ -83,8 +87,22 @@ function tageBis(iso) {
   return Math.round(ms / 86400000);
 }
 
+function inTagen(n) {
+  const d = new Date();
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
 const initialen = (name) =>
   (name || "?").split(/\s+/).slice(0, 2).map((w) => w[0] || "").join("").toUpperCase();
+
+/** "Alemannenstraße 7" -> {strasse: "Alemannenstraße", nr: "7", sort: 7} */
+function adresseTeilen(roh) {
+  const text = (roh || "").trim();
+  const m = text.match(/^(.*?)[\s,]+(\d+\s*[-/]?\s*\w*)$/);
+  if (!m) return { strasse: text || "Ohne Straße", nr: "", sort: 0 };
+  return { strasse: m[1].trim(), nr: m[2].trim(), sort: parseInt(m[2], 10) || 0 };
+}
 
 /* ------------------------------------------------------------- Anmeldung */
 
@@ -125,10 +143,7 @@ async function start() {
     return zeigeGate("Sitzung konnte nicht gelesen werden: " + sitzungsfehler.message);
   }
   if (!session) {
-    // Nach einer Rückleitung von Google sollte hier eine Sitzung stehen. Tut
-    // sie es nicht, ist der Code-Tausch gescheitert - das muss man sehen.
-    const kamVonGoogle = new URLSearchParams(location.search).has("code");
-    if (kamVonGoogle) {
+    if (new URLSearchParams(location.search).has("code")) {
       history.replaceState(null, "", location.pathname);
       return zeigeGate(
         "Google hat zurückgeleitet, aber Supabase konnte daraus keine Sitzung " +
@@ -142,16 +157,12 @@ async function start() {
   const { data: profil, error } = await sb
     .from("profiles").select("*").eq("id", session.user.id).maybeSingle();
 
-  if (error) {
-    zeigeGate(`Profil konnte nicht geladen werden: ${error.message}`);
-    return;
-  }
+  if (error) return zeigeGate(`Profil konnte nicht geladen werden: ${error.message}`);
   if (!profil) {
-    zeigeGate(
+    return zeigeGate(
       `Für ${session.user.email} ist kein Zugang freigeschaltet. ` +
       "Bitte Leon melden, damit er dich in der Tabelle 'einladungen' einträgt."
     );
-    return;
   }
 
   state.profil = profil;
@@ -188,9 +199,7 @@ async function ladeTeam() {
 async function ladeListen() {
   const { data } = await sb.from("listen").select("kategorie,wert").order("sortierung");
   state.listen = {};
-  (data || []).forEach(({ kategorie, wert }) => {
-    (state.listen[kategorie] ||= []).push(wert);
-  });
+  (data || []).forEach(({ kategorie, wert }) => { (state.listen[kategorie] ||= []).push(wert); });
   if (!state.listen.status) state.listen.status = STATUS;
 }
 
@@ -213,23 +222,22 @@ async function ladeLeads() {
 
 function abonniere() {
   sb.channel("leads-live")
-    .on("postgres_changes", { event: "*", schema: "public", table: "leads" }, (nutzlast) => {
-      const { eventType, new: neu, old: alt } = nutzlast;
+    .on("postgres_changes", { event: "*", schema: "public", table: "leads" }, ({ eventType, new: neu, old: alt }) => {
       if (eventType === "DELETE") {
         state.leads = state.leads.filter((l) => l.id !== alt.id);
+        state.auswahl.delete(alt.id);
       } else {
         const i = state.leads.findIndex((l) => l.id === neu.id);
-        // Realtime liefert die Tabelle, nicht die Sicht - abgeleitete Felder ergänzen.
-        const angereichert = {
+        // Realtime liefert die Tabelle, nicht die Sicht - Abgeleitetes ergänzen.
+        const voll = {
           ...neu,
           bearbeiter_name: state.team.find((t) => t.id === neu.bearbeiter)?.name || "",
           faellig_in_tagen: tageBis(neu.wiedervorlage_am),
         };
-        if (i >= 0) state.leads[i] = angereichert;
-        else state.leads.push(angereichert);
+        if (i >= 0) state.leads[i] = voll; else state.leads.push(voll);
 
         if (state.offen?.id === neu.id && document.activeElement?.form?.id !== "d-form") {
-          state.offen = angereichert;
+          state.offen = voll;
           zeichneSchublade();
         }
       }
@@ -247,9 +255,10 @@ function abonniere() {
 const KACHELN = [
   { id: "", cls: "", lbl: "Leads gesamt", f: () => true },
   { id: "meine", cls: "t-acc", lbl: "Meine Leads", f: (l) => l.bearbeiter === state.profil.id },
-  { id: "offen", cls: "", lbl: "Nie kontaktiert", f: (l) => !l.letzter_kontakt_am },
+  { id: "frei", cls: "t-grey", lbl: "Nicht zugewiesen", f: (l) => !l.bearbeiter },
+  { id: "offen", cls: "", lbl: "Nie kontaktiert", f: (l) => !l.letzter_kontakt_am && !ERLEDIGT.has(l.status) },
   { id: "faellig", cls: "t-warn", lbl: "Wiedervorlage fällig", f: (l) => {
-      const t = tageBis(l.wiedervorlage_am); return t !== null && t <= 0; } },
+      const t = tageBis(l.wiedervorlage_am); return t !== null && t <= 0 && !ERLEDIGT.has(l.status); } },
   { id: "noweb", cls: "t-hot", lbl: "Ohne Website", f: (l) => !l.website },
   { id: "gewonnen", cls: "t-good", lbl: "Gewonnen", f: (l) => l.status === "Gewonnen" },
 ];
@@ -261,10 +270,7 @@ function zeichneKacheln() {
       <span class="lbl">${esc(k.lbl)}</span>
     </button>`).join("");
   el("tiles").querySelectorAll(".tile").forEach((b) => {
-    b.onclick = () => {
-      state.kachel = state.kachel === b.dataset.k ? "" : b.dataset.k;
-      zeichneKacheln(); zeichne();
-    };
+    b.onclick = () => { state.kachel = state.kachel === b.dataset.k ? "" : b.dataset.k; zeichne(); };
   });
 }
 
@@ -276,19 +282,23 @@ function zeichneFilter() {
       `<option value="${esc(w.v)}"${w.v === aktuell ? " selected" : ""}>${esc(w.t)}</option>`).join("");
   };
 
-  const orte = [...new Set(state.leads.map((l) => l.ort).filter(Boolean))].sort((a, b) =>
-    a.localeCompare(b, "de"));
-  fuellen("f-ort", orte.map((o) => ({
-    v: o, t: `${o} (${state.leads.filter((l) => l.ort === o).length})` })), state.ort);
+  const orte = [...new Set(state.leads.map((l) => l.ort).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
+  fuellen("f-ort", orte.map((o) => ({ v: o, t: `${o} (${state.leads.filter((l) => l.ort === o).length})` })), state.ort);
 
-  fuellen("f-bearbeiter", [
-    { v: "__keiner", t: "– nicht zugeordnet –" },
-    ...state.team.map((t) => ({ v: t.id, t: t.name || t.email })),
-  ], state.bearbeiter);
+  const leute = [{ v: "__keiner", t: "– nicht zugeordnet –" },
+    ...state.team.map((t) => ({ v: t.id, t: t.name || t.email }))];
+  fuellen("f-bearbeiter", leute, state.bearbeiter);
 
-  const branchen = [...new Set(state.leads.map((l) => l.branche).filter(Boolean))].sort((a, b) =>
-    a.localeCompare(b, "de"));
+  const branchen = [...new Set(state.leads.map((l) => l.branche).filter(Boolean))].sort((a, b) => a.localeCompare(b, "de"));
   fuellen("f-branche", branchen.map((b) => ({ v: b, t: b })), state.branche);
+
+  // Sammelaktionen teilen sich die Listen
+  el("bulk-bearbeiter").innerHTML =
+    '<option value="">Bearbeiter zuweisen …</option><option value="__keiner">– niemandem –</option>' +
+    state.team.map((t) => `<option value="${esc(t.id)}">${esc(t.name || t.email)}</option>`).join("");
+  el("bulk-status").innerHTML =
+    '<option value="">Status setzen …</option>' +
+    (state.listen.status || STATUS).map((s) => `<option value="${esc(s)}">${esc(s)}</option>`).join("");
 
   el("status-chips").innerHTML = (state.listen.status || STATUS).map((s) => `
     <button class="chip" data-s="${esc(s)}" aria-pressed="${state.status.has(s)}">
@@ -298,12 +308,12 @@ function zeichneFilter() {
     b.onclick = () => {
       const s = b.dataset.s;
       state.status.has(s) ? state.status.delete(s) : state.status.add(s);
-      zeichneFilter(); zeichne();
+      zeichne();
     };
   });
 }
 
-/* --------------------------------------------------------------- Tabelle */
+/* ----------------------------------------------------------------- Filter */
 
 function sichtbar() {
   const kachel = KACHELN.find((k) => k.id === state.kachel);
@@ -323,6 +333,23 @@ function sichtbar() {
     return true;
   });
 
+  if (state.view === "heute") {
+    // Überfällige Wiedervorlagen zuerst, dann meine offenen, dann der Rest.
+    out = out.filter((l) => {
+      if (ERLEDIGT.has(l.status)) return false;
+      const t = tageBis(l.wiedervorlage_am);
+      if (t !== null && t <= 0) return true;
+      return l.bearbeiter === state.profil.id && !l.letzter_kontakt_am;
+    });
+    return out.sort((a, b) => {
+      const ta = tageBis(a.wiedervorlage_am), tb = tageBis(b.wiedervorlage_am);
+      if (ta !== null && tb === null) return -1;
+      if (ta === null && tb !== null) return 1;
+      if (ta !== null && tb !== null && ta !== tb) return ta - tb;
+      return (a.strasse || "").localeCompare(b.strasse || "", "de", { numeric: true });
+    });
+  }
+
   const { k, dir } = state.sort;
   out.sort((a, b) => {
     const av = a[k] ?? "", bv = b[k] ?? "";
@@ -333,48 +360,282 @@ function sichtbar() {
   return out;
 }
 
+/* ------------------------------------------------------- Zeichnen gesamt */
+
 function zeichne() {
   zeichneKacheln();
   const rows = sichtbar();
+
+  const gefiltert = state.q || state.ort || state.bearbeiter || state.branche
+    || state.status.size || state.kachel;
+  el("filter-reset").hidden = !gefiltert;
+
+  el("tablewrap").hidden = state.view === "strasse";
+  el("streets").hidden = state.view !== "strasse";
+
+  if (state.view === "strasse") zeichneStrassen(rows);
+  else zeichneTabelle(rows);
+
+  el("count").textContent = state.view === "heute"
+    ? `${rows.length} heute dran — überfällige Wiedervorlagen und deine offenen Leads`
+    : `${rows.length} von ${state.leads.length} Leads angezeigt`;
+
+  zeichneBulk();
+  if (el("stats").hidden === false) zeichneStats();
+}
+
+function zeilenKlasse(l) {
+  const t = tageBis(l.wiedervorlage_am);
+  return [
+    !l.website ? "no-web" : "",
+    t !== null && t <= 0 && !ERLEDIGT.has(l.status) ? "faellig" : "",
+    ERLEDIGT.has(l.status) ? "inaktiv" : "",
+    state.auswahl.has(l.id) ? "gewaehlt" : "",
+  ].filter(Boolean).join(" ");
+}
+
+/* Nur Auffälliges markieren. "Keine Website" und "keine Nummer" sind bei
+   diesem Bestand der Normalfall (62 % bzw. 86 %) - als Marke wären sie
+   Rauschen. Die fehlende Website zeigt der rote Streifen links, die Nummer
+   sieht man in der Kontaktspalte. */
+function marken(l) {
+  const t = tageBis(l.wiedervorlage_am);
+  return [
+    l.bearbeiter === state.profil.id ? '<span class="tag mine">meiner</span>' : "",
+    t !== null && t <= 0 && !ERLEDIGT.has(l.status)
+      ? `<span class="tag due">${t === 0 ? "heute fällig" : `${-t} T überfällig`}</span>` : "",
+  ].filter(Boolean).join("");
+}
+
+function kontaktZellen(l) {
+  return `
+    ${l.telefon ? `<a class="tel" href="tel:${esc(l.telefon)}" onclick="event.stopPropagation()">${esc(l.telefon)}</a>`
+      : '<span class="dot">T</span>'}
+    ${l.email ? `<a class="dot on" href="mailto:${esc(l.email)}" title="${esc(l.email)}" onclick="event.stopPropagation()">@</a>` : ""}
+    ${l.website ? `<a class="dot on" href="${esc(l.website)}" target="_blank" rel="noopener noreferrer" title="${esc(l.website)}" onclick="event.stopPropagation()">W</a>` : ""}
+    ${l.google_profil_link ? `<a class="dot on" href="${esc(l.google_profil_link)}" target="_blank" rel="noopener noreferrer" title="Google-Profil" onclick="event.stopPropagation()">G</a>` : ""}`;
+}
+
+/* --------------------------------------------------------- Ansicht Liste */
+
+function zeichneTabelle(rows) {
   el("empty").hidden = rows.length > 0;
-  el("count").textContent =
-    `${rows.length} von ${state.leads.length} Leads angezeigt`;
+  el("empty").textContent = state.view === "heute"
+    ? "Nichts fällig und nichts Offenes zugewiesen. Schöner Tag."
+    : "Kein Treffer. Filter zurücksetzen.";
 
-  el("tb").innerHTML = rows.map((l) => {
-    const faellig = tageBis(l.wiedervorlage_am);
-    const istFaellig = faellig !== null && faellig <= 0;
-    const cls = [!l.website ? "no-web" : "", istFaellig ? "faellig" : ""].filter(Boolean).join(" ");
-    const tags = [
-      l.bearbeiter === state.profil.id ? '<span class="tag mine">meiner</span>' : "",
-      !l.website ? '<span class="tag nw">keine Website</span>' : "",
-      istFaellig ? `<span class="tag due">${faellig === 0 ? "heute fällig" : `${-faellig} T überfällig`}</span>` : "",
-    ].filter(Boolean).join("");
-
-    return `<tr data-id="${l.id}" class="${cls}" aria-selected="${state.offen?.id === l.id}">
+  el("tb").innerHTML = rows.map((l) => `
+    <tr data-id="${l.id}" class="${zeilenKlasse(l)}" aria-selected="${state.offen?.id === l.id}">
+      <td class="pick"><input type="checkbox" ${state.auswahl.has(l.id) ? "checked" : ""}
+          aria-label="${esc(l.firmenname || "Lead")} auswählen"></td>
       <td class="stripe"><i></i></td>
-      <td>
+      <td class="klick zelle-name">
         <span class="nm">${esc(l.firmenname) || '<span class="sub">ohne Firmenname</span>'}</span>
-        ${tags ? `<div class="tags">${tags}</div>` : ""}
+        ${marken(l) ? `<div class="tags">${marken(l)}</div>` : ""}
         <div class="sub">${esc(l.branche)}${l.strasse ? " · " + esc(l.strasse) : ""}</div>
       </td>
-      <td>${esc(l.ort)}<div class="sub mono">${esc(l.plz)}</div></td>
-      <td><span class="status" data-s="${esc(l.status)}">${esc(l.status)}</span></td>
-      <td>${esc(l.bearbeiter_name) || '<span class="sub">—</span>'}</td>
-      <td class="mono">${datumDe(l.letzter_kontakt_am) || '<span class="sub">nie</span>'}
-        ${l.anzahl_kontakte ? `<div class="sub">${l.anzahl_kontakte}× Kontakt</div>` : ""}</td>
-      <td class="mono">${datumDe(l.wiedervorlage_am) || '<span class="sub">—</span>'}</td>
-      <td>
-        ${l.telefon ? `<a class="dot on" href="tel:${esc(l.telefon)}" title="${esc(l.telefon)}" onclick="event.stopPropagation()">T</a>` : '<span class="dot">T</span>'}
-        ${l.email ? `<a class="dot on" href="mailto:${esc(l.email)}" title="${esc(l.email)}" onclick="event.stopPropagation()">@</a>` : '<span class="dot">@</span>'}
-        ${l.website ? `<a class="dot on" href="${esc(l.website)}" target="_blank" rel="noopener noreferrer" title="${esc(l.website)}" onclick="event.stopPropagation()">W</a>` : '<span class="dot">W</span>'}
-      </td>
-    </tr>`;
-  }).join("");
+      <td class="klick" data-label="Ort">${esc(l.ort)}<div class="sub mono">${esc(l.plz)}</div></td>
+      <td class="klick" data-label="Status"><span class="status" data-s="${esc(l.status)}">${esc(l.status)}</span></td>
+      <td class="klick" data-label="Bearbeiter">${esc(l.bearbeiter_name) || '<span class="sub">—</span>'}</td>
+      <td class="klick mono" data-label="Letzter Kontakt">${datumDe(l.letzter_kontakt_am) || '<span class="sub">nie</span>'}${
+        l.anzahl_kontakte ? `<div class="sub">${l.anzahl_kontakte}× Kontakt</div>` : ""}</td>
+      <td class="klick mono" data-label="Wiedervorlage">${datumDe(l.wiedervorlage_am) || '<span class="sub">—</span>'}</td>
+      <td class="zelle-kontakt">${kontaktZellen(l)}</td>
+    </tr>`).join("");
 
   el("tb").querySelectorAll("tr").forEach((tr) => {
-    tr.onclick = () => oeffne(tr.dataset.id);
+    const id = tr.dataset.id;
+    tr.querySelectorAll("td.klick").forEach((td) => { td.onclick = () => oeffne(id); });
+    tr.querySelector("td.pick input").onchange = (e) => waehle(id, e.target.checked);
+  });
+
+  const alleGewaehlt = rows.length > 0 && rows.every((l) => state.auswahl.has(l.id));
+  el("pick-all").checked = alleGewaehlt;
+  el("pick-all").indeterminate = !alleGewaehlt && rows.some((l) => state.auswahl.has(l.id));
+}
+
+/* ------------------------------------------------------- Ansicht Straße */
+
+function zeichneStrassen(rows) {
+  if (!rows.length) {
+    el("streets").innerHTML = '<div class="empty">Kein Treffer. Filter zurücksetzen.</div>';
+    return;
+  }
+
+  const gruppen = new Map();
+  for (const l of rows) {
+    const a = adresseTeilen(l.strasse);
+    const schluessel = `${l.ort} · ${a.strasse}`;
+    if (!gruppen.has(schluessel)) gruppen.set(schluessel, []);
+    gruppen.get(schluessel).push({ ...l, _nr: a.nr, _sort: a.sort });
+  }
+
+  const sortiert = [...gruppen.entries()].sort((a, b) => a[0].localeCompare(b[0], "de"));
+  // Beim Blättern offene Gruppen merken, damit sie nicht zuklappen.
+  const offeneGruppen = new Set(
+    [...el("streets").querySelectorAll("details[open]")].map((d) => d.dataset.g)
+  );
+
+  el("streets").innerHTML = sortiert.map(([name, leads]) => {
+    leads.sort((a, b) => a._sort - b._sort || a._nr.localeCompare(b._nr, "de"));
+    const fertig = leads.filter((l) => l.letzter_kontakt_am || ERLEDIGT.has(l.status)).length;
+    const auf = offeneGruppen.has(name) || sortiert.length <= 3;
+    return `
+      <details class="street" data-g="${esc(name)}"${auf ? " open" : ""}>
+        <summary>
+          <h3>${esc(name)}</h3>
+          <span class="zahl">${fertig} / ${leads.length} bearbeitet</span>
+        </summary>
+        <div class="hausnummern">
+          ${leads.map((l) => `
+            <div class="haus ${state.auswahl.has(l.id) ? "gewaehlt" : ""} ${
+              l.letzter_kontakt_am || ERLEDIGT.has(l.status) ? "erledigt" : ""}" data-id="${l.id}">
+              <input type="checkbox" ${state.auswahl.has(l.id) ? "checked" : ""}
+                aria-label="${esc(l.firmenname || "Lead")} auswählen" onclick="event.stopPropagation()">
+              <span class="hnr">${esc(l._nr) || "–"}</span>
+              <span class="wer">
+                <span class="nm">${esc(l.firmenname) || "ohne Firmenname"}</span>
+                <span class="sub">${esc(l.branche)}${l.bearbeiter_name ? " · " + esc(l.bearbeiter_name) : ""}</span>
+              </span>
+              <span class="kontakt-spalte">
+                <span class="status" data-s="${esc(l.status)}">${esc(l.status)}</span>
+              </span>
+            </div>`).join("")}
+        </div>
+      </details>`;
+  }).join("");
+
+  el("streets").querySelectorAll(".haus").forEach((h) => {
+    const id = h.dataset.id;
+    h.onclick = () => oeffne(id);
+    h.querySelector("input").onchange = (e) => waehle(id, e.target.checked);
   });
 }
+
+/* ------------------------------------------------------- Sammelaktionen */
+
+function waehle(id, an) {
+  an ? state.auswahl.add(id) : state.auswahl.delete(id);
+  zeichne();
+}
+
+function zeichneBulk() {
+  const n = state.auswahl.size;
+  el("bulkbar").hidden = n === 0;
+  el("bulk-count").textContent = `${n} ausgewählt`;
+}
+
+el("pick-all").onchange = (e) => {
+  const rows = sichtbar();
+  if (e.target.checked) rows.forEach((l) => state.auswahl.add(l.id));
+  else rows.forEach((l) => state.auswahl.delete(l.id));
+  zeichne();
+};
+
+el("bulk-clear").onclick = () => { state.auswahl.clear(); zeichne(); };
+
+async function sammelAendern(aenderung, beschreibung) {
+  const ids = [...state.auswahl];
+  if (!ids.length) return;
+  if (!confirm(`${beschreibung} für ${ids.length} Leads?`)) return;
+
+  const block = 200;
+  let fertig = 0;
+  for (let i = 0; i < ids.length; i += block) {
+    const teil = ids.slice(i, i + block);
+    const { error } = await sb.from("leads")
+      .update({ ...aenderung, geaendert_von: state.profil.id })
+      .in("id", teil);
+    if (error) { toast("Fehlgeschlagen: " + error.message); return; }
+    fertig += teil.length;
+    el("bulk-count").textContent = `${fertig} von ${ids.length} geändert …`;
+  }
+
+  // Lokal nachziehen, damit es sofort steht - Realtime liefert es ohnehin auch.
+  state.leads.forEach((l) => {
+    if (state.auswahl.has(l.id)) {
+      Object.assign(l, aenderung);
+      l.bearbeiter_name = state.team.find((t) => t.id === l.bearbeiter)?.name || "";
+      l.faellig_in_tagen = tageBis(l.wiedervorlage_am);
+    }
+  });
+
+  toast(`${beschreibung} für ${ids.length} Leads erledigt.`);
+  state.auswahl.clear();
+  zeichne();
+}
+
+el("bulk-bearbeiter").onchange = (e) => {
+  const v = e.target.value;
+  if (!v) return;
+  const name = v === "__keiner" ? "niemandem" : state.team.find((t) => t.id === v)?.name;
+  sammelAendern({ bearbeiter: v === "__keiner" ? null : v }, `Zuweisen an ${name}`);
+  e.target.value = "";
+};
+
+el("bulk-status").onchange = (e) => {
+  const v = e.target.value;
+  if (!v) return;
+  sammelAendern({ status: v }, `Status „${v}" setzen`);
+  e.target.value = "";
+};
+
+el("bulk-datum").onchange = (e) => {
+  const v = e.target.value;
+  if (!v) return;
+  sammelAendern({ wiedervorlage_am: v }, `Wiedervorlage ${datumDe(v)} setzen`);
+  e.target.value = "";
+};
+
+/* ------------------------------------------------------------ Fortschritt */
+
+async function zeichneStats() {
+  const seit = new Date(Date.now() - 7 * 86400000).toISOString();
+  const { data: akt } = await sb.from("aktivitaet")
+    .select("benutzer, lead_id").gte("zeit", seit).limit(5000);
+
+  const wocheProPerson = new Map();
+  (akt || []).forEach((a) => {
+    if (!a.benutzer) return;
+    if (!wocheProPerson.has(a.benutzer)) wocheProPerson.set(a.benutzer, new Set());
+    wocheProPerson.get(a.benutzer).add(a.lead_id);
+  });
+
+  const karten = state.team.map((t) => {
+    const meine = state.leads.filter((l) => l.bearbeiter === t.id);
+    const bearbeitet = meine.filter((l) => l.status !== "Neu").length;
+    const gewonnen = meine.filter((l) => l.status === "Gewonnen").length;
+    const woche = wocheProPerson.get(t.id)?.size || 0;
+    const anteil = meine.length ? Math.round((bearbeitet / meine.length) * 100) : 0;
+    return `
+      <div class="stat-person">
+        <h3>${esc(t.name || t.email)}</h3>
+        <div class="balken"><i style="width:${anteil}%"></i></div>
+        <div class="stat-zeile"><span>zugewiesen</span><b>${meine.length}</b></div>
+        <div class="stat-zeile"><span>angefasst</span><b>${bearbeitet}</b></div>
+        <div class="stat-zeile"><span>letzte 7 Tage</span><b>${woche}</b></div>
+        <div class="stat-zeile"><span>gewonnen</span><b>${gewonnen}</b></div>
+      </div>`;
+  });
+
+  const frei = state.leads.filter((l) => !l.bearbeiter).length;
+  karten.push(`
+    <div class="stat-person">
+      <h3>Nicht zugewiesen</h3>
+      <div class="balken"><i style="width:0%"></i></div>
+      <div class="stat-zeile"><span>offen</span><b>${frei}</b></div>
+      <div class="stat-zeile"><span class="note">Über die Kachel auswählen und unten zuweisen.</span></div>
+    </div>`);
+
+  el("stats").innerHTML = karten.join("");
+}
+
+el("stats-toggle").onclick = () => {
+  const auf = el("stats").hidden;
+  el("stats").hidden = !auf;
+  el("stats-toggle").setAttribute("aria-expanded", String(auf));
+  if (auf) zeichneStats();
+};
 
 /* -------------------------------------------------------------- Steuerung */
 
@@ -382,6 +643,28 @@ el("q").oninput = (e) => { state.q = e.target.value; zeichne(); };
 el("f-ort").onchange = (e) => { state.ort = e.target.value; zeichne(); };
 el("f-bearbeiter").onchange = (e) => { state.bearbeiter = e.target.value; zeichne(); };
 el("f-branche").onchange = (e) => { state.branche = e.target.value; zeichne(); };
+
+el("filter-toggle").onclick = () => {
+  const auf = el("filter-mehr").classList.toggle("auf");
+  el("filter-toggle").setAttribute("aria-expanded", String(auf));
+};
+
+el("filter-reset").onclick = () => {
+  Object.assign(state, { q: "", ort: "", bearbeiter: "", branche: "", kachel: "" });
+  state.status.clear();
+  el("q").value = ""; el("f-ort").value = ""; el("f-bearbeiter").value = ""; el("f-branche").value = "";
+  zeichneFilter();
+  zeichne();
+};
+
+el("views").querySelectorAll(".view-btn").forEach((b) => {
+  b.onclick = () => {
+    state.view = b.dataset.view;
+    el("views").querySelectorAll(".view-btn").forEach((o) =>
+      o.setAttribute("aria-pressed", String(o === b)));
+    zeichne();
+  };
+});
 
 document.querySelectorAll("th.sortable").forEach((th) => {
   th.onclick = () => {
@@ -397,14 +680,17 @@ document.querySelectorAll("th.sortable").forEach((th) => {
 /* -------------------------------------------------------------- Schublade */
 
 const FELDER = [
-  { legend: "Vertrieb", felder: [
+  { legend: "Beim Gespräch", kern: true, felder: [
     { k: "status", t: "Status", typ: "liste", liste: "status" },
     { k: "bearbeiter", t: "Bearbeiter", typ: "team" },
+    { k: "wiedervorlage_am", t: "Wiedervorlage am", typ: "datum" },
     { k: "kontaktkanal", t: "Kontaktkanal", typ: "liste", liste: "kontaktkanal" },
+    { k: "notizen", t: "Notizen / nächster Schritt", typ: "mehrzeilig", voll: true },
+  ]},
+  { legend: "Kontaktverlauf", felder: [
     { k: "anzahl_kontakte", t: "Anzahl Kontakte", typ: "zahl" },
     { k: "kontaktiert_am", t: "Erstkontakt am", typ: "datum" },
     { k: "letzter_kontakt_am", t: "Letzter Kontakt am", typ: "datum" },
-    { k: "wiedervorlage_am", t: "Wiedervorlage am", typ: "datum" },
     { k: "produktinteresse", t: "Produktinteresse", typ: "liste", liste: "produktinteresse" },
   ]},
   { legend: "Angebot", felder: [
@@ -414,7 +700,7 @@ const FELDER = [
   ]},
   { legend: "Firma und Kontakt", felder: [
     { k: "firmenname", t: "Firmenname", typ: "text", voll: true },
-    { k: "branche", t: "Branche", typ: "liste", liste: "branche", frei: true },
+    { k: "branche", t: "Branche", typ: "liste", liste: "branche" },
     { k: "ansprechpartner", t: "Ansprechpartner", typ: "text" },
     { k: "position", t: "Position", typ: "text" },
     { k: "telefon", t: "Telefon", typ: "tel" },
@@ -433,9 +719,6 @@ const FELDER = [
     { k: "bewertungslink", t: "Bewertungslink", typ: "url", voll: true },
     { k: "kurzlink", t: "Kurzlink", typ: "text" },
     { k: "linktest", t: "Linktest", typ: "text" },
-  ]},
-  { legend: "Notizen", felder: [
-    { k: "notizen", t: "Notizen / nächster Schritt", typ: "mehrzeilig", voll: true },
   ]},
 ];
 
@@ -457,10 +740,28 @@ function schliesse() {
   zeichne();
 }
 
+/** Im aktuell gefilterten Satz einen Schritt weiter oder zurück. */
+function blaettern(richtung) {
+  const rows = sichtbar();
+  const i = rows.findIndex((l) => l.id === state.offen?.id);
+  const ziel = rows[i + richtung];
+  if (!ziel) return toast(richtung > 0 ? "Letzter Lead der Liste." : "Erster Lead der Liste.");
+  oeffne(ziel.id);
+  ladeVerlauf(ziel.id);
+}
+
 el("d-close").onclick = schliesse;
 el("scrim").onclick = schliesse;
+el("d-prev").onclick = () => blaettern(-1);
+el("d-next").onclick = () => blaettern(1);
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !el("drawer").hidden) schliesse();
+  if (el("drawer").hidden) return;
+  const tippt = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "");
+  if (e.key === "Escape") return schliesse();
+  if (tippt) return;
+  if (e.key === "ArrowDown" || e.key === "j") { e.preventDefault(); blaettern(1); }
+  if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); blaettern(-1); }
 });
 
 function feldHtml(f, lead) {
@@ -478,7 +779,6 @@ function feldHtml(f, lead) {
       opts = [{ v: "", t: "– offen –" }, { v: "true", t: "Ja" }, { v: "false", t: "Nein" }];
     } else {
       const werte = state.listen[f.liste] || [];
-      // Ein vorhandener Wert, der nicht in der Liste steht, geht nicht verloren.
       const extra = wert && !werte.includes(wert) ? [wert] : [];
       opts = [{ v: "", t: "– leer –" }, ...[...extra, ...werte].map((w) => ({ v: w, t: w }))];
     }
@@ -503,20 +803,23 @@ function feldHtml(f, lead) {
   return `<label${cls} for="${id}">${esc(f.t)}${eingabe}</label>`;
 }
 
+function gruppeHtml(g, lead) {
+  const inhalt = `<div class="grid2">${g.felder.map((f) => feldHtml(f, lead)).join("")}</div>`;
+  if (g.kern) return `<fieldset class="kern"><legend>${esc(g.legend)}</legend>${inhalt}</fieldset>`;
+  return `<details class="mehr"><summary>${esc(g.legend)}</summary>${inhalt}</details>`;
+}
+
 function zeichneSchublade() {
   const lead = state.offen;
   if (!lead) return;
 
   el("d-title").textContent = lead.firmenname || lead.ansprechpartner || "Ohne Namen";
+  el("d-sub").textContent = [lead.branche, lead.strasse, `${lead.plz || ""} ${lead.ort || ""}`.trim()]
+    .filter(Boolean).join(" · ");
 
   zeichneQuick();
 
-  el("d-form").innerHTML = FELDER.map((gruppe) => `
-    <fieldset>
-      <legend>${esc(gruppe.legend)}</legend>
-      <div class="grid2">${gruppe.felder.map((f) => feldHtml(f, lead)).join("")}</div>
-    </fieldset>`).join("");
-
+  el("d-form").innerHTML = FELDER.map((g) => gruppeHtml(g, lead)).join("");
   el("d-form").querySelectorAll("input, select, textarea").forEach((eingabe) => {
     const ereignis = eingabe.tagName === "SELECT" ? "change" : "blur";
     eingabe.addEventListener(ereignis, () => speichereFeld(eingabe));
@@ -530,11 +833,12 @@ function zeichneQuick() {
   if (!lead) return;
   const zurueck = rueckgaengig.get(lead.id);
   el("d-quick").innerHTML = `
-    <button class="btn small" data-q="angerufen">Angerufen</button>
+    ${lead.telefon ? `<a class="btn small" href="tel:${esc(lead.telefon)}">Anrufen</a>` : ""}
+    <button class="btn ${lead.telefon ? "ghost " : ""}small" data-q="angerufen">Kontaktiert</button>
     <button class="btn ghost small" data-q="erreicht">Erreicht, Follow-up</button>
     <button class="btn ghost small" data-q="mir">Mir zuweisen</button>
     <button class="btn ghost small" data-q="plus7">Wiedervorlage +7 Tage</button>
-    ${lead.telefon ? `<a class="btn ghost small" href="tel:${esc(lead.telefon)}">Anrufen</a>` : ""}
+    <button class="btn ghost small" data-q="irrelevant">Nicht relevant</button>
     ${zurueck ? `<button class="btn danger small" id="d-undo"
         title="Stellt den Stand vor dieser Änderung wieder her"
       >↩ ${esc(zurueck.label)} zurücknehmen</button>` : ""}`;
@@ -548,7 +852,6 @@ function zeichneQuick() {
 function leseFeld(eingabe) {
   const { name, value, type } = eingabe;
   if (value === "") {
-    // Leere Textfelder bleiben leer, leere Datums-/Zahlenfelder werden NULL.
     return ["date", "number"].includes(type) || name === "bearbeiter"
       || name === "google_profil_vorhanden" ? null : "";
   }
@@ -565,8 +868,7 @@ async function speichereFeld(eingabe) {
   const alt = lead[feld] ?? (typeof neu === "string" ? "" : null);
   if (String(alt ?? "") === String(neu ?? "")) return;
 
-  const beschriftung = FELDNAMEN[feld] || feld;
-  merkeVorzustand(lead, { [feld]: neu }, "Änderung an " + beschriftung);
+  merkeVorzustand(lead, { [feld]: neu }, "Änderung an " + (FELDNAMEN[feld] || feld));
   await schreibe({ [feld]: neu });
 }
 
@@ -578,15 +880,14 @@ async function schnellaktion(welche) {
   if (welche === "angerufen") {
     aenderung.letzter_kontakt_am = heute();
     aenderung.anzahl_kontakte = (lead.anzahl_kontakte || 0) + 1;
-    aenderung.kontaktkanal = lead.kontaktkanal || "Telefon";
+    aenderung.kontaktkanal = lead.kontaktkanal || (lead.telefon ? "Telefon" : "Persönlich vor Ort");
     if (!lead.kontaktiert_am) aenderung.kontaktiert_am = heute();
     if (lead.status === "Neu" || lead.status === "Recherchiert") aenderung.status = "Kontaktiert";
     if (!lead.bearbeiter) aenderung.bearbeiter = state.profil.id;
   } else if (welche === "erreicht") {
     aenderung.status = "Follow-up";
     aenderung.letzter_kontakt_am = heute();
-    const in7 = new Date(); in7.setDate(in7.getDate() + 7);
-    aenderung.wiedervorlage_am = in7.toISOString().slice(0, 10);
+    aenderung.wiedervorlage_am = inTagen(7);
     if (!lead.bearbeiter) aenderung.bearbeiter = state.profil.id;
   } else if (welche === "mir") {
     aenderung.bearbeiter = state.profil.id;
@@ -594,13 +895,14 @@ async function schnellaktion(welche) {
     const basis = lead.wiedervorlage_am ? new Date(lead.wiedervorlage_am) : new Date();
     basis.setDate(basis.getDate() + 7);
     aenderung.wiedervorlage_am = basis.toISOString().slice(0, 10);
+  } else if (welche === "irrelevant") {
+    aenderung.status = "Nicht relevant";
+    aenderung.wiedervorlage_am = null;
   }
 
   const LABELS = {
-    angerufen: "Angerufen",
-    erreicht: "Erreicht, Follow-up",
-    mir: "Mir zuweisen",
-    plus7: "Wiedervorlage +7 Tage",
+    angerufen: "Kontaktiert", erreicht: "Erreicht, Follow-up", mir: "Mir zuweisen",
+    plus7: "Wiedervorlage +7 Tage", irrelevant: "Nicht relevant",
   };
   merkeVorzustand(lead, aenderung, LABELS[welche]);
 
@@ -619,7 +921,6 @@ async function zuruecknehmen() {
   const lead = state.offen;
   const eintrag = lead && rueckgaengig.get(lead.id);
   if (!eintrag) return;
-
   rueckgaengig.delete(lead.id);   // das Zurücknehmen selbst ist nicht umkehrbar
   await schreibe(eintrag.vorher);
   zeichneSchublade();
@@ -632,12 +933,9 @@ async function schreibe(aenderung) {
   melde.textContent = "speichert …";
   melde.dataset.state = "";
 
-  const { data, error } = await sb
-    .from("leads")
+  const { data, error } = await sb.from("leads")
     .update({ ...aenderung, geaendert_von: state.profil.id })
-    .eq("id", lead.id)
-    .select()
-    .single();
+    .eq("id", lead.id).select().single();
 
   if (error) {
     melde.textContent = "Nicht gespeichert: " + error.message;
@@ -656,7 +954,7 @@ async function schreibe(aenderung) {
   melde.textContent = "gespeichert " + new Date().toLocaleTimeString("de-DE");
   melde.dataset.state = "ok";
   zeichne();
-  zeichneQuick();   // lässt den Rückgängig-Knopf erscheinen bzw. verschwinden
+  zeichneQuick();
   ladeVerlauf(lead.id);
 }
 
@@ -672,13 +970,12 @@ const FELDNAMEN = {
   strasse: "Straße", plz: "PLZ", ort: "Ort", branche: "Branche",
   ansprechpartner: "Ansprechpartner", position: "Position",
   place_id: "Place-ID", bewertungslink: "Bewertungslink",
+  produktinteresse: "Produktinteresse",
 };
 
-/** Die Protokolltabelle speichert alle Werte als Text. Für das Zurückschreiben
- *  muss daraus wieder der Typ der Spalte werden, sonst lehnt PostgREST ab. */
-const FELD_TYP = Object.fromEntries(
-  FELDER.flatMap((g) => g.felder.map((f) => [f.k, f.typ]))
-);
+/** Das Protokoll speichert alles als Text. Fürs Zurückschreiben muss daraus
+ *  wieder der Typ der Spalte werden, sonst lehnt PostgREST ab. */
+const FELD_TYP = Object.fromEntries(FELDER.flatMap((g) => g.felder.map((f) => [f.k, f.typ])));
 
 function wertAusText(feld, text) {
   const typ = FELD_TYP[feld];
@@ -686,16 +983,13 @@ function wertAusText(feld, text) {
   if (typ === "zahl") return leer ? null : Number(text);
   if (typ === "datum") return leer ? null : text;
   if (typ === "janein") return leer ? null : text === "true";
-  if (typ === "team") return leer ? null : text;   // uuid oder nicht zugeordnet
-  return leer ? "" : text;                         // Textspalten sind NOT NULL
+  if (typ === "team") return leer ? null : text;
+  return leer ? "" : text;
 }
 
-/** Anzeigefassung eines protokollierten Werts. */
 function verlaufWert(feld, roh) {
   if (roh === null || roh === undefined || roh === "") return "leer";
-  if (feld === "bearbeiter") {
-    return state.team.find((t) => t.id === roh)?.name || "nicht zugeordnet";
-  }
+  if (feld === "bearbeiter") return state.team.find((t) => t.id === roh)?.name || "nicht zugeordnet";
   if (FELD_TYP[feld] === "datum") return datumDe(roh);
   if (FELD_TYP[feld] === "janein") return roh === "true" ? "Ja" : "Nein";
   return roh.length > 60 ? roh.slice(0, 60) + "…" : roh;
@@ -712,12 +1006,9 @@ async function stelleWiederHer(feld, altText, beschriftung) {
 }
 
 async function ladeVerlauf(leadId) {
-  const { data, error } = await sb
-    .from("aktivitaet")
+  const { data, error } = await sb.from("aktivitaet")
     .select("feld, alt, neu, zeit, benutzer")
-    .eq("lead_id", leadId)
-    .order("zeit", { ascending: false })
-    .limit(40);
+    .eq("lead_id", leadId).order("zeit", { ascending: false }).limit(40);
 
   const ziel = el("d-log");
   if (error) { ziel.innerHTML = `<p class="note err">${esc(error.message)}</p>`; return; }
@@ -728,13 +1019,11 @@ async function ladeVerlauf(leadId) {
     const feld = FELDNAMEN[a.feld] || a.feld;
     const alt = verlaufWert(a.feld, a.alt);
     const neu = verlaufWert(a.feld, a.neu);
-    // Nur Felder, die das Formular auch kennt, lassen sich zurückschreiben.
     const herstellbar = a.feld in FELD_TYP;
     return `<div class="log-row">
       <span class="when">${esc(zeitDe(a.zeit))}</span>
       <span class="what">
-        ${esc(wer)}: ${esc(feld)}
-        <s>${esc(alt)}</s> → <b>${esc(neu)}</b>
+        ${esc(wer)}: ${esc(feld)} <s>${esc(alt)}</s> → <b>${esc(neu)}</b>
         ${herstellbar ? `<button class="log-undo" data-i="${i}"
             title="Setzt ${esc(feld)} wieder auf ${esc(alt)}">↩ zurück auf ${esc(alt)}</button>` : ""}
       </span>
