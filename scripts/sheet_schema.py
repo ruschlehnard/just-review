@@ -62,11 +62,16 @@ SHEET_COLUMNS = [
 ]
 
 # Beim Export zusätzlich hinten angehängt - das, was im Sheet bisher fehlt.
+# Die persönliche Watchlist steht bewusst NICHT dabei: sie gehört einem
+# Mitarbeiter, nicht dem gemeinsamen Datenbestand.
 EXTRA_COLUMNS = [
     ("Bearbeiter", "bearbeiter_name"),
-    ("Zuletzt geändert am", "geaendert_am"),
+    ("Priorität", "prioritaet"),
     ("Produktinteresse", "produktinteresse"),
+    ("Zuletzt geändert am", "geaendert_am"),
 ]
+
+PRIO_NAME = {1: "hoch", 2: "mittel", 3: "niedrig"}
 
 DATE_FIELDS = {
     "kontaktiert_am", "letzter_kontakt_am", "wiedervorlage_am",

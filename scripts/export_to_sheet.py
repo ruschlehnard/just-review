@@ -25,6 +25,7 @@ from sheet_schema import (
     DATE_FIELDS,
     HEADER_ROW,
     NUMBER_FIELDS,
+    PRIO_NAME,
     SPREADSHEET_ID,
     TAB_LEADS,
     export_fields,
@@ -69,13 +70,34 @@ def zelle(lead, feld):
         return format_date(wert)
     if feld in BOOL_FIELDS:
         return "Ja" if wert else "Nein"
+    if feld == "prioritaet":
+        return PRIO_NAME.get(int(wert), str(wert))
     if feld == "abschluss_wahrsch":
         return f"{float(wert) * 100:.0f} %"
     if feld in ("angebotswert", "gewichteter_wert"):
-        return format_number(wert, 2)
+        # Der gewichtete Wert wird in der Datenbank immer gerechnet und ist
+        # nie leer. Ohne Angebot steht da eine 0 - als Kolonne über tausend
+        # Zeilen nur Rauschen, deshalb leer lassen.
+        return "" if float(wert) == 0 else format_number(wert, 2)
     if feld in NUMBER_FIELDS:
         return format_number(wert, 0)
     return str(wert)
+
+
+def raster_vergroessern(blatt, zeilen_noetig, spalten_noetig):
+    """Google lehnt Schreibzugriffe ausserhalb des Rasters ab. Der Tab waechst
+    nicht von allein mit, also vorher nachsehen und anbauen."""
+    gewachsen = []
+
+    if blatt.row_count < zeilen_noetig:
+        blatt.add_rows(zeilen_noetig - blatt.row_count + 50)   # etwas Luft
+        gewachsen.append(f"Zeilen {blatt.row_count}")
+
+    if blatt.col_count < spalten_noetig:
+        blatt.add_cols(spalten_noetig - blatt.col_count)
+        gewachsen.append(f"Spalten {blatt.col_count}")
+
+    return gewachsen
 
 
 def sicherung_anlegen(buch, blatt):
@@ -125,13 +147,18 @@ def main():
     buch = sheets_client().open_by_key(SPREADSHEET_ID)
     blatt = buch.worksheet(TAB_LEADS)
 
+    print(f"Tab vorher:           {blatt.row_count} Zeilen, {blatt.col_count} Spalten")
+    gewachsen = raster_vergroessern(blatt, HEADER_ROW + len(zeilen), len(kopf))
+    if gewachsen:
+        print(f"  Raster erweitert -> {blatt.row_count} Zeilen, {blatt.col_count} Spalten")
+
     if not args.ohne_sicherung:
         name = sicherung_anlegen(buch, blatt)
         print(f"  Sicherung angelegt: {name}")
 
     # Ab der Kopfzeile alles raus, Titelbalken in Zeile 1 bleibt stehen.
-    letzte_zeile = max(blatt.row_count, HEADER_ROW + len(zeilen) + 1)
-    blatt.batch_clear([f"A{HEADER_ROW}:ZZ{letzte_zeile}"])
+    letzte = gspread.utils.rowcol_to_a1(blatt.row_count, blatt.col_count)
+    blatt.batch_clear([f"A{HEADER_ROW}:{letzte}"])
 
     inhalt = [kopf] + zeilen
     blatt.update(
