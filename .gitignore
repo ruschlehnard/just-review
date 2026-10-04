@@ -6,3 +6,7 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# Arbeitsstand mit Zugangskennungen und Team-Adressen - bleibt lokal,
+# das Repo ist oeffentlich.
+KONTEXT.md
